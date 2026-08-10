@@ -1,0 +1,1836 @@
+<title>零时 · 原子弹的一秒与八十年</title>
+
+<style>
+/* ═══════════════════════════════════════════════════════════
+   零时 — 一座可以往下走的纪念馆
+   单一视觉世界：清水混凝土展厅。刻意不做浅色主题。
+   ═══════════════════════════════════════════════════════════ */
+
+:root{
+  /* 展厅 — 冷蓝偏中性，不是纯黑 */
+  --void:      #07080a;
+  --hall:      #0d0f12;
+  --concrete:  #16181c;
+  --concrete-2:#1d2026;
+  --riser:     #23272e;
+
+  /* 字 — 骨白，暖，与冷灰对撞 */
+  --bone:      #e7e3da;
+  --ash:       #938f88;
+  --dust:      #5b5f66;
+  --hair:      #2a2e35;
+
+  /* 三种被允许的颜色，用途严格 */
+  --flash:     #ffc86b;   /* 那一瞬间 · 实测数据 */
+  --ember:     #d0421c;   /* 伤害 · 死亡 */
+  --pool:      #7ea3ad;   /* 战后 · 反思 · 碑池 */
+
+  --serif: "Songti SC","STSong","SimSun","Noto Serif CJK SC","Source Han Serif SC","Noto Serif SC",Georgia,serif;
+  --mono: ui-monospace,"SF Mono","JetBrains Mono","Roboto Mono",Menlo,Consolas,monospace;
+
+  --measure: 34em;
+  --rail: 4.5rem;
+
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E");
+  --board: repeating-linear-gradient(to bottom,
+      rgba(255,255,255,.014) 0 1px,
+      transparent 1px 116px,
+      rgba(0,0,0,.5) 116px 118px,
+      rgba(255,255,255,.022) 118px 119px,
+      transparent 119px 132px);
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  background:var(--void);
+  color:var(--bone);
+  font-family:var(--serif);
+  font-size:17px;
+  line-height:1.95;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  letter-spacing:.01em;
+}
+
+/* 全局颗粒 */
+body::after{
+  content:"";position:fixed;inset:0;z-index:900;pointer-events:none;
+  background-image:var(--grain);
+  opacity:.11;mix-blend-mode:overlay;
+}
+
+::selection{background:var(--flash);color:#000}
+
+a{color:var(--pool);text-decoration:none;border-bottom:1px solid rgba(126,163,173,.3)}
+a:hover{border-bottom-color:var(--pool)}
+:focus-visible{outline:2px solid var(--flash);outline-offset:3px;border-radius:2px}
+
+/* ─── 左侧时间轨 ─────────────────────────────────────── */
+#timerail{
+  position:fixed;left:0;top:0;bottom:0;width:var(--rail);z-index:800;
+  pointer-events:none;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  border-right:1px solid var(--hair);
+  background:linear-gradient(to right,rgba(7,8,10,.92),rgba(7,8,10,.55));
+}
+#timerail .tick{
+  position:absolute;left:0;width:100%;height:1px;background:var(--flash);
+  opacity:.55;transition:top .12s linear;
+}
+#timerail .stamp{
+  writing-mode:vertical-rl;transform:rotate(180deg);
+  font-family:var(--mono);font-size:11px;letter-spacing:.24em;
+  color:var(--ash);white-space:nowrap;
+  font-variant-numeric:tabular-nums;
+  transition:color .5s ease;
+}
+#timerail.hot .stamp{color:var(--flash)}
+#timerail .cap{
+  position:absolute;top:1.6rem;font-family:var(--mono);font-size:9px;
+  letter-spacing:.2em;color:var(--dust);writing-mode:vertical-rl;transform:rotate(180deg);
+}
+
+/* ─── 结构 ───────────────────────────────────────────── */
+main{padding-left:var(--rail)}
+
+.hall{
+  position:relative;
+  padding:11rem 2rem 12rem;
+  background-color:var(--hall);
+  background-image:var(--board);
+  border-top:1px solid var(--hair);
+}
+.hall.deep{background-color:var(--void)}
+
+/* 走廊：两展厅之间几乎空白的过渡带 */
+.corridor{
+  padding:14rem 2rem;background:var(--void);
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  border-top:1px solid var(--hair);
+}
+.corridor p{
+  max-width:26em;margin:0;font-size:1.35rem;line-height:2.5;color:var(--ash);
+  text-wrap:balance;
+}
+.corridor em{color:var(--bone);font-style:normal}
+
+.wrap{max-width:74rem;margin:0 auto}
+.narrow{max-width:var(--measure)}
+
+/* ─── 展厅标题 ───────────────────────────────────────── */
+.roomhead{margin-bottom:6rem;display:flex;flex-direction:column;gap:1.4rem}
+.roomno{
+  font-family:var(--mono);font-size:10px;letter-spacing:.42em;color:var(--dust);
+  text-transform:uppercase;display:flex;align-items:center;gap:1rem;
+}
+.roomno::after{content:"";flex:1;height:1px;background:var(--hair);max-width:16rem}
+.roomno.center{justify-content:center}
+.roomno.center::after{display:none}
+h2{
+  margin:0;font-size:clamp(2.4rem,6.5vw,4.6rem);font-weight:400;line-height:1.12;
+  letter-spacing:.06em;text-wrap:balance;
+}
+.subhead{
+  font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--flash);
+  opacity:.85;
+}
+
+h3{
+  font-size:1.5rem;font-weight:400;margin:0 0 1.2rem;letter-spacing:.05em;
+  text-wrap:balance;
+}
+p{margin:0 0 1.6rem}
+.lede{font-size:1.24rem;line-height:2.3;color:var(--bone)}
+.dim{color:var(--ash)}
+.small{font-size:.94rem;line-height:1.9;color:var(--ash)}
+
+/* 展签 */
+.caption{
+  font-family:var(--mono);font-size:10.5px;line-height:1.85;letter-spacing:.13em;
+  color:var(--dust);text-transform:none;margin-top:1rem;
+}
+.caption b{color:var(--ash);font-weight:400}
+
+/* ─── 两栏：叙述 + 数据边栏 ─────────────────────────── */
+.panelrow{display:grid;grid-template-columns:minmax(0,var(--measure)) minmax(0,1fr);gap:5rem;align-items:start}
+.rail-notes{display:flex;flex-direction:column;gap:2.4rem;padding-top:.5rem}
+.note{border-left:1px solid var(--hair);padding-left:1.4rem}
+.note .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.24em;color:var(--dust);display:block;margin-bottom:.5rem}
+.note .v{font-family:var(--mono);font-size:1.6rem;color:var(--flash);font-variant-numeric:tabular-nums;line-height:1.3;display:block}
+.note .u{font-family:var(--mono);font-size:10px;color:var(--ash);letter-spacing:.1em}
+.note .d{font-size:.88rem;line-height:1.8;color:var(--ash);margin-top:.5rem}
+
+/* ─── 通用卡片 ───────────────────────────────────────── */
+.slab{
+  background:var(--concrete);border:1px solid var(--hair);
+  padding:2.2rem;position:relative;
+}
+.slab::before{
+  content:"";position:absolute;left:1.1rem;top:1.1rem;width:5px;height:5px;
+  border-radius:50%;background:var(--hair);box-shadow:0 0 0 1px rgba(0,0,0,.6) inset;
+}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(19rem,1fr));gap:1.5rem}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:1.5rem}
+
+/* ─── 揭示动画 ───────────────────────────────────────── */
+.rv{opacity:0;transform:translateY(26px);transition:opacity 1.3s cubic-bezier(.2,.7,.2,1),transform 1.3s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+
+/* ═══ 序章 ══════════════════════════════════════════════ */
+#prologue{
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:6rem 2rem;background:var(--void);position:relative;gap:2.5rem;
+}
+#watch{width:min(260px,58vw);height:auto}
+.hero-title{
+  font-size:clamp(3.2rem,13vw,8rem);letter-spacing:.3em;margin:0;font-weight:400;
+  text-indent:.3em;line-height:1;
+}
+.hero-sub{
+  font-family:var(--mono);font-size:clamp(10px,2.4vw,13px);letter-spacing:.42em;color:var(--ash);
+  max-width:40em;line-height:2.6;
+}
+.hero-note{font-size:.86rem;color:var(--dust);max-width:30em;line-height:1.9;font-family:var(--mono);letter-spacing:.08em}
+.scrollcue{
+  font-family:var(--mono);font-size:10px;letter-spacing:.35em;color:var(--dust);
+  display:flex;flex-direction:column;align-items:center;gap:.8rem;margin-top:1rem;
+}
+.scrollcue span.bar{display:block;width:1px;height:44px;background:linear-gradient(var(--dust),transparent);animation:drop 2.8s ease-in-out infinite}
+@keyframes drop{0%,100%{opacity:.25;transform:scaleY(.5);transform-origin:top}50%{opacity:1;transform:scaleY(1);transform-origin:top}}
+
+/* ═══ 年表 ══════════════════════════════════════════════ */
+.chrono{border-top:1px solid var(--hair);margin-top:1rem}
+.ev{
+  display:grid;grid-template-columns:9.5rem minmax(0,1fr);gap:2.5rem;
+  padding:2.1rem 0;border-bottom:1px solid var(--hair);align-items:baseline;
+}
+.ev .when{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--flash);opacity:.8;font-variant-numeric:tabular-nums}
+.ev .what h4{margin:0 0 .5rem;font-size:1.12rem;font-weight:400;letter-spacing:.04em}
+.ev .what p{margin:0;font-size:.96rem;color:var(--ash);line-height:1.95}
+.ev.pivot{background:linear-gradient(90deg,rgba(255,200,107,.05),transparent 60%)}
+.ev.pivot .when{opacity:1}
+
+/* ═══ 链式反应 ══════════════════════════════════════════ */
+.reactor{border:1px solid var(--hair);background:#050608;position:relative;overflow:hidden}
+#chain{display:block;width:100%;height:clamp(300px,46vh,460px)}
+.reactor-hud{
+  position:absolute;left:0;right:0;bottom:0;
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(9rem,1fr));
+  border-top:1px solid var(--hair);background:rgba(5,6,8,.88);backdrop-filter:blur(6px);
+}
+.hud-cell{padding:.9rem 1.2rem;border-right:1px solid var(--hair)}
+.hud-cell:last-child{border-right:0}
+.hud-cell .k{font-family:var(--mono);font-size:9px;letter-spacing:.22em;color:var(--dust);display:block}
+.hud-cell .v{font-family:var(--mono);font-size:1.15rem;color:var(--flash);font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.reactor-start{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:1.2rem;background:rgba(5,6,8,.75);cursor:pointer;border:0;
+  font-family:var(--mono);color:var(--bone);letter-spacing:.3em;font-size:11px;
+  transition:background .4s ease;width:100%;
+}
+.reactor-start:hover{background:rgba(5,6,8,.5)}
+.reactor-start .ring{
+  width:64px;height:64px;border:1px solid var(--flash);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;color:var(--flash);
+}
+.reactor-start .ring::before{content:"";width:7px;height:7px;background:var(--flash);border-radius:50%;box-shadow:0 0 22px 5px rgba(255,200,107,.55)}
+.reactor.done .reactor-start{display:none}
+
+.btn{
+  font-family:var(--mono);font-size:10px;letter-spacing:.26em;color:var(--bone);
+  background:transparent;border:1px solid var(--hair);padding:.75rem 1.5rem;cursor:pointer;
+  transition:border-color .3s,color .3s,background .3s;
+}
+.btn:hover{border-color:var(--flash);color:var(--flash)}
+.btn[aria-pressed="true"]{background:var(--flash);color:#000;border-color:var(--flash)}
+
+/* ═══ 两种构型 ══════════════════════════════════════════ */
+.device{background:var(--concrete);border:1px solid var(--hair);padding:2rem;display:flex;flex-direction:column;gap:1.2rem}
+.device svg{width:100%;height:auto;display:block}
+.device .dname{font-family:var(--mono);font-size:11px;letter-spacing:.24em;color:var(--flash)}
+.device h4{margin:0;font-size:1.3rem;font-weight:400;letter-spacing:.05em}
+.spec{display:grid;grid-template-columns:auto 1fr;gap:.35rem 1.2rem;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;border-top:1px solid var(--hair);padding-top:1rem}
+.spec dt{color:var(--dust)}
+.spec dd{margin:0;color:var(--bone);font-variant-numeric:tabular-nums}
+
+/* ═══ 对数时间轴 ════════════════════════════════════════ */
+.scrub{border:1px solid var(--hair);background:var(--concrete);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,22rem)}
+#stage{display:block;width:100%;height:clamp(280px,44vh,430px);background:#040507}
+.scrub-text{padding:2rem;border-left:1px solid var(--hair);display:flex;flex-direction:column;gap:1rem;min-height:0}
+.scrub-t{font-family:var(--mono);font-size:1.9rem;color:var(--flash);font-variant-numeric:tabular-nums;line-height:1.15}
+.scrub-t small{display:block;font-size:10px;letter-spacing:.2em;color:var(--dust);margin-top:.5rem}
+.scrub-h{font-size:1.18rem;letter-spacing:.05em;line-height:1.6}
+.scrub-b{font-size:.98rem;color:var(--ash);line-height:2.05;margin:0}
+.axis{grid-column:1/-1;border-top:1px solid var(--hair);padding:1.6rem 2rem 1.9rem;background:#0a0c0f}
+.axis-track{position:relative;height:44px;cursor:pointer}
+.axis-line{position:absolute;top:22px;left:0;right:0;height:1px;background:var(--hair)}
+.axis-fill{position:absolute;top:22px;left:0;height:1px;background:var(--flash)}
+.axis-dec{position:absolute;top:16px;width:1px;height:13px;background:var(--dust)}
+.axis-dec span{position:absolute;top:16px;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:8.5px;color:var(--dust);white-space:nowrap;letter-spacing:.05em}
+.axis-ev{position:absolute;top:18px;width:5px;height:5px;margin-left:-2px;border-radius:50%;background:var(--ash);transition:background .3s,transform .3s}
+.axis-ev.on{background:var(--flash);transform:scale(1.9)}
+#axisInput{
+  position:absolute;top:0;left:0;width:100%;height:44px;opacity:0;margin:0;cursor:ew-resize;
+}
+#axisInput:focus-visible + .axis-knob{box-shadow:0 0 0 2px var(--flash)}
+.axis-knob{position:absolute;top:12px;width:2px;height:22px;background:var(--flash);margin-left:-1px;pointer-events:none;box-shadow:0 0 14px 2px rgba(255,200,107,.5)}
+.axis-legend{display:flex;justify-content:space-between;font-family:var(--mono);font-size:9px;letter-spacing:.2em;color:var(--dust);margin-top:1.2rem}
+
+/* ═══ 蘑菇云 ════════════════════════════════════════════ */
+.cloudbox{position:relative;border:1px solid var(--hair);background:#000;overflow:hidden}
+#cloud{display:block;width:100%;height:clamp(420px,78vh,760px)}
+.cloud-ui{position:absolute;left:1.4rem;bottom:1.4rem;display:flex;gap:.6rem;align-items:center;flex-wrap:wrap}
+.cloud-tag{
+  position:absolute;right:1.4rem;top:1.4rem;font-family:var(--mono);font-size:9px;
+  letter-spacing:.2em;color:var(--dust);text-align:right;line-height:1.9;
+  border:1px solid var(--hair);padding:.6rem .9rem;background:rgba(0,0,0,.5);max-width:15rem;
+}
+.cloud-scale{position:absolute;right:1.4rem;bottom:1.4rem;font-family:var(--mono);font-size:9px;letter-spacing:.18em;color:var(--ash);text-align:right}
+.cloud-scale i{display:block;height:1px;background:var(--ash);margin-top:.4rem;width:110px}
+
+/* ═══ 半径图 ════════════════════════════════════════════ */
+.radlab{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,23rem);border:1px solid var(--hair);background:var(--concrete)}
+#rings{display:block;width:100%;height:clamp(320px,60vh,600px);background:#050608;cursor:crosshair}
+@media (min-width:901px){ #rings{height:100%;min-height:clamp(340px,62vh,600px)} }
+.radside{border-left:1px solid var(--hair);display:flex;flex-direction:column}
+.yieldpick{padding:1.5rem;border-bottom:1px solid var(--hair);display:flex;flex-direction:column;gap:.9rem}
+.yieldpick .k{font-family:var(--mono);font-size:9px;letter-spacing:.24em;color:var(--dust)}
+.chips{display:flex;flex-wrap:wrap;gap:.4rem}
+.chip{
+  font-family:var(--mono);font-size:9.5px;letter-spacing:.1em;padding:.5rem .7rem;
+  border:1px solid var(--hair);background:transparent;color:var(--ash);cursor:pointer;
+  transition:.25s;
+}
+.chip:hover{color:var(--bone);border-color:var(--dust)}
+.chip[aria-pressed="true"]{background:var(--flash);color:#000;border-color:var(--flash)}
+.ringlist{flex:1;overflow-y:auto;max-height:26rem}
+.ringrow{
+  display:grid;grid-template-columns:auto 1fr auto;gap:.9rem;align-items:center;
+  padding:.85rem 1.5rem;border-bottom:1px solid var(--hair);cursor:pointer;transition:background .2s;
+  background:transparent;border-left:0;border-right:0;border-top:0;width:100%;text-align:left;font:inherit;color:inherit;
+}
+.ringrow:hover,.ringrow.on{background:var(--concrete-2)}
+.ringrow .sw{width:10px;height:10px;border-radius:50%}
+.ringrow .nm{font-size:.92rem;letter-spacing:.03em}
+.ringrow .ds{font-family:var(--mono);font-size:11px;color:var(--flash);font-variant-numeric:tabular-nums}
+.ringfact{padding:1.5rem;border-top:1px solid var(--hair);min-height:11rem;background:var(--concrete-2)}
+.ringfact .k{font-family:var(--mono);font-size:9px;letter-spacing:.24em;color:var(--ember);display:block;margin-bottom:.7rem}
+.ringfact p{margin:0;font-size:.95rem;line-height:2;color:var(--bone)}
+
+/* ═══ 反常识 ════════════════════════════════════════════ */
+.odd{border-top:1px solid var(--hair);padding:2rem 0;display:grid;grid-template-columns:3.5rem minmax(0,1fr);gap:2rem;align-items:start}
+.odd .n{font-family:var(--mono);font-size:10px;color:var(--ember);letter-spacing:.1em;padding-top:.5rem}
+.odd h4{margin:0 0 .7rem;font-size:1.2rem;font-weight:400;letter-spacing:.04em;text-wrap:balance}
+.odd p{margin:0;color:var(--ash);font-size:1rem;line-height:2.1}
+.odd .src{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;color:var(--dust);margin-top:.8rem;display:block}
+
+/* ═══ 影子 ══════════════════════════════════════════════ */
+.shadowbox{display:grid;grid-template-columns:minmax(0,26rem) minmax(0,1fr);gap:4rem;align-items:center}
+.shadowbox svg{width:100%;height:auto;border:1px solid var(--hair);display:block}
+
+/* ═══ 军备图 ════════════════════════════════════════════ */
+.chartbox{border:1px solid var(--hair);background:var(--concrete);padding:2rem;overflow-x:auto}
+.chartbox svg{display:block;min-width:600px;width:100%;height:auto}
+.legend{display:flex;gap:2rem;flex-wrap:wrap;font-family:var(--mono);font-size:10px;letter-spacing:.15em;color:var(--ash);margin-top:1.2rem}
+.legend i{display:inline-block;width:20px;height:2px;margin-right:.6rem;vertical-align:middle}
+
+/* ═══ 险些 ══════════════════════════════════════════════ */
+.near{border-left:2px solid var(--ember);padding:1.4rem 0 1.4rem 1.8rem;margin-bottom:1.6rem;background:linear-gradient(90deg,rgba(208,66,28,.05),transparent 50%)}
+.near .yr{font-family:var(--mono);font-size:11px;letter-spacing:.2em;color:var(--ember)}
+.near h4{margin:.4rem 0 .6rem;font-size:1.1rem;font-weight:400;letter-spacing:.04em}
+.near p{margin:0;font-size:.95rem;color:var(--ash);line-height:2}
+
+/* ═══ 末日钟 ════════════════════════════════════════════ */
+.clockrow{display:grid;grid-template-columns:minmax(0,17rem) minmax(0,1fr);gap:3.5rem;align-items:center}
+#doomsday{width:100%;height:auto;display:block}
+.bignum{font-family:var(--mono);font-size:clamp(3.4rem,9vw,6rem);color:var(--ember);line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+
+/* ═══ 尾声 ══════════════════════════════════════════════ */
+#memorial{background:var(--void);padding:11rem 2rem 9rem;border-top:1px solid var(--hair)}
+.dotsbox{border:1px solid var(--hair);background:#040507;padding:1.5rem;position:relative}
+#dots{display:block;width:100%;height:auto}
+.dotsmeta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--dust);margin-top:1.2rem}
+.dotsmeta b{color:var(--bone);font-weight:400}
+
+.cenotaph{
+  text-align:center;padding:9rem 2rem 4rem;max-width:44rem;margin:0 auto;
+  display:flex;flex-direction:column;gap:2rem;align-items:center;
+}
+.cenotaph .jp{font-size:clamp(1.5rem,4.4vw,2.4rem);line-height:2.1;letter-spacing:.16em;color:var(--pool);text-wrap:balance}
+.cenotaph .cn{font-size:1.1rem;color:var(--ash);letter-spacing:.1em;line-height:2.2}
+.cenotaph .attr{font-family:var(--mono);font-size:9.5px;letter-spacing:.22em;color:var(--dust);line-height:2}
+
+/* ═══ 资料来源 ══════════════════════════════════════════ */
+#sources{background:var(--void);padding:6rem 2rem 8rem;border-top:1px solid var(--hair)}
+#sources ul{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(20rem,1fr));gap:.9rem 2.5rem}
+#sources li{font-family:var(--mono);font-size:10.5px;line-height:2;color:var(--ash);letter-spacing:.04em;border-bottom:1px solid var(--hair);padding-bottom:.55rem}
+
+/* ═══ 响应式 ════════════════════════════════════════════ */
+@media (max-width:900px){
+  :root{--rail:2.4rem}
+  body{font-size:16px}
+  #timerail .cap{display:none}
+  #timerail .stamp{font-size:9px;letter-spacing:.18em}
+  .hall{padding:6.5rem 1.2rem 7rem}
+  .corridor{padding:8rem 1.4rem}
+  .panelrow,.shadowbox,.clockrow{grid-template-columns:minmax(0,1fr);gap:2.5rem}
+  .scrub,.radlab{grid-template-columns:minmax(0,1fr)}
+  .scrub-text,.radside{border-left:0;border-top:1px solid var(--hair)}
+  .ev{grid-template-columns:minmax(0,1fr);gap:.6rem}
+  .odd{grid-template-columns:minmax(0,1fr);gap:.5rem}
+  .roomhead{margin-bottom:3.5rem}
+  .cloud-tag{position:static;margin:1rem;max-width:none}
+  .axis-legend{display:none}
+  .axis{padding:1.4rem 1.2rem 1.6rem}
+  .scrub-text{padding:1.6rem}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
+  .rv{opacity:1;transform:none}
+}
+</style>
+
+<!-- ══════════════════════════════════════════════════════ -->
+<div id="timerail" aria-hidden="true">
+  <span class="cap">TIME</span>
+  <span class="stamp" id="stamp">1938.12.17</span>
+  <span class="tick" id="tick" style="top:0"></span>
+</div>
+
+<main>
+
+<!-- ═══ 序 ═══════════════════════════════════════════════ -->
+<section id="prologue" data-time="08:15:00">
+  <svg id="watch" viewBox="0 0 200 200" role="img" aria-label="停在八点十五分的怀表">
+    <defs>
+      <radialGradient id="wface" cx="42%" cy="36%">
+        <stop offset="0" stop-color="#2b2d31"/><stop offset="1" stop-color="#101215"/>
+      </radialGradient>
+    </defs>
+    <circle cx="100" cy="100" r="86" fill="url(#wface)" stroke="#3a3e45" stroke-width="1.4"/>
+    <circle cx="100" cy="100" r="76" fill="none" stroke="#23272e" stroke-width="1"/>
+    <g stroke="#8d8b86" stroke-width="1.6">
+      <line x1="100" y1="26" x2="100" y2="38"/><line x1="100" y1="162" x2="100" y2="174"/>
+      <line x1="26" y1="100" x2="38" y2="100"/><line x1="162" y1="100" x2="174" y2="100"/>
+    </g>
+    <g stroke="#5b5f66" stroke-width="1">
+      <line x1="137" y1="36" x2="131" y2="46"/><line x1="164" y1="63" x2="154" y2="69"/>
+      <line x1="164" y1="137" x2="154" y2="131"/><line x1="137" y1="164" x2="131" y2="154"/>
+      <line x1="63" y1="164" x2="69" y2="154"/><line x1="36" y1="137" x2="46" y2="131"/>
+      <line x1="36" y1="63" x2="46" y2="69"/><line x1="63" y1="36" x2="69" y2="46"/>
+    </g>
+    <!-- 8:15：时针 247.5°，分针 90° -->
+    <line x1="100" y1="100" x2="61" y2="116" stroke="#e7e3da" stroke-width="4.2" stroke-linecap="round"/>
+    <line x1="100" y1="100" x2="162" y2="100" stroke="#e7e3da" stroke-width="2.4" stroke-linecap="round"/>
+    <circle cx="100" cy="100" r="4.5" fill="#ffc86b"/>
+    <path d="M60 150 L88 176" stroke="#3a3e45" stroke-width="1"/>
+  </svg>
+
+  <h1 class="hero-title">零時</h1>
+  <p class="hero-sub">1945.08.06 · 08:15:00 JST · HIROSHIMA · 34.3955°N 132.4536°E</p>
+  <p class="lede narrow" style="text-align:center;color:var(--ash)">
+    一个不到一微秒的物理过程，结束了一座城市，<br>并且到今天为止仍然没有结束。
+  </p>
+  <p class="hero-note">
+    本站包含关于大规模死亡与创伤的内容。<br>
+    全部图像均为程序生成的复原示意，非历史照片。
+  </p>
+  <div class="scrollcue"><span>向下</span><span class="bar"></span></div>
+</section>
+
+<!-- ═══ 第一室 · 发现 ════════════════════════════════════ -->
+<section class="hall" data-time="1938.12.17">
+  <div class="wrap">
+    <header class="roomhead rv">
+      <span class="roomno">第一室 / Room I</span>
+      <h2>它本来只是一个<br>没人预料到的实验结果</h2>
+      <span class="subhead">1938 — 1945 · 从柏林的一张化学分析表到内华达的沙子</span>
+    </header>
+
+    <div class="panelrow">
+      <div class="narrow">
+        <p class="lede rv">1938年12月，柏林。奥托·哈恩用中子轰击铀，然后在产物里找到了钡——一种只有铀一半重的元素。他自己都不敢相信，写信给流亡瑞典的莉泽·迈特纳：<span class="dim">"也许你能给出某种奇妙的解释。"</span></p>
+        <p class="rv">迈特纳和她的侄子奥托·弗里施在雪地里散步时算出了答案：铀核裂开了。而裂开前后的质量差，按 E=mc² 换算，是每个原子约 2 亿电子伏特。</p>
+        <p class="rv">这个数字本身不惊人。惊人的是紧接着的第二个发现——裂变会同时放出 2 到 3 个新的中子。也就是说，它可以自己喂自己。</p>
+        <p class="rv dim">从这一刻起，剩下的全部是工程问题。</p>
+      </div>
+      <aside class="rail-notes rv">
+        <div class="note"><span class="k">单次裂变释放</span><span class="v">200</span><span class="u">MeV（百万电子伏特）</span><span class="d">约为一次化学反应（燃烧一个碳原子）的 5,000 万倍。</span></div>
+        <div class="note"><span class="k">每次裂变放出中子</span><span class="v">2 – 3</span><span class="u">个</span><span class="d">这个"大于1"是全部问题的起点。</span></div>
+        <div class="note"><span class="k">曼哈顿计划耗资</span><span class="v">$2.2<span class="u"> B</span></span><span class="u">1945年美元 ≈ 今日 400 亿</span><span class="d">峰值雇员约13万人。其中绝大多数不知道自己在造什么。</span></div>
+      </aside>
+    </div>
+
+    <div class="chrono rv" style="margin-top:5rem">
+      <div class="ev"><span class="when">1938.12</span><div class="what"><h4>柏林 · 裂变被发现</h4><p>哈恩与施特拉斯曼在铀的辐照产物中检出钡。迈特纳与弗里施在几周后给出理论解释，并命名为"fission"（裂变）。</p></div></div>
+      <div class="ev"><span class="when">1939.08.02</span><div class="what"><h4>爱因斯坦—西拉德信</h4><p>利奥·西拉德起草、爱因斯坦签名，警告罗斯福德国可能制造"一种新型的、极端强大的炸弹"。爱因斯坦后来称签这封信是他一生最大的错误。</p></div></div>
+      <div class="ev"><span class="when">1942.12.02</span><div class="what"><h4>芝加哥 · 人类第一次可控链式反应</h4><p>费米在芝加哥大学一个壁球场的看台下建起石墨堆 CP-1，让链式反应自持了 28 分钟。暗号电报只有一句：<span style="color:var(--flash)">"意大利航海家已在新世界登陆。"</span></p></div></div>
+      <div class="ev"><span class="when">1943 — 1945</span><div class="what"><h4>三座凭空出现的城市</h4><p>橡树岭（铀浓缩）、汉福德（钚生产）、洛斯阿拉莫斯（设计与装配）。它们不在任何地图上，居民信件由军方拆检，孩子的出生证明上籍贯写着一个邮政信箱。</p></div></div>
+      <div class="ev pivot"><span class="when">1945.07.16<br>05:29:45</span><div class="what"><h4>三位一体 · 人类第一次核爆</h4><p>新墨西哥州，代号"小玩意"的钚弹在30米高的钢塔上引爆，当量约21千吨。钢塔完全汽化；沙子被熔成一层淡绿色的玻璃，后来被称为"三位一体石"。试验总指挥巴恩布里奇转向奥本海默，说了一句：<span style="color:var(--flash)">"现在我们都是狗娘养的了。"</span></p></div></div>
+      <div class="ev pivot"><span class="when">1945.08.06<br>08:15</span><div class="what"><h4>广岛</h4><p>"小男孩"在岛医院上空约 580 米处起爆。当量约 15 千吨。</p></div></div>
+      <div class="ev pivot"><span class="when">1945.08.09<br>11:02</span><div class="what"><h4>长崎</h4><p>首要目标是小仓，因烟雾与云层无法目视投弹，转向备用目标。"胖子"在浦上谷地上空约 503 米处起爆。当量约 21 千吨。三天之内，人类用完了当时全世界的核武库存。</p></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="corridor"><p>要理解接下来的十四万人，<br>必须先理解一个非常简单的数：<br><em>2 比 1 大。</em></p></div>
+
+<!-- ═══ 第二室 · 原理 ════════════════════════════════════ -->
+<section class="hall deep" data-time="+0.000000010 s">
+  <div class="wrap">
+    <header class="roomhead rv">
+      <span class="roomno">第二室 / Room II</span>
+      <h2>八十次翻倍</h2>
+      <span class="subhead">链式反应 · 每一代间隔约 10 纳秒</span>
+    </header>
+
+    <div class="narrow" style="margin-bottom:3rem">
+      <p class="lede rv">一个中子打进铀-235 的核，核裂开，放出 2 个新中子。这 2 个各自再打进一个核，变成 4 个。然后 8、16、32⋯⋯</p>
+      <p class="rv">每一"代"耗时大约 10 纳秒（1 shake）。翻倍这件事在人的直觉里从来都是被低估的——所以下面这个东西请你自己点一下。</p>
+    </div>
+
+    <div class="reactor rv" id="reactor">
+      <canvas id="chain" aria-label="链式反应可视化"></canvas>
+      <button class="reactor-start" id="chainStart"><span class="ring"></span><span>注入第一个中子</span></button>
+      <div class="reactor-hud">
+        <div class="hud-cell"><span class="k">代 GENERATION</span><span class="v" id="hGen">0</span></div>
+        <div class="hud-cell"><span class="k">已裂变原子</span><span class="v" id="hAtoms">0</span></div>
+        <div class="hud-cell"><span class="k">经过时间</span><span class="v" id="hTime">0 ns</span></div>
+        <div class="hud-cell"><span class="k">释放能量</span><span class="v" id="hEnergy">0 J</span></div>
+      </div>
+    </div>
+    <div style="display:flex;gap:.8rem;margin-top:1.2rem;flex-wrap:wrap">
+      <button class="btn" id="chainReset">重置</button>
+      <span class="caption" style="margin:0;align-self:center">屏幕上的每个亮点是一个铀原子核。屏幕会先被填满，然后数字继续。</span>
+    </div>
+
+    <div class="panelrow rv" style="margin-top:5rem">
+      <div class="narrow">
+        <h3>为什么"最后三代"是全部</h3>
+        <p>指数增长的残忍之处在于：第 77 代之前所有代加起来，还不到总量的八分之一。整颗炸弹 <strong style="color:var(--flash)">99% 以上的能量，是在最后 3 代、约 30 纳秒之内释放的</strong>。</p>
+        <p>这也是为什么核弹必须被"组装得足够快"。如果超临界状态形成得慢了一点点，最先释放的那点能量就会把整个装置炸散，反应中止——这叫"哑弹"（fizzle）。整个武器工程的核心难题，其实是一个时间竞赛：把材料压到位的速度，必须快过它自己把自己推开的速度。</p>
+        <h3 style="margin-top:2.5rem">消失的那 0.7 克</h3>
+        <p>广岛这颗弹装了约 64 公斤铀-235，其中真正参与裂变的不到 1 公斤，效率约 1.4%。</p>
+        <p>而在这不到 1 公斤里，真正"消失"、变成能量的质量是 <strong style="color:var(--flash)">约 0.7 克</strong>——比一枚回形针还轻。</p>
+      </div>
+      <aside class="rail-notes">
+        <div class="note"><span class="k">临界质量 · 铀-235</span><span class="v">52</span><span class="u">kg（裸球，无反射层）</span></div>
+        <div class="note"><span class="k">临界质量 · 钚-239</span><span class="v">10</span><span class="u">kg（裸球，无反射层）</span><span class="d">加中子反射层可显著降低。钚更"敏感"，这直接决定了两颗弹为什么结构完全不同。</span></div>
+        <div class="note"><span class="k">1 克质量完全转化 =</span><span class="v">21.5</span><span class="u">千吨 TNT 当量</span><span class="d">E=mc²。这就是核与化学炸药之间那道六个数量级的鸿沟。</span></div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 第三室 · 制造 ════════════════════════════════════ -->
+<section class="hall" data-time="1943 — 1945">
+  <div class="wrap">
+    <header class="roomhead rv">
+      <span class="roomno">第三室 / Room III</span>
+      <h2>难的不是物理</h2>
+      <span class="subhead">同位素分离 · 反应堆生产 · 两种构型</span>
+    </header>
+
+    <div class="panelrow">
+      <div class="narrow">
+        <p class="lede rv">1940 年代，裂变的物理学已经写在公开期刊上，全世界的物理学家都读过。真正把原子弹挡在门外的，从来是另外两件极其笨重的事。</p>
+        <h3 class="rv">第一件：天然铀里，99.3% 是没用的</h3>
+        <p class="rv">铀-235 和铀-238 化学性质完全相同，唯一的区别是 3 个中子——质量差 1.3%。你没法用化学分离它们，只能用这 1.3% 的重量差，一遍一遍地筛。</p>
+        <p class="rv">橡树岭为此建了 K-25 气体扩散厂：当时世界上占地面积最大的建筑，长达 800 米。旁边的 Y-12 用电磁分离，绕线圈需要的铜在战时被征用完了，于是财政部借出了 <strong style="color:var(--flash)">14,700 吨白银</strong> 来代替铜——战后一克不少地还了回去。</p>
+        <p class="rv">据常引用的估计，整个工程在高峰期的耗电量相当于全美发电量的 <strong style="color:var(--flash)">六分之一</strong>。这才是原子弹真正的门槛：它不是一个实验室能做出来的东西，它需要一个国家。</p>
+        <h3 class="rv">第二件：钚在自然界里几乎不存在</h3>
+        <p class="rv">它必须在反应堆里，由铀-238 吸收中子后逐级衰变"长"出来，再从强放射性的乏燃料中用远程操作的化学流程提取。汉福德为此在哥伦比亚河边建了世界第一批工业规模的生产堆。</p>
+        <p class="rv dim">八十年后，这两件事依然是核不扩散体系监控的核心——因为它们依然是最难藏的两件事。</p>
+      </div>
+      <aside class="rail-notes rv">
+        <div class="note"><span class="k">天然铀中的 U-235</span><span class="v">0.72<span class="u">%</span></span><span class="d">武器级需要浓缩到 90% 以上。</span></div>
+        <div class="note"><span class="k">K-25 厂房长度</span><span class="v">800<span class="u"> m</span></span><span class="u">U 形，占地 17 万平方米</span></div>
+        <div class="note"><span class="k">财政部出借白银</span><span class="v">14,700<span class="u"> t</span></span><span class="d">用于绕制电磁分离器的线圈。战后全部归还。</span></div>
+        <div class="note"><span class="k">耗电占全美</span><span class="v">≈ 1/6</span><span class="d">1945年高峰期。</span></div>
+      </aside>
+    </div>
+
+    <h3 class="rv" style="margin-top:6rem;text-align:center;font-size:1.1rem;letter-spacing:.2em;color:var(--ash);font-family:var(--mono)">两种构型 · 原理示意</h3>
+    <div class="grid2 rv" style="margin-top:2rem">
+
+      <div class="device">
+        <span class="dname">LITTLE BOY · 小男孩</span>
+        <h4>枪式 — 把两块合成一块</h4>
+        <svg viewBox="0 0 420 150" role="img" aria-label="枪式构型原理示意图">
+          <defs><linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#3a3e45"/><stop offset="1" stop-color="#23272e"/></linearGradient></defs>
+          <rect x="10" y="45" width="400" height="60" rx="30" fill="url(#g1)" stroke="#4a4e56"/>
+          <rect x="24" y="62" width="372" height="26" rx="13" fill="#0a0c0f" stroke="#3a3e45"/>
+          <!-- 发射药 -->
+          <rect x="34" y="64" width="46" height="22" rx="10" fill="#5b5f66"/>
+          <text x="57" y="122" fill="#5b5f66" font-family="ui-monospace,monospace" font-size="9" text-anchor="middle">发射药</text>
+          <!-- 弹体 -->
+          <rect x="120" y="64" width="54" height="22" rx="10" fill="#ffc86b" opacity=".85"/>
+          <text x="147" y="122" fill="#ffc86b" font-family="ui-monospace,monospace" font-size="9" text-anchor="middle">次临界块 A</text>
+          <!-- 箭头 -->
+          <path d="M186 75 L246 75" stroke="#ffc86b" stroke-width="1.5" stroke-dasharray="4 4"/>
+          <path d="M246 75 l-8 -4 l0 8 z" fill="#ffc86b"/>
+          <!-- 靶 -->
+          <circle cx="300" cy="75" r="19" fill="#ffc86b" opacity=".85"/>
+          <text x="300" y="122" fill="#ffc86b" font-family="ui-monospace,monospace" font-size="9" text-anchor="middle">次临界块 B（靶）</text>
+          <!-- 反射层 -->
+          <path d="M330 52 A26 26 0 0 1 330 98" fill="none" stroke="#8d8b86" stroke-width="3"/>
+          <text x="372" y="40" fill="#8d8b86" font-family="ui-monospace,monospace" font-size="9" text-anchor="middle">中子反射层</text>
+          <text x="215" y="28" fill="#938f88" font-family="ui-monospace,monospace" font-size="10" text-anchor="middle" letter-spacing="2">A + B ＞ 临界质量</text>
+        </svg>
+        <p class="small">两块各自达不到临界的铀-235，用一门炮把其中一块高速射向另一块。合并瞬间超过临界质量，链式反应启动。<br><br>结构简单到几乎不可能失败——所以它<strong style="color:var(--flash)">从未经过试验</strong>，第一次使用就是在广岛。但它只对铀有效：钚的自发裂变率太高，枪式的合并速度不够快，会在完全合拢前提前"预点火"而炸散。</p>
+        <dl class="spec">
+          <dt>装药</dt><dd>约 64 kg 高浓铀-235</dd>
+          <dt>当量</dt><dd>约 15 千吨</dd>
+          <dt>效率</dt><dd>约 1.4%</dd>
+          <dt>起爆高度</dt><dd>580 m 空爆</dd>
+        </dl>
+      </div>
+
+      <div class="device">
+        <span class="dname">FAT MAN · 胖子</span>
+        <h4>内爆式 — 把一块压得更密</h4>
+        <svg viewBox="0 0 420 150" role="img" aria-label="内爆式构型原理示意图">
+          <g transform="translate(140,75)">
+            <circle r="66" fill="none" stroke="#3a3e45" stroke-width="14"/>
+            <circle r="66" fill="none" stroke="#4a4e56" stroke-width="1"/>
+            <circle r="48" fill="#16181c" stroke="#5b5f66"/>
+            <circle r="30" fill="#23272e" stroke="#8d8b86"/>
+            <circle r="15" fill="#ffc86b" opacity=".9"/>
+            <circle r="15" fill="none" stroke="#ffc86b"/>
+          </g>
+          <!-- 向心箭头 -->
+          <g fill="#d0421c">
+            <g transform="translate(140,75)">
+              <g id="arr"><path d="M0 -60 L0 -40" stroke="#d0421c" stroke-width="1.5"/><path d="M0 -36 l-4 -8 l8 0 z"/></g>
+              <use href="#arr" transform="rotate(45)"/><use href="#arr" transform="rotate(90)"/>
+              <use href="#arr" transform="rotate(135)"/><use href="#arr" transform="rotate(180)"/>
+              <use href="#arr" transform="rotate(225)"/><use href="#arr" transform="rotate(270)"/>
+              <use href="#arr" transform="rotate(315)"/>
+            </g>
+          </g>
+          <g font-family="ui-monospace,monospace" font-size="9" fill="#8d8b86">
+            <text x="248" y="30">炸药透镜层</text><line x1="205" y1="26" x2="243" y2="26" stroke="#3a3e45"/>
+            <text x="248" y="62">铀-238 夯实层</text><line x1="180" y1="58" x2="243" y2="58" stroke="#3a3e45"/>
+            <text x="248" y="94" fill="#ffc86b">钚-239 弹芯</text><line x1="158" y1="90" x2="243" y2="90" stroke="#3a3e45"/>
+            <text x="248" y="126" fill="#d0421c">均匀向心压缩</text>
+          </g>
+        </svg>
+        <p class="small">钚必须换一条路：不增加质量，而是<strong style="color:var(--flash)">增加密度</strong>。一层精心成形的炸药同时起爆，产生一道从四面八方均匀向内收缩的冲击波，把中心的钚球压到原体积的一半以下——密度翻倍，临界质量就下降到手上这块之下。</p>
+        <p class="small">难点全在"均匀"二字：任何一点点不对称，弹芯就会被挤成一个歪掉的形状而失效。正因为没人相信它能成，才有了三位一体试验。</p>
+        <dl class="spec">
+          <dt>装药</dt><dd>约 6.2 kg 钚-239</dd>
+          <dt>当量</dt><dd>约 21 千吨</dd>
+          <dt>效率</dt><dd>约 17%</dd>
+          <dt>起爆高度</dt><dd>503 m 空爆</dd>
+        </dl>
+      </div>
+    </div>
+    <p class="caption rv" style="max-width:52em;margin-top:2rem">
+      <b>关于本室内容的说明：</b>以上为博物馆与公开教科书层面的原理示意，仅说明"为什么这样做"，不包含任何几何尺寸、装药配方、起爆时序或工程参数。这些原理自 1945 年起即为公开知识；真正的门槛在于上一段所描述的国家级工业能力。
+    </p>
+  </div>
+</section>
+
+<div class="corridor"><p>下面这一段，<br>在真实世界里持续了<em>不到一秒</em>。</p></div>
+
+<!-- ═══ 第四室 · 那一秒 ══════════════════════════════════ -->
+<section class="hall deep" data-time="08:15:00.000">
+  <div class="wrap">
+    <header class="roomhead rv">
+      <span class="roomno">第四室 / Room IV</span>
+      <h2>从十亿分之一秒<br>到三十年</h2>
+      <span class="subhead">对数时间轴 · 横跨 18 个数量级 · 拖动或用方向键</span>
+    </header>
+
+    <div class="scrub rv" id="scrub">
+      <canvas id="stage" aria-label="爆炸不同时刻的示意图"></canvas>
+      <div class="scrub-text">
+        <div class="scrub-t" id="sT">+1 ns<small id="sTsub">起爆后</small></div>
+        <div class="scrub-h" id="sH">—</div>
+        <p class="scrub-b" id="sB">—</p>
+      </div>
+      <div class="axis">
+        <div class="axis-track" id="axisTrack">
+          <div class="axis-line"></div>
+          <div class="axis-fill" id="axisFill"></div>
+          <div id="axisDecs"></div>
+          <div id="axisEvs"></div>
+          <input type="range" id="axisInput" min="0" max="1000" value="0" step="1" aria-label="时间轴位置">
+          <div class="axis-knob" id="axisKnob"></div>
+        </div>
+        <div class="axis-legend"><span>1 纳秒</span><span>1 微秒</span><span>1 毫秒</span><span>1 秒</span><span>1 小时</span><span>1 年</span><span>30 年</span></div>
+        <div style="display:flex;gap:.8rem;margin-top:1.2rem;flex-wrap:wrap">
+          <button class="btn" id="playBtn" aria-pressed="false">自动播放</button>
+          <button class="btn" id="prevBtn">← 上一刻</button>
+          <button class="btn" id="nextBtn">下一刻 →</button>
+        </div>
+      </div>
+    </div>
+    <p class="caption rv">
+      <b>示意图说明：</b>火球尺度与冲击波到达时间按 15 千吨空爆的公开经验公式近似绘制，视野比例尺随时间自动缩放（见图右下角）。用于建立数量级直觉，非精确模拟。
+    </p>
+  </div>
+</section>
+
+<!-- ═══ 第五室 · 火 ══════════════════════════════════════ -->
+<section class="hall deep" data-time="+00:01:00" style="padding-top:7rem">
+  <div class="wrap">
+    <header class="roomhead rv">
+      <span class="roomno">第五室 / Room V</span>
+      <h2>那朵云</h2>
+      <span class="subhead">程序生成的涡环复原 · 非历史照片</span>
+    </header>
+    <div class="cloudbox rv">
+      <canvas id="cloud" aria-label="蘑菇云形成过程的程序化复原动画"></canvas>
+      <div class="cloud-tag">
+        程序化复原 / NOT A PHOTOGRAPH<br>
+        <span style="color:var(--ash)">按火球浮升与涡环卷起<br>的流体行为生成</span>
+      </div>
+      <div class="cloud-ui"><button class="btn" id="cloudReplay">重放</button></div>
+      <div class="cloud-scale" id="cloudScale">云顶高度<i></i><span id="cloudH">0 km</span></div>
+    </div>
+
+    <div class="panelrow rv" style="margin-top:4rem">
+      <div class="narrow">
+        <h3>它为什么是这个形状</h3>
+        <p>蘑菇云不是"爆炸的形状"，而是<strong style="color:var(--flash)">浮力的形状</strong>。极热的火球密度远低于周围空气，于是像水里的一个气泡一样急速上浮。上浮时前缘受阻、边缘外翻向下卷，形成一个甜甜圈状的涡环——这就是"帽"。涡环把地面的尘土和碎片一路吸上来，形成"柄"。</p>
+        <p>云最后停在某个高度不动，是因为撞上了平流层底部：那里温度不再随高度下降，浮力消失。广岛的云顶最终稳定在约 <strong style="color:var(--flash)">16 公里</strong>。</p>
+        <p>任何足够猛烈的热源都会做出这个形状——火山、大型火灾也有。它之所以成为核的图腾，只是因为核是唯一能把它做到这个尺寸的东西。</p>
+      </div>
+      <aside class="rail-notes">
+        <div class="note"><span class="k">火球最大直径</span><span class="v">≈ 400<span class="u"> m</span></span><span class="u">15 千吨，起爆后约 1 秒</span></div>
+        <div class="note"><span class="k">火球表面亮度</span><span class="v">100×</span><span class="u">正午太阳（1 毫秒时）</span><span class="d">在 16 公里外仍足以造成瞬间闪光失明。</span></div>
+        <div class="note"><span class="k">云顶最终高度</span><span class="v">≈ 16<span class="u"> km</span></span><span class="u">进入平流层底部</span></div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<div class="corridor"><p>现在把镜头拉到正上方。<br>下面这张图上的每一个圈，<br><em>都是一种不同的死法。</em></p></div>
+
+<!-- ═══ 第六室 · 半径 ════════════════════════════════════ -->
+<section class="hall" data-time="08:15:02">
+  <div class="wrap">
+    <header class="roomhead rv">
+      <span class="roomno">第六室 / Room VI</span>
+      <h2>威力，是一个<br>关于距离的函数</h2>
+      <span class="subhead">俯视半径图 · 切换当量观察尺度如何变化</span>
+    </header>
+
+    <div class="radlab rv">
+      <canvas id="rings" aria-label="不同当量下各效应半径的俯视示意图"></canvas>
+      <div class="radside">
+        <div class="yieldpick">
+          <span class="k">爆炸当量 YIELD</span>
+          <div class="chips" id="yieldChips">
+            <button class="chip" data-kt="15" aria-pressed="true">15 kt · 小男孩</button>
+            <button class="chip" data-kt="21" aria-pressed="false">21 kt · 胖子</button>
+            <button class="chip" data-kt="300" aria-pressed="false">300 kt · 现役典型</button>
+            <button class="chip" data-kt="1200" aria-pressed="false">1.2 Mt · B83</button>
+            <button class="chip" data-kt="50000" aria-pressed="false">50 Mt · 沙皇炸弹</button>
+          </div>
+        </div>
+        <div class="ringlist" id="ringList"></div>
+        <div class="ringfact" id="ringFact">
+          <span class="k">悬停或点击任一圈层</span>
+          <p class="dim">左图中心的十字是爆心投影点。每一圈的半径都随当量的立方根（冲击波）或 0.41 次方（热辐射）增长——所以当量翻 8 倍，破坏半径只翻 2 倍。这是核武器最重要、也最反直觉的一条标度律。</p>
+        </div>
+      </div>
+    </div>
+    <p class="caption rv">
+      <b>数据说明：</b>基准值取 15 千吨空爆的公开经验值，其余当量按标度律外推，用于比较尺度而非精确预测。真实毁伤强烈依赖起爆高度、地形、建筑与天气。
+    </p>
+
+    <div style="margin-top:7rem">
+      <h3 class="rv" style="font-family:var(--mono);font-size:1rem;letter-spacing:.24em;color:var(--ember);text-align:center;margin-bottom:1rem">反常识清单</h3>
+      <p class="rv narrow" style="margin:0 auto 3rem;text-align:center;color:var(--ash)">下面这些不是修辞。它们是被测量、被记录、被保存在广岛和平纪念资料馆里的物证。</p>
+
+      <div class="narrow" style="margin:0 auto">
+        <div class="odd rv"><span class="n">01</span><div>
+          <h4>石阶上留下的不是烧焦的人影，是<span style="color:var(--ember)">没被漂白的地方</span></h4>
+          <p>住友银行广岛支店门前的石阶，距爆心约 260 米。热辐射把整片花岗岩表面瞬间烤白，唯独一个坐着等银行开门的人所遮挡的那一块，保持了原来的颜色。所以那道"影子"是一片<strong>未被改变</strong>的石头——它记录的不是这个人被烧掉，而是这个人曾经挡住过光。这级石阶后来被整块切下，至今陈列在广岛和平纪念资料馆。这个人的身份从未确认。</p>
+          <span class="src">广岛和平纪念资料馆藏 · 「人影の石」</span>
+        </div></div>
+
+        <div class="odd rv"><span class="n">02</span><div>
+          <h4>和服的花纹被<span style="color:var(--ember)">印进了皮肤里</span></h4>
+          <p>热辐射不区分你穿没穿衣服，只区分颜色。深色布料吸收热量、浅色反射，于是同一件和服上的图案在同一个人的背上被逐字逐句地复制成了烧伤——花是花的形状，格子是格子的形状。医生在整理伤员时发现，只要看烧伤图案，就能反推出这个人当时穿的是哪一件衣服。</p>
+          <span class="src">美国战略轰炸调查团医学报告 · 1946</span>
+        </div></div>
+
+        <div class="odd rv"><span class="n">03</span><div>
+          <h4>屋瓦在<span style="color:var(--ember)">不到两秒内熔化了表面</span>，但屋子还立着</h4>
+          <p>爆心 600 米内的日式屋瓦，表面被熔出不到 1 毫米深的一层气泡状玻璃质——这需要 1,700℃ 以上。而这些瓦当时还好好地待在屋顶上：热辐射以光速到达，瓦已经熔完了，把房子推倒的冲击波还要再过将近一秒才来。<strong>先烧，后炸。</strong></p>
+          <span class="src">爆心地表温度推定 3,000 – 4,000℃</span>
+        </div></div>
+
+        <div class="odd rv"><span class="n">04</span><div>
+          <h4>原爆圆顶馆之所以还站着，<span style="color:var(--ember)">正因为它离爆心太近</span></h4>
+          <p>广岛县产业奖励馆几乎就在爆心正下方（水平距离约 160 米）。冲击波从头顶垂直压下，而不是从侧面推——垂直的墙面受到的横向推力反而最小，于是它的立柱和穹顶骨架留了下来，成为整片废墟里唯一的立面。稍远一点、承受侧向冲击的建筑，全部倒了。</p>
+          <span class="src">今：原爆圆顶馆 · 世界文化遗产</span>
+        </div></div>
+
+        <div class="odd rv"><span class="n">05</span><div>
+          <h4>幸存者反复描述的顺序是：<span style="color:var(--ember)">光，寂静，然后才是声音</span></h4>
+          <p>光以每秒 30 万公里到达，冲击波以每秒几百米。在 2 公里外，这中间隔着大约 5 秒钟——足够一个人转过头、意识到"发生了什么"、甚至开始往回走。然后墙才塌下来。爆炸的声音在更远的地方直到几十秒后才传到。很多人的记忆里，广岛的那一刻是<strong>无声的</strong>。</p>
+        </div></div>
+
+        <div class="odd rv"><span class="n">06</span><div>
+          <h4>晴天下起了<span style="color:var(--ember)">黑色的、粘的、微温的雨</span>，人们张着嘴去接</h4>
+          <p>火球和随后的大火把海量烟尘抽上高空，水汽在尘埃上凝结，二三十分钟后落回地面——雨滴被烟灰染成黑色，含有裂变产物。落雨范围从爆心一直延伸到十几公里外。当时全城供水系统被摧毁，重度烧伤的人处在极度脱水中，于是很多人仰起脸喝了这场雨。<br>直到 2020 年前后，日本法院仍在审理"黑雨"受害者的被爆者认定诉讼。</p>
+          <span class="src">2020 广岛地方法院判决 · 扩大被爆者认定范围</span>
+        </div></div>
+
+        <div class="odd rv"><span class="n">07</span><div>
+          <h4>真正烧毁广岛的<span style="color:var(--ember)">不是炸弹，是炸弹之后的风</span></h4>
+          <p>爆炸大约 20 分钟后，成千上万处独立起火点连成一片，热空气猛烈上升，四面八方的冷空气被抽向市中心，形成风速极高的火风暴。约 11 平方公里同时燃烧。许多在爆炸中幸存、被压在倒塌房屋下的人，是在接下来的几个小时里被这场火烧死的——他们的家人能听见声音，但搬不开梁柱。</p>
+        </div></div>
+
+        <div class="odd rv"><span class="n">08</span><div>
+          <h4>有一批人在爆炸后<span style="color:var(--ember)">看起来完全没事</span>，两周后开始掉头发</h4>
+          <p>急性放射病有一个"潜伏期"：受到致死剂量照射的人，在最初的恶心呕吐过去后，会有几天到两周的"假愈期"，感觉正在好转，甚至能走能吃。随后是脱发、牙龈出血、高烧、免疫系统崩溃。1945 年秋天，广岛的医生完全不知道这是什么病，只在记录里称它为"原爆症"。</p>
+        </div></div>
+
+        <div class="odd rv"><span class="n">09</span><div>
+          <h4>幸存下来，在此后几十年里<span style="color:var(--ember)">是一件需要隐瞒的事</span></h4>
+          <p>"被爆者"（hibakusha）在战后长期遭受歧视：被认为会传染、会生下畸形的孩子，因而在婚姻和就业上被系统性排斥。许多人一生不向配偶提起自己来自广岛。<br>佐佐木祯子在爆炸时两岁，距爆心 1.6 公里，看上去毫发无伤。十年后她被诊断出白血病，在病床上折纸鹤，折到一千只以上，1955 年去世，十二岁。她的同学发起募捐，建起了今天广岛和平公园里的儿童和平纪念碑。</p>
+          <span class="src">白血病发病率于 1950 – 1953 年前后达到峰值；实体癌的超额风险持续了数十年</span>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 第七室 · 影子 ════════════════════════════════════ -->
+<section class="hall deep" data-time="1945.08.06 08:15:00">
+  <div class="wrap">
+    <header class="roomhead rv" style="margin-bottom:4rem">
+      <span class="roomno">第七室 / Room VII</span>
+    </header>
+    <div class="shadowbox rv">
+      <svg viewBox="0 0 300 300" role="img" aria-label="住友银行石阶上人影的示意复原">
+        <defs>
+          <filter id="rough" x="0" y="0" width="100%" height="100%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="4" result="n"/>
+            <feColorMatrix in="n" type="saturate" values="0"/>
+          </filter>
+        </defs>
+        <rect width="300" height="300" fill="#0a0c0f"/>
+        <!-- 被漂白的石阶 -->
+        <g>
+          <rect x="20" y="60" width="260" height="76" fill="#b8b3a6"/>
+          <rect x="20" y="136" width="260" height="8" fill="#8d8a80"/>
+          <rect x="20" y="144" width="260" height="76" fill="#c2bdb0"/>
+          <rect x="20" y="220" width="260" height="8" fill="#8d8a80"/>
+          <rect x="20" y="228" width="260" height="46" fill="#b0aba0"/>
+        </g>
+        <rect x="20" y="60" width="260" height="214" fill="url(#rough)" opacity=".35"/>
+        <!-- 未被漂白处 -->
+        <path d="M150 86 c-13 0 -21 10 -21 21 c0 8 4 13 9 17 c-14 6 -22 18 -24 33 l-4 32 l-9 44 l14 0 l7 -40 l4 0 l-3 40 l16 0 l0 -46 l6 0 l0 46 l16 0 l-3 -40 l4 0 l7 40 l14 0 l-9 -44 l-4 -32 c-2 -15 -10 -27 -24 -33 c5 -4 9 -9 9 -17 c0 -11 -8 -21 -21 -21 z"
+                fill="#4d4a44" opacity=".92"/>
+        <rect x="20" y="60" width="260" height="214" fill="none" stroke="#3a3e45"/>
+        <text x="150" y="292" fill="#5b5f66" font-family="ui-monospace,monospace" font-size="8.5" text-anchor="middle" letter-spacing="2">示意复原 · 非原物影像</text>
+      </svg>
+      <div>
+        <h2 style="font-size:clamp(1.8rem,4.6vw,3rem);margin-bottom:2rem">距爆心 260 米。<br>上午八点十五分。<br>银行还没开门。</h2>
+        <p class="lede">我们不知道这个人的名字、性别、年纪，不知道他们那天为什么要早到，不知道他们在等什么。</p>
+        <p>我们唯一确知的是：在那 0.7 克物质消失之后的某个瞬间，他们坐在这级台阶上，并且挡住了光。</p>
+        <p class="dim">这块石头现在有编号，有恒温恒湿的展柜，有每年上百万人从它面前走过。它是人类保存得最完整的一份关于核武器的证据——一个人形状的空白。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="corridor"><p>1945 年 8 月，全世界的核弹总数是<em>三枚</em>。<br>其中两枚已经用掉了。</p></div>
+
+<!-- ═══ 第八室 · 之后 ════════════════════════════════════ -->
+<section class="hall" data-time="1945 → 2026">
+  <div class="wrap">
+    <header class="roomhead rv">
+      <span class="roomno">第八室 / Room VIII</span>
+      <h2>然后我们造了<br>七万枚</h2>
+      <span class="subhead">全球核弹头库存 1945 — 2026 · 数据：FAS / Our World in Data 估计</span>
+    </header>
+
+    <div class="chartbox rv">
+      <svg id="arms" viewBox="0 0 900 380" role="img" aria-label="1945年至2026年美苏俄核弹头库存曲线图"></svg>
+      <div class="legend">
+        <span><i style="background:#7ea3ad"></i>美国 · 现役库存</span>
+        <span><i style="background:#d0421c"></i>苏联 / 俄罗斯 · 现役库存</span>
+        <span><i style="background:#ffc86b"></i>两国合计</span>
+      </div>
+    </div>
+    <p class="caption rv" style="max-width:52em">
+      <b>关于两条口径：</b>实线画的是"现役库存"（stockpile）——军方实际持有、可投入使用的弹头。上方那条虚线是"总保有量"（inventory），额外包含已退役、等待拆解但弹体仍然完整的部分。两者相差数千枚，这也是为什么不同来源给出的核弹数量常常对不上。<br>
+      本图只含美苏俄两国；其余七个拥核国合计约 1,500 枚，未画出。数据为 FAS / Our World in Data 的公开估计。
+    </p>
+
+    <div class="panelrow rv" style="margin-top:5rem">
+      <div class="narrow">
+        <p class="lede">1986 年，人类手里同时握着约 <strong style="color:var(--flash)">70,300</strong> 枚核弹头。其中大部分的当量，是广岛那一颗的几十倍。</p>
+        <p>这个数字后来降下来了——这是冷战结束后最被低估的成就之一。今天全球约有 <strong style="color:var(--flash)">12,200</strong> 枚，其中约 9,600 枚在服役库存中。美俄两国占其中约 87%。</p>
+        <p>下降的曲线容易让人产生一种错觉，好像事情正在自动变好。但曲线在 2015 年之后就基本走平了，而且它衡量的是数量，不是风险。</p>
+      </div>
+      <aside class="rail-notes">
+        <div class="note"><span class="k">历史峰值 · 1986</span><span class="v">70,300</span><span class="u">枚</span></div>
+        <div class="note"><span class="k">今天 · 2026 年初</span><span class="v">≈12,200</span><span class="u">枚（约 9,600 在役）</span></div>
+        <div class="note"><span class="k">已进行的核试验</span><span class="v">2,056</span><span class="u">次 · 1945 — 2017</span></div>
+        <div class="note"><span class="k">拥核国家</span><span class="v">9</span><span class="u">美 俄 英 法 中 印 巴 朝 以</span></div>
+      </aside>
+    </div>
+
+    <h3 class="rv" style="margin-top:7rem;font-family:var(--mono);font-size:1rem;letter-spacing:.24em;color:var(--ember)">我们没有被炸死，很大程度上是运气</h3>
+    <p class="rv narrow" style="margin-bottom:2.5rem">冷战期间已解密的"险些"事件有数十起。以下四起的共同点是：阻止事态发展的，是某一个具体的人，在没有授权的情况下，决定不服从流程。</p>
+    <div class="grid2 rv">
+      <div class="near"><span class="yr">1961.01.24 · 美国 北卡罗来纳</span><h4>戈兹伯勒事件</h4><p>一架 B-52 空中解体，两枚 Mark 39 氢弹落地。其中一枚的四道保险中有三道在坠落过程中失效，只剩最后一个低压开关处在"安全"位置。该弹当量为广岛的 250 倍。事后一枚弹芯至今仍埋在农田地下未能取出。</p></div>
+      <div class="near"><span class="yr">1962.10.27 · 加勒比海</span><h4>B-59 潜艇 · 瓦西里·阿尔希波夫</h4><p>古巴导弹危机最紧张的一天，苏联潜艇 B-59 在美军深水炸弹的逼迫下失去与莫斯科的联系，艇长认为战争已经爆发，下令准备发射核鱼雷。发射需要艇上三名军官一致同意。副参谋长阿尔希波夫拒绝了。</p></div>
+      <div class="near"><span class="yr">1983.09.26 · 苏联 谢尔普霍夫-15</span><h4>斯坦尼斯拉夫·彼得罗夫</h4><p>预警卫星系统报告美国发射了 5 枚洲际导弹。值班军官彼得罗夫的职责是立即上报，上报几乎必然触发反击。他判断"美国若要开战不会只发 5 枚"，认定是系统故障并如此上报。事后查明是阳光在高空云层上的反射。</p></div>
+      <div class="near"><span class="yr">1995.01.25 · 俄罗斯</span><h4>黑雁事件</h4><p>挪威发射的一枚科研火箭被俄军雷达判读为潜射导弹。俄罗斯的核手提箱在历史上唯一一次被真正启动并送到叶利钦面前。他选择等待，几分钟后火箭轨迹显示它正在飞离俄罗斯。</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 第九室 · 今天 ════════════════════════════════════ -->
+<section class="hall deep" data-time="2026.02.05">
+  <div class="wrap">
+    <header class="roomhead rv">
+      <span class="roomno">第九室 / Room IX</span>
+      <h2>现在是<br>差八十五秒</h2>
+      <span class="subhead">2026.01.27 · 《原子科学家公报》末日之钟</span>
+    </header>
+
+    <div class="clockrow rv">
+      <svg id="doomsday" viewBox="0 0 240 240" role="img" aria-label="末日之钟，指针指向差85秒到午夜">
+        <circle cx="120" cy="120" r="104" fill="#0d0f12" stroke="#23272e" stroke-width="1.5"/>
+        <circle cx="120" cy="120" r="92" fill="none" stroke="#16181c"/>
+        <!-- 只画最后五分钟的刻度 -->
+        <g stroke="#5b5f66" stroke-width="1.2">
+          <line x1="120" y1="16" x2="120" y2="34"/>
+          <line x1="129.7" y1="16.5" x2="128" y2="34.3"/>
+          <line x1="139.3" y1="18" x2="136" y2="35.6"/>
+          <line x1="110.3" y1="16.5" x2="112" y2="34.3"/>
+          <line x1="100.7" y1="18" x2="104" y2="35.6"/>
+        </g>
+        <path d="M120 120 L120 34" stroke="#e7e3da" stroke-width="2.5" stroke-linecap="round"/>
+        <!-- 分针，差85秒 ≈ -8.5度 -->
+        <g transform="rotate(-8.5 120 120)"><path d="M120 120 L120 44" stroke="#d0421c" stroke-width="4" stroke-linecap="round"/></g>
+        <circle cx="120" cy="120" r="5" fill="#d0421c"/>
+        <text x="120" y="196" fill="#5b5f66" font-family="ui-monospace,monospace" font-size="9" text-anchor="middle" letter-spacing="3">MIDNIGHT</text>
+      </svg>
+      <div>
+        <div class="bignum">85″</div>
+        <p class="lede" style="margin-top:1.5rem">2026 年 1 月 27 日，《原子科学家公报》把末日之钟从 89 秒推进到 <strong style="color:var(--ember)">距午夜 85 秒</strong>——这是这座钟从 1947 年设立以来离午夜最近的一次。</p>
+        <p>公报给出的理由包括核武库的重新增长、人工智能带来的不确定性、生物安全，以及气候危机；核心指控是"全球领导力的失败"。</p>
+      </div>
+    </div>
+
+    <div class="panelrow rv" style="margin-top:6rem">
+      <div class="narrow">
+        <h3>2026 年 2 月 5 日</h3>
+        <p class="lede">《新削减战略武器条约》（New START）在这一天到期，没有续签，没有替代协议。</p>
+        <p>这意味着<strong style="color:var(--ember)">自 1972 年以来第一次</strong>，世界上两个最大的核武库之间，不存在任何具有法律约束力的数量上限，也不存在相互核查机制。俄方表示暂时仍将非正式遵守原有限额，但明确说明"这是一项没有法律约束力的安排"。</p>
+        <p class="dim">写下这一句时，这个状态仍在持续。</p>
+
+        <h3 style="margin-top:3.5rem">还有一件比数量更重要的事</h3>
+        <p>1980 年代，萨根等人提出"核冬天"：大规模核战争引发的城市火灾会把上千万吨黑烟送进平流层，遮蔽阳光，使全球气温骤降、农业绝收。</p>
+        <p>近年的气候模型把这个问题推向了一个更不安的结论——即使是一场"区域性"核战争，比如印巴之间动用约 100 枚广岛级弹头，产生的烟尘也足以让全球粮食减产多年，使 <strong style="color:var(--ember)">超过 20 亿人</strong> 面临饥荒风险。</p>
+        <p>换句话说：核武器早已不是一种"谁按按钮谁承担后果"的武器。<strong>它没有旁观者。</strong></p>
+      </div>
+      <aside class="rail-notes">
+        <div class="note" style="border-color:var(--pool)"><span class="k">《不扩散核武器条约》</span><span class="v" style="color:var(--pool)">1970</span><span class="u">191 个缔约方</span></div>
+        <div class="note" style="border-color:var(--pool)"><span class="k">《全面禁止核试验条约》</span><span class="v" style="color:var(--pool)">1996</span><span class="u">签署 · 至今未生效</span></div>
+        <div class="note" style="border-color:var(--pool)"><span class="k">《禁止核武器条约》</span><span class="v" style="color:var(--pool)">2021</span><span class="u">生效 · 无拥核国参加</span></div>
+        <div class="note" style="border-color:var(--ember)"><span class="k">New START</span><span class="v" style="color:var(--ember)">2026.02</span><span class="u">到期 · 未续签</span></div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 尾声 ═════════════════════════════════════════════ -->
+<section id="memorial" data-time="1945.12.31">
+  <div class="wrap">
+    <div class="rv" style="text-align:center;margin-bottom:3.5rem">
+      <span class="roomno center">尾声 / Epilogue</span>
+      <h2 style="margin-top:1.4rem">每一个点，<br>是一个人</h2>
+    </div>
+    <div class="dotsbox rv">
+      <canvas id="dots" aria-label="十四万个点，代表1945年底前广岛的死亡人数"></canvas>
+    </div>
+    <div class="dotsmeta">
+      <span>广岛 · 至 1945 年 12 月 31 日 · <b id="dotCount">0</b> / 140,000</span>
+      <span style="color:var(--ash)">上半：当天即死亡 &nbsp;·&nbsp; 下半：此后四个月内陆续死亡</span>
+      <span>长崎另有约 <b>70,000</b> 人</span>
+    </div>
+    <p class="caption rv" style="max-width:48em;margin-top:2rem">
+      <b>关于这个数字：</b>爆炸当天的直接死亡约 7 万人。到 1945 年底，因烧伤、外伤与急性放射病死亡的总数估计为约 14 万人。此后数十年间，白血病与实体癌的超额死亡仍在继续累加，因此这个数字没有一个真正的终点。当时的户籍档案本身也在爆炸中被烧毁了，所以所有的统计都是重建出来的估计——有多少人连"被计入"这件事都没能做到，无人知道。
+    </p>
+
+    <div class="cenotaph rv">
+      <p class="jp">安らかに眠って下さい<br>過ちは繰返しませぬから</p>
+      <p class="cn">请安息吧<br>过错不会重演</p>
+      <p class="attr">广岛和平都市纪念碑 · 1952<br>碑文主语被刻意省略。<br>关于"过错"是谁犯的，日文原文不作说明——<br>这被理解为：说话的是全体人类。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 资料 ═════════════════════════════════════════════ -->
+<section id="sources">
+  <div class="wrap">
+    <span class="roomno" style="margin-bottom:2rem">资料来源 / SOURCES</span>
+    <ul>
+      <li>广岛和平纪念资料馆（Hiroshima Peace Memorial Museum）· 馆藏与展品说明</li>
+      <li>广岛市《原爆的实相》官方资料</li>
+      <li>放射线影响研究所（RERF）· 寿命调查（LSS）队列</li>
+      <li>美国战略轰炸调查团（USSBS）· 广岛长崎报告，1946</li>
+      <li>Glasstone &amp; Dolan《核武器效应》(The Effects of Nuclear Weapons), 1977</li>
+      <li>Federation of American Scientists · Status of World Nuclear Forces, 2026</li>
+      <li>Bulletin of the Atomic Scientists · 2026 Doomsday Clock Statement</li>
+      <li>Arms Control Association · New START Expires, 2026.03</li>
+      <li>Our World in Data · Nuclear Weapons（基于 Norris &amp; Kristensen 数据集）</li>
+      <li>Robock &amp; Toon 等 · 区域核冲突气候与粮食影响模型研究</li>
+      <li>Richard Rhodes《原子弹出世记》(The Making of the Atomic Bomb), 1986</li>
+      <li>John Hersey《广岛》(Hiroshima), The New Yorker, 1946</li>
+    </ul>
+    <p class="caption" style="margin-top:3rem;max-width:44em">
+      本页所有图像均为程序化生成的示意与复原，不包含任何历史照片。技术内容限于博物馆与公开教科书层面的原理说明。<br>
+      数值为公开估计值，不同来源之间存在差异；凡涉及伤亡的数字，都请理解为"至少"。
+    </p>
+  </div>
+</section>
+
+</main>
+
+<script>
+(() => {
+"use strict";
+const RM = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const $  = (s,r)=> (r||document).querySelector(s);
+const $$ = (s,r)=> Array.from((r||document).querySelectorAll(s));
+
+/* ── 通用：揭示 ─────────────────────────────────────── */
+const rvIO = new IntersectionObserver(es=>{
+  es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add("in"); rvIO.unobserve(e.target);} });
+},{rootMargin:"0px 0px -12% 0px",threshold:.05});
+$$(".rv").forEach(n=>rvIO.observe(n));
+
+/* ── 时间轨 ─────────────────────────────────────────── */
+const stamp=$("#stamp"), tick=$("#tick"), rail=$("#timerail");
+const timed=$$("[data-time]");
+const railIO=new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(e.isIntersecting){
+      const t=e.target.dataset.time;
+      stamp.textContent=t;
+      rail.classList.toggle("hot", /^\+|^08:15/.test(t));
+    }
+  });
+},{rootMargin:"-45% 0px -45% 0px"});
+timed.forEach(n=>railIO.observe(n));
+addEventListener("scroll",()=>{
+  const p=scrollY/Math.max(1,document.body.scrollHeight-innerHeight);
+  tick.style.top=(p*100)+"%";
+},{passive:true});
+
+/* ── canvas 工具 ────────────────────────────────────── */
+function fit(cv,hCss){
+  const dpr=Math.min(devicePixelRatio||1,2);
+  const w=cv.clientWidth, h=hCss||cv.clientHeight;
+  cv.width=Math.round(w*dpr); cv.height=Math.round(h*dpr);
+  const c=cv.getContext("2d"); c.setTransform(dpr,0,0,dpr,0,0);
+  return {c,w,h};
+}
+const sup=n=>String(n).split("").map(d=> d==="-" ? "⁻" : ("⁰¹²³⁴⁵⁶⁷⁸⁹"[+d]||d)).join("");
+const fmt=n=>{
+  if(n===0) return "0";
+  if(n>=1 && n<1e4) return Math.round(n).toLocaleString("en-US");
+  const e=Math.floor(Math.log10(Math.abs(n)));
+  return (n/Math.pow(10,e)).toFixed(2)+"×10"+sup(e);
+};
+
+/* ═══════════════════════════════════════════════════════
+   链式反应
+   ═══════════════════════════════════════════════════════ */
+(()=>{
+  const cv=$("#chain"); if(!cv) return;
+  const box=$("#reactor");
+  let c,W,H, nuclei=[], flying=[], gen=0, running=false, raf=0, tLast=0, acc=0;
+  let whiteout=0, tail=0, finished=false;
+  const GEN_MS = RM?60:300, HUD_ATOMS=$("#hAtoms"),HUD_GEN=$("#hGen"),HUD_T=$("#hTime"),HUD_E=$("#hEnergy");
+
+  function build(){
+    const r=fit(cv); c=r.c; W=r.w; H=r.h;
+    nuclei=[];
+    const target = Math.round(W*H/900);
+    const cols=Math.round(Math.sqrt(target*W/H)), rows=Math.max(1,Math.round(target/cols));
+    const dx=W/cols, dy=H/rows;
+    for(let j=0;j<rows;j++)for(let i=0;i<cols;i++){
+      nuclei.push({x:(i+.5)*dx+(Math.random()-.5)*dx*.62,
+                   y:(j+.5)*dy+(Math.random()-.5)*dy*.62,
+                   f:0,t:0});
+    }
+    draw();
+  }
+  function reset(){
+    gen=0;flying=[];whiteout=0;tail=0;finished=false;running=false;
+    nuclei.forEach(n=>{n.f=0;n.t=0});
+    box.classList.remove("done");
+    hud(0); draw();
+    cancelAnimationFrame(raf);
+  }
+  const MAXGEN=80, EPF=3.204e-11;              // 每次裂变约 200 MeV
+  const cumAtoms=g=> g<=0?0:Math.pow(2,g)-1;   // 第 n 代有 2^(n-1) 次裂变，累计 2^n − 1
+  function hud(g){
+    HUD_GEN.textContent=g;
+    const atoms=cumAtoms(g);
+    HUD_ATOMS.textContent=fmt(atoms);
+    HUD_T.textContent = (g*10)>=1000 ? (g*10/1000).toFixed(2)+" µs" : (g*10)+" ns";
+    const J=atoms*EPF;
+    HUD_E.textContent = g===0 ? "0 J"
+      : J<4.184e10 ? fmt(J)+" J"
+      : (J/4.184e12).toFixed(J/4.184e12<10?2:0)+" 千吨 TNT";
+  }
+  function ignite(n,g){ n.f=1; n.t=performance.now(); n.g=g; }
+
+  function step(){
+    const cur=nuclei.filter(n=>n.f===1&&n.g===gen);
+    if(gen===0){
+      const s=nuclei[Math.floor(nuclei.length/2)+Math.floor((Math.random()-.5)*8)];
+      ignite(s,1); gen=1; hud(1); return;
+    }
+    let spawned=0;
+    for(const n of cur){
+      const near=[];
+      for(const m of nuclei){ if(m.f) continue;
+        const d=(m.x-n.x)**2+(m.y-n.y)**2;
+        if(d < 5200){ near.push([d,m]); }
+      }
+      near.sort((a,b)=>a[0]-b[0]);
+      for(let k=0;k<2&&k<near.length;k++){
+        const m=near[k][1]; ignite(m,gen+1); spawned++;
+        flying.push({x0:n.x,y0:n.y,x1:m.x,y1:m.y,p:0});
+      }
+    }
+    gen++;
+    hud(gen);
+    if(spawned===0 && !finished){ finished=true; tail=performance.now(); }
+  }
+
+  function draw(now){
+    c.fillStyle="#050608"; c.fillRect(0,0,W,H);
+    // 未裂变核
+    c.fillStyle="rgba(120,128,140,.30)";
+    for(const n of nuclei){ if(!n.f){ c.beginPath(); c.arc(n.x,n.y,1.1,0,7); c.fill(); } }
+    // 已裂变
+    for(const n of nuclei){
+      if(!n.f) continue;
+      const age=Math.min(1,((now||performance.now())-n.t)/900);
+      const r=1.6+ (1-age)*6;
+      const a=.35+(1-age)*.65;
+      c.beginPath(); c.arc(n.x,n.y,r,0,7);
+      c.fillStyle=`rgba(255,${190+Math.round(50*(1-age))},${90+Math.round(120*(1-age))},${a})`;
+      c.fill();
+      if(age<.55){
+        c.beginPath(); c.arc(n.x,n.y, 6+age*26, 0, 7);
+        c.strokeStyle=`rgba(255,200,107,${(.5-age*.9).toFixed(3)})`; c.lineWidth=1; c.stroke();
+      }
+    }
+    // 中子轨迹
+    c.lineWidth=1;
+    for(const f of flying){
+      const x=f.x0+(f.x1-f.x0)*f.p, y=f.y0+(f.y1-f.y0)*f.p;
+      c.strokeStyle="rgba(255,200,107,.4)";
+      c.beginPath(); c.moveTo(f.x0,f.y0); c.lineTo(x,y); c.stroke();
+    }
+    if(whiteout>0){ c.fillStyle=`rgba(255,236,200,${whiteout})`; c.fillRect(0,0,W,H); }
+    if(whiteout>.6 && capGen>=MAXGEN){
+      const a=Math.min(1,(whiteout-.6)/.28);
+      c.textAlign="center";
+      c.fillStyle=`rgba(20,16,10,${a*.92})`;
+      c.font="600 13px ui-monospace,monospace";
+      c.fillText("第 80 代 · 1.21×10²⁴ 次裂变 · 8.0×10⁻⁷ 秒 · ≈ 9 千吨 TNT", W/2, H/2-14);
+      c.fillStyle=`rgba(20,16,10,${a*.62})`;
+      c.font="11px ui-monospace,monospace";
+      c.fillText("再多一代，就是 18 千吨。广岛那颗，落在这两者之间。", W/2, H/2+12);
+      c.textAlign="left";
+    }
+  }
+
+  let capGen=0;
+  function loop(now){
+    if(!tLast) tLast=now;
+    const dt=now-tLast; tLast=now;
+    if(running && !finished){ acc+=dt; if(acc>=GEN_MS){ acc=0; step(); } }
+    for(const f of flying){ f.p=Math.min(1,f.p+dt/(GEN_MS*.85)); }
+    flying=flying.filter(f=>f.p<1);
+
+    let stop=false;
+    if(finished){
+      const el=now-tail;
+      whiteout=Math.min(.94, el/2400);
+      capGen=Math.min(MAXGEN, gen+Math.floor(el/30));
+      hud(capGen);
+      if(capGen>=MAXGEN && el>5200){ running=false; stop=true; }
+    }
+    draw(now);
+    if(!stop) raf=requestAnimationFrame(loop);
+  }
+
+  $("#chainStart").addEventListener("click",()=>{
+    reset(); box.classList.add("done");
+    running=true; tLast=0; acc=GEN_MS; capGen=0;
+    cancelAnimationFrame(raf); raf=requestAnimationFrame(loop);
+  });
+  $("#chainReset").addEventListener("click",()=>{ reset(); });
+
+  build();
+  addEventListener("resize",()=>{ build(); reset(); });
+})();
+
+/* ═══════════════════════════════════════════════════════
+   对数时间轴
+   ═══════════════════════════════════════════════════════ */
+(()=>{
+  const cv=$("#stage"); if(!cv) return;
+  const LO=-9, HI=9;             // 10^-9 s → 10^9 s
+  const EV=[
+    {t:1e-9,h:"起爆",b:"中子源向弹芯注入第一批中子。此刻装置的外形、位置、温度都还完全正常。"},
+    {t:1e-8,h:"第 1 代",b:"一个铀核裂开，放出约 200 MeV 和 2 个中子。释放的总能量目前约为 3×10⁻¹¹ 焦耳——不足以让一粒灰尘动一下。"},
+    {t:3e-7,h:"第 30 代",b:"已有约 10 亿个原子裂变。能量仍然微不足道。指数增长在这个阶段看起来像什么都没发生。"},
+    {t:7e-7,h:"第 77 代",b:"到这一步为止，所有代加起来释放的能量，还不到最终总量的八分之一。"},
+    {t:8e-7,h:"第 80 代 · 反应结束",b:"约 1.2×10²⁴ 个原子完成裂变，相当于 10 千吨量级的 TNT。全部能量的 99% 以上是在最后 3 代、约 30 纳秒内释放的。弹芯温度超过 6,000 万℃，压力达数百万个大气压——比太阳中心还极端。"},
+    {t:1e-6,h:"+1 微秒 · 弹体还没动",b:"这是最反直觉的一刻：能量已经全部释放完毕，但炸弹的金属外壳还完整地停在原处。它来不及移动——冲击波在钢里传播需要时间，而这里的时间尺度比那还短。"},
+    {t:1e-5,h:"X 射线点燃空气",b:"弹芯以 X 射线的形式向外辐射能量，把周围的空气加热到不透明的等离子体状态。火球就此诞生，边界是空气本身。"},
+    {t:1e-4,h:"火球直径 30 米",q:1,b:"表面温度约 30 万℃。此时火球的膨胀速度快于声速——它不是被推开的，它是被「点亮」的。"},
+    {t:1e-3,h:"第一次闪光",q:1,b:"火球直径约 180 米，亮度达到正午太阳的约 100 倍。在数十公里外，这道光足以造成瞬时闪光失明。地面上任何直视它的人，视网膜会被灼伤。"},
+    {t:1.5e-2,h:"双闪 · 核爆的指纹",q:1,b:"冲击波从火球中脱出，形成一层不透明的激波前沿，短暂遮住内部更亮的核心，亮度出现一个凹谷。这个「亮—暗—更亮」的双峰曲线是核爆独有的特征，全球核监测卫星正是靠识别它来判定核试验。"},
+    {t:2e-1,h:"第二次、也是最强的闪光",q:1,b:"激波前沿冷却变透明，火球核心重新露出。核爆约三分之一的能量以热辐射形式射出，其中绝大部分集中在这之后的几秒钟内。远处的可燃物在这一刻被点燃。"},
+    {t:1,h:"火球最大 · 地面 3,000℃",q:1,b:"火球直径达到约 400 米的峰值，随即因浮力开始上升并变暗。爆心正下方的地表温度达到 3,000 – 4,000℃：屋瓦表面熔化，花岗岩起泡，人的影子被印在石头上。而此刻，冲击波才刚刚离开火球。"},
+    {t:2,h:"冲击波抵达 1 公里",b:"这里的建筑在几分之一秒内被压垮。站在这里的人，先是在 1 秒多以前看到了那道光，然后经历了几秒钟绝对的安静，然后才被击中。"},
+    {t:10,h:"冲击波抵达 3.5 公里 · 声音到了",b:"玻璃在这个距离上大面积碎裂，飞散的碎片造成了大量创伤。声音终于在此刻追上来。更远的地方要再等几十秒。"},
+    {t:60,h:"云柄成形",b:"火球已升到数公里高空，从地面卷起的尘土和碎片被吸成一根柱子跟在下面。同时，全城成千上万处独立火点开始蔓延。"},
+    {t:600,h:"云顶抵达平流层",b:"上升在约 16 公里高度停住——那里温度不再随高度下降，浮力消失。蘑菇云在此摊平成帽状，开始向下风向漂移。"},
+    {t:1800,h:"黑雨",b:"烟尘被抽上高空，水汽在其上凝结，二三十分钟后落回地面：黑色、粘稠、微温，含有裂变产物。供水系统已被摧毁，重度烧伤者极度脱水，很多人仰起脸喝了它。"},
+    {t:3600,h:"火风暴",b:"约 11 平方公里的城区同时燃烧，上升气流把四面的空气抽向中心形成大风。许多在爆炸中幸存但被压在废墟下的人，是在这几个小时里被烧死的。"},
+    {t:6e5,h:"第 1 – 2 周 · 急性放射病",b:"经历了几天「假愈期」、看似在康复的人开始脱发、牙龈出血、高烧不退。当年的医生完全不知道这是什么，在病历上写下「原爆症」。"},
+    {t:2.2e8,h:"第 5 – 8 年 · 白血病峰值",b:"白血病的超额发病率在 1950 – 1953 年前后达到高点，儿童尤其显著。佐佐木祯子就死于这一波。"},
+    {t:1e9,h:"第 30 年之后 · 还在继续",b:"甲状腺癌、乳腺癌、肺癌等实体癌的超额风险在几十年间持续存在，与受照剂量近似成线性关系，并且在流行病学上<b>没有观察到一个安全阈值</b>。<br><br>那一秒，到今天还没有结束。"}
+  ];
+  const pos=t=>(Math.log10(t)-LO)/(HI-LO);
+  const val=p=>Math.pow(10, LO+p*(HI-LO));
+
+  const input=$("#axisInput"), knob=$("#axisKnob"), fill=$("#axisFill");
+  const sT=$("#sT"),sTsub=$("#sTsub"),sH=$("#sH"),sB=$("#sB");
+  let c,W,H;
+
+  // 刻度
+  const decs=$("#axisDecs"), evs=$("#axisEvs");
+  const LBL={"-9":"ns","-6":"µs","-3":"ms","0":"s","3":"","6":"","9":""};
+  for(let e=LO;e<=HI;e+=1){
+    const d=document.createElement("div"); d.className="axis-dec";
+    d.style.left=(((e-LO)/(HI-LO))*100)+"%";
+    if(e%3===0){ d.style.height="17px"; d.innerHTML='<span>10'+sup(e)+'</span>'; }
+    decs.appendChild(d);
+  }
+  EV.forEach((e,i)=>{
+    const d=document.createElement("div"); d.className="axis-ev"; d.dataset.i=i;
+    d.style.left=(pos(e.t)*100)+"%"; evs.appendChild(d);
+  });
+  const evNodes=$$(".axis-ev");
+
+  function timeLabel(t){
+    if(t<1e-6) return (t*1e9).toPrecision(2).replace(/\.?0+$/,"")+" ns";
+    if(t<1e-3) return (t*1e6).toPrecision(2).replace(/\.?0+$/,"")+" µs";
+    if(t<1)    return (t*1e3).toPrecision(2).replace(/\.?0+$/,"")+" ms";
+    if(t<60)   return t.toPrecision(2).replace(/\.?0+$/,"")+" 秒";
+    if(t<3600) return Math.round(t/60)+" 分钟";
+    if(t<86400)return (t/3600).toFixed(1)+" 小时";
+    if(t<3.15e7)return Math.round(t/86400)+" 天";
+    return (t/3.156e7).toFixed(t/3.156e7<10?1:0)+" 年";
+  }
+
+  // 视觉尺度模型（15 kt 空爆近似）
+  const FB=[[-9,0],[-6.4,0],[-6,0.3],[-5,5],[-4,15],[-3,90],[-2,150],[-1,190],[0,200],[1,150]]; // log10 t → 火球半径 m
+  const SW=[[0,60],[0.3,180],[0.5,420],[1,1000],[1.6,2600],[2,5000],[3,20000]]; // log10 t → 冲击波半径 m
+  const CH=[[1,600],[1.5,2000],[2,5000],[2.5,9000],[3,16000],[4,16000],[9,16000]]; // 云顶 m
+  function interp(tab,lt){
+    if(lt<=tab[0][0])return tab[0][1];
+    if(lt>=tab[tab.length-1][0])return tab[tab.length-1][1];
+    for(let i=0;i<tab.length-1;i++){
+      if(lt>=tab[i][0]&&lt<=tab[i+1][0]){
+        const f=(lt-tab[i][0])/(tab[i+1][0]-tab[i][0]);
+        return tab[i][1]+(tab[i+1][1]-tab[i][1])*f;
+      }
+    }
+    return tab[tab.length-1][1];
+  }
+
+  function render(t){
+    if(!c) return;
+    const lt=Math.log10(t);
+    c.fillStyle="#040507"; c.fillRect(0,0,W,H);
+    const fb=interp(FB,lt), sw=lt>-0.6?interp(SW,lt):0, ch=lt>0.8?interp(CH,lt):0;
+    // 视野宽度（米）：早期贴近弹体，后期一路拉远
+    const span=Math.max(fb*4.5, sw*2.4, ch*2.2, 12);
+    const S=W/span;                     // 米→像素
+    const cx=W/2;
+    // 爆点在地面上方 580 m。当这个高度超出画面时，改为把爆点居中，地面移出视野。
+    let gy=H*0.82, cy=gy-580*S;
+    if(cy < H*0.26){ cy=H*0.46; gy=cy+580*S; }
+    const groundVisible = gy < H-2;
+
+    // 天空
+    const sky=c.createLinearGradient(0,0,0,Math.min(gy,H));
+    sky.addColorStop(0,"#05070a"); sky.addColorStop(1,"#0b0e13");
+    c.fillStyle=sky; c.fillRect(0,0,W,Math.min(gy,H));
+    if(groundVisible){
+      c.fillStyle="#0a0b0d"; c.fillRect(0,gy,W,H-gy);
+      c.strokeStyle="#23272e"; c.beginPath(); c.moveTo(0,gy+.5); c.lineTo(W,gy+.5); c.stroke();
+      // 城市剪影（仅在比例尺足够远时才有意义）
+      if(span>600){
+        c.fillStyle="#111418";
+        let sx=0, seed=7;
+        while(sx<W){ const rw=8+((seed=(seed*1103515245+12345)&0x7fffffff)%22), rh=4+(seed>>7)%16;
+          c.fillRect(sx,gy-rh,rw,rh); sx+=rw+2; }
+      }
+    }
+
+    // 冲击波环
+    if(sw>0 && groundVisible){
+      const r=sw*S;
+      c.strokeStyle="rgba(180,190,205,.30)"; c.lineWidth=2;
+      c.beginPath(); c.arc(cx,gy,r,Math.PI,0); c.stroke();
+      c.strokeStyle="rgba(180,190,205,.10)"; c.lineWidth=6;
+      c.beginPath(); c.arc(cx,gy,r,Math.PI,0); c.stroke();
+    }
+    // 云
+    if(ch>0){
+      const top=gy-ch*S, capR=Math.max(6,ch*S*0.30);
+      const g=c.createLinearGradient(0,top,0,gy);
+      g.addColorStop(0,"rgba(150,150,152,.5)"); g.addColorStop(1,"rgba(70,66,64,.35)");
+      c.fillStyle=g;
+      c.beginPath(); c.ellipse(cx,top+capR*.55,capR,capR*.55,0,0,7); c.fill();
+      c.beginPath(); c.moveTo(cx-capR*.20,top+capR); c.lineTo(cx-capR*.34,gy);
+      c.lineTo(cx+capR*.34,gy); c.lineTo(cx+capR*.20,top+capR); c.closePath(); c.fill();
+    }
+    // 火球
+    if(fb>0.4 && lt<1.6){
+      const r=Math.max(1.5,fb*S);
+      const heat=Math.max(0,Math.min(1,(0.5-lt)/2.2));
+      const g=c.createRadialGradient(cx,cy,0,cx,cy,r);
+      g.addColorStop(0,`rgba(255,255,${230+Math.round(20*heat)},1)`);
+      g.addColorStop(.42,`rgba(255,${205+Math.round(40*heat)},${110+Math.round(70*heat)},.98)`);
+      g.addColorStop(.78,`rgba(${230-Math.round(20*(1-heat))},${110+Math.round(40*heat)},30,.82)`);
+      g.addColorStop(1,"rgba(120,30,8,0)");
+      c.fillStyle=g; c.beginPath(); c.arc(cx,cy,r*1.25,0,7); c.fill();
+    }
+    // 弹体：能量已经全部释放，外壳却还没来得及动
+    if(lt < -4.6){
+      const fade=Math.max(0,Math.min(1,(-4.6-lt)/0.8));
+      const BL=3.0*S, BD=0.71*S;            // 小男孩 3.0 m × 0.71 m
+      if(BL>4){
+        c.save(); c.globalAlpha=fade;
+        // 尾翼盒（先画，压在弹体之下）
+        c.fillStyle="#1b1e23"; c.strokeStyle="#5b6069"; c.lineWidth=1;
+        c.beginPath(); c.rect(cx+BL*0.24, cy-BD*0.80, BL*0.26, BD*1.60); c.fill(); c.stroke();
+        c.beginPath(); c.moveTo(cx+BL*0.24,cy-BD*0.80); c.lineTo(cx+BL*0.24,cy+BD*0.80); c.stroke();
+        // 弹体：圆头圆柱
+        c.fillStyle="#23272e"; c.strokeStyle="#767b84";
+        c.beginPath();
+        c.moveTo(cx+BL*0.30, cy-BD*0.50);
+        c.lineTo(cx-BL*0.24, cy-BD*0.50);
+        c.quadraticCurveTo(cx-BL*0.52, cy-BD*0.46, cx-BL*0.50, cy);
+        c.quadraticCurveTo(cx-BL*0.52, cy+BD*0.46, cx-BL*0.24, cy+BD*0.50);
+        c.lineTo(cx+BL*0.30, cy+BD*0.50);
+        c.closePath(); c.fill(); c.stroke();
+        c.fillStyle="#938f88"; c.font="10px ui-monospace,monospace"; c.textAlign="center";
+        c.fillText("弹体 · 3.0 m", cx, cy-BD*1.35);
+        c.restore();
+      } else {
+        c.fillStyle="#ffc86b"; c.fillRect(cx-1.5,cy-1.5,3,3);
+      }
+    }
+    if(!groundVisible){
+      c.fillStyle="#5b5f66"; c.font="10px ui-monospace,monospace"; c.textAlign="left";
+      c.fillText("离地 580 m · 地面在画面之外", 20, 24);
+    }
+    // 比例尺
+    const barM=Math.pow(10,Math.round(Math.log10(span/4)));
+    const barPx=barM*S;
+    c.strokeStyle="#5b5f66"; c.lineWidth=1;
+    c.beginPath(); c.moveTo(W-24-barPx,H-22); c.lineTo(W-24,H-22); c.stroke();
+    c.beginPath(); c.moveTo(W-24-barPx,H-26); c.lineTo(W-24-barPx,H-18); c.moveTo(W-24,H-26); c.lineTo(W-24,H-18); c.stroke();
+    c.fillStyle="#938f88"; c.font="10px ui-monospace,monospace"; c.textAlign="right";
+    c.fillText(barM>=1000?(barM/1000)+" km":barM+" m", W-24, H-30);
+    c.textAlign="left"; c.fillStyle="#5b5f66";
+    c.fillText("15 kt · 580 m 空爆 · 侧视示意", 20, H-22);
+  }
+
+  let curI=-1;
+  function apply(p,fromEvent){
+    const t=val(p);
+    fill.style.width=(p*100)+"%"; knob.style.left=(p*100)+"%";
+    // 最近事件
+    let bi=0,bd=1e9;
+    EV.forEach((e,i)=>{ const d=Math.abs(pos(e.t)-p); if(d<bd){bd=d;bi=i;} });
+    if(bi!==curI){
+      curI=bi;
+      const e=EV[bi];
+      sH.textContent=e.h; sB.innerHTML=e.b;
+      evNodes.forEach((n,i)=>n.classList.toggle("on",i===bi));
+    }
+    sT.childNodes[0].nodeValue="+"+timeLabel(t);
+    sTsub.textContent="起爆后 · 10"+sup(Math.round(Math.log10(t)))+" 秒量级";
+    render(t);
+  }
+  function setP(p){ input.value=Math.round(p*1000); apply(p); }
+
+  input.addEventListener("input",()=>apply(+input.value/1000));
+  $("#nextBtn").addEventListener("click",()=>{ const i=Math.min(EV.length-1,curI+1); setP(pos(EV[i].t)); });
+  $("#prevBtn").addEventListener("click",()=>{ const i=Math.max(0,curI-1); setP(pos(EV[i].t)); });
+  evNodes.forEach(n=>n.addEventListener("click",()=>setP(pos(EV[+n.dataset.i].t))));
+
+  let playing=false, pRaf=0, pT=0;
+  const playBtn=$("#playBtn");
+  playBtn.addEventListener("click",()=>{
+    playing=!playing; playBtn.setAttribute("aria-pressed",String(playing));
+    playBtn.textContent=playing?"暂停":"自动播放";
+    if(playing){ if(+input.value>=1000) setP(0); pT=0; pRaf=requestAnimationFrame(tickPlay); }
+    else cancelAnimationFrame(pRaf);
+  });
+  function tickPlay(now){
+    if(!pT) pT=now;
+    const dt=now-pT; pT=now;
+    let p=+input.value/1000 + dt/26000;
+    if(p>=1){ p=1; playing=false; playBtn.setAttribute("aria-pressed","false"); playBtn.textContent="自动播放"; }
+    setP(p);
+    if(playing) pRaf=requestAnimationFrame(tickPlay);
+  }
+
+  function size(){ const r=fit(cv); c=r.c; W=r.w; H=r.h; apply(+input.value/1000); }
+  size(); addEventListener("resize",size);
+  setP(0);
+})();
+
+/* ═══════════════════════════════════════════════════════
+   蘑菇云
+   ═══════════════════════════════════════════════════════ */
+(()=>{
+  const cv=$("#cloud"); if(!cv) return;
+  let c,W,H,raf=0,t0=0,parts=[],started=false;
+  const DUR=15000;
+  const hLabel=$("#cloudH");
+
+  // 预渲染软粒子精灵：一组由暗到亮的灰，用于体积感明暗；另一枚用于热辐射叠加
+  const SMOKE_STEPS=7;
+  let smokeSpr=[], hotSpr=null;
+  function mkSprite(r,g,b,peak){
+    const s=document.createElement("canvas"); s.width=s.height=64;
+    const x=s.getContext("2d");
+    const gr=x.createRadialGradient(32,32,0,32,32,32);
+    gr.addColorStop(0,`rgba(${r},${g},${b},${peak})`);
+    gr.addColorStop(.38,`rgba(${r},${g},${b},${peak*0.42})`);
+    gr.addColorStop(1,`rgba(${r},${g},${b},0)`);
+    x.fillStyle=gr; x.fillRect(0,0,64,64);
+    return s;
+  }
+  function mkSprites(){
+    smokeSpr=[];
+    for(let i=0;i<SMOKE_STEPS;i++){
+      const f=i/(SMOKE_STEPS-1);
+      // 暗面偏冷褐，亮面偏暖灰 —— 尘土被侧下方的火光照亮
+      const r=Math.round(46+150*f), g=Math.round(43+140*f), b=Math.round(41+132*f);
+      smokeSpr.push(mkSprite(r,g,b,.62));
+    }
+    hotSpr=mkSprite(255,214,150,.85);
+  }
+
+  function build(){
+    const r=fit(cv); c=r.c; W=r.w; H=r.h;
+    mkSprites();
+    parts=[];
+    const N=RM?600:Math.min(2600,Math.round(W*H/300));
+    for(let i=0;i<N;i++){
+      if(i < N*0.66){
+        parts.push({
+          k:"cap",
+          phi: Math.random()*Math.PI*2,          // 绕竖轴的方位角（三维）
+          th : Math.random()*Math.PI*2,          // 绕涡管的角度
+          rho: Math.sqrt(Math.random()),         // 涡管内半径，sqrt 保证面均匀
+          spin:.7+Math.random()*.85,
+          sz : Math.random()<.12 ? 1.8+Math.random()*1.4 : .5+Math.random()*1.1,  // 少量大团块制造湍流感
+          delay: Math.random()*.05,
+          jt : (Math.random()-.5)*.5
+        });
+      } else {
+        parts.push({
+          k:"stem",
+          phi: Math.random()*Math.PI*2,
+          u  : Math.pow(Math.random(),1.35),     // 底部更密
+          rr : Math.sqrt(Math.random()),
+          wob: Math.random()*Math.PI*2,
+          sz : .55+Math.random()*1.0,
+          delay: Math.random()*.10
+        });
+      }
+    }
+  }
+
+  const FLAT=0.78;   // 帽的竖向压扁系数
+  function skeleton(p){
+    const e   = 1-Math.pow(1-Math.min(1,p),2.1);                  // 上升缓动
+    const capR= 0.028 + Math.pow(Math.min(1,p*1.1),.72)*0.155;    // 涡环主半径（占 S）
+    const tube= capR*(0.80 - 0.22*e);                             // 涡管半径：随时间相对变扁
+    return {e,capR,tube};
+  }
+
+  function draw(now){
+    const el=now-t0, p=Math.min(1, el/DUR);
+    const S=Math.min(W,H);
+    const gy=H*0.94;
+    const {e,capR,tube}=skeleton(p);
+    const cx=W/2;
+    const capCY = gy - (gy-H*0.10)*(0.05+e*0.74);       // 帽心随时间上升
+    const Rm=capR*S, rm=tube*S;
+
+    // ── 背景 ─────────────────────────────────────────
+    c.fillStyle="#000"; c.fillRect(0,0,W,H);
+    const sky=c.createLinearGradient(0,0,0,gy);
+    sky.addColorStop(0,"#04060a"); sky.addColorStop(.72,"#080a0e"); sky.addColorStop(1,"#0d0f12");
+    c.fillStyle=sky; c.fillRect(0,0,W,gy);
+    c.fillStyle="#050607"; c.fillRect(0,gy,W,H-gy);
+
+    // 地面余火辉光
+    const gi=Math.max(0,1-p*1.5);
+    if(gi>0.01){
+      const glow=c.createRadialGradient(cx,gy,0,cx,gy,S*0.6);
+      glow.addColorStop(0,`rgba(255,140,52,${(.34*gi).toFixed(3)})`);
+      glow.addColorStop(.5,`rgba(190,70,24,${(.12*gi).toFixed(3)})`);
+      glow.addColorStop(1,"rgba(255,120,40,0)");
+      c.fillStyle=glow; c.fillRect(0,gy-S*.6,W,S*.62);
+    }
+    // 城市剪影
+    c.fillStyle="#0a0b0d"; let sx=0,sd=99;
+    while(sx<W){ const rw=10+((sd=(sd*1103515245+12345)&0x7fffffff)%26), rh=3+(sd>>9)%13;
+      c.fillRect(sx,gy-rh,rw,rh); sx+=rw+3; }
+    c.strokeStyle="#1a1d22"; c.beginPath(); c.moveTo(0,gy+.5); c.lineTo(W,gy+.5); c.stroke();
+
+    // 起爆闪光
+    if(p<0.05){ const f=1-p/0.05; c.fillStyle=`rgba(255,247,232,${(f*f*0.97).toFixed(3)})`; c.fillRect(0,0,W,H); }
+
+    // ── 粒子（先按深度排序：远的先画） ────────────────
+    const wind=(p*p)*S*0.05;
+    const buf=[];
+    for(const q of parts){
+      const lp=Math.max(0,(p-q.delay)/(1-q.delay));
+      if(lp<=0) continue;
+      let x,y,z,size,heat,shade;
+      if(q.k==="cap"){
+        const th=q.th + (q.spin*lp*6.2) + q.jt;
+        const rr=rm*(0.25+q.rho*0.9)*(0.6+lp*0.55);
+        const ax=Rm*(0.35+lp*0.85) + rr*Math.cos(th);   // 到竖轴的距离
+        const yy=rr*Math.sin(th)*FLAT;
+        x=cx + ax*Math.cos(q.phi) + wind;
+        z=      ax*Math.sin(q.phi);
+        y=capCY + yy;
+        size=rm*0.40*q.sz*(0.65+lp*0.6);
+        // 明暗：帽顶亮、帽底暗（火光从下方来时反转，故早期底部反而更亮）
+        const vert=0.5 - yy/(2*rm*FLAT+0.001);          // 1=顶 0=底
+        shade=Math.max(0,Math.min(1, 0.30+vert*0.72 ));
+        heat=Math.max(0,1-lp*1.9)*(0.35+0.65*(1-vert));
+      } else {
+        // 柄是帽的尾迹：始终从地面连到帽底，不留断口
+        const u=q.u;
+        y=gy-(gy-capCY)*u;
+        const flare=0.34+0.80*Math.pow(1-u,1.9);
+        const ax=Rm*0.60*flare*q.rr + Math.sin(q.wob+lp*3.1)*S*0.007;
+        x=cx + ax*Math.cos(q.phi) + wind*u*0.75;
+        z=      ax*Math.sin(q.phi);
+        y+=Math.sin(q.wob*2+lp*2.2)*S*0.004;
+        size=rm*0.34*q.sz*(0.55+u*0.6);
+        shade=Math.max(0,Math.min(1,0.20+u*0.48));
+        heat=Math.max(0,1-lp*2.6)*(1-u)*0.85;
+      }
+      if(size<0.5) continue;
+      buf.push({x,y,z,size,heat,shade});
+    }
+    buf.sort((a,b)=>a.z-b.z);                          // 远 → 近
+
+    const lim=Rm+rm+1;
+    c.globalCompositeOperation="source-over";
+    for(const q of buf){
+      const depth=Math.max(-1,Math.min(1,q.z/lim));     // -1 后 → +1 前
+      const dm=0.55+0.45*(depth*0.5+0.5);
+      const sh=Math.min(SMOKE_STEPS-1, Math.max(0, Math.round(q.shade*dm*(SMOKE_STEPS-1))));
+      c.globalAlpha=0.070+0.090*dm;
+      const s2=q.size*(0.88+0.22*(depth*0.5+0.5));
+      c.drawImage(smokeSpr[sh], q.x-s2, q.y-s2, s2*2, s2*2);
+    }
+    // 热辐射：叠加
+    c.globalCompositeOperation="lighter";
+    for(const q of buf){
+      if(q.heat<=0.04) continue;
+      c.globalAlpha=Math.min(.55,q.heat*0.42);
+      const s2=q.size*0.9;
+      c.drawImage(hotSpr, q.x-s2, q.y-s2, s2*2, s2*2);
+    }
+    c.globalAlpha=1; c.globalCompositeOperation="source-over";
+
+    // 地面冲击波环
+    if(p<0.32){
+      const r=Math.pow(p/0.32,.55)*S*0.66;
+      c.strokeStyle=`rgba(200,210,225,${(0.30*(1-p/0.32)).toFixed(3)})`;
+      c.lineWidth=2; c.beginPath(); c.ellipse(cx,gy,Math.max(0,r),Math.max(0,r*0.15),0,0,7); c.stroke();
+    }
+
+    hLabel.textContent=(e*16).toFixed(1).replace(/\.0$/,"")+" km";
+    if(p<1) raf=requestAnimationFrame(draw);
+  }
+
+  function start(){
+    cancelAnimationFrame(raf);
+    if(RM){ t0=performance.now()-DUR; draw(performance.now()); return; }   // 静止呈现最终形态
+    t0=performance.now(); raf=requestAnimationFrame(draw);
+  }
+  build();
+  $("#cloudReplay").addEventListener("click",start);
+  addEventListener("resize",()=>{ build(); if(started) start(); });
+
+  new IntersectionObserver((es,o)=>{
+    es.forEach(e=>{ if(e.isIntersecting && !started){ started=true; start(); } });
+  },{threshold:.28}).observe(cv);
+})();
+
+/* ═══════════════════════════════════════════════════════
+   半径图
+   ═══════════════════════════════════════════════════════ */
+(()=>{
+  const cv=$("#rings"); if(!cv) return;
+  let c,W,H,kt=15,hover=-1,sel=-1;
+  // 基准 15 kt 空爆，半径单位 km；exp = 标度指数
+  const R0=[
+    {n:"火球",           r:0.18, exp:0.40, col:"#ffe9b0",
+     f:"在这个半径内，物质不是被烧毁，而是被电离。空气本身变成了发光的等离子体。任何固体在这里都不会留下可辨认的残骸——广岛爆心附近的死亡人数之所以是「估计」，部分原因就是没有可供统计的遗体。"},
+    {n:"重度冲击波 20 psi", r:0.50, exp:0.333, col:"#d0421c",
+     f:"超压 20 磅/平方英寸。钢筋混凝土建筑被压垮，重型工业设备被掀翻。这里的致死原因通常不是「被炸飞」，而是建筑物在零点几秒内塌到人的身上。"},
+    {n:"致死辐射剂量 500 rem", r:1.13, exp:0.333, col:"#c98adf",
+     f:"约一半的人会在没有救治的情况下死于急性放射病。但在广岛，这一圈几乎没有独立意义——落在这个半径内的人，早已同时承受了致命的热与冲击波。它真正的意义在于现代小当量武器：那时辐射半径可以超过爆炸半径。"},
+    {n:"中度冲击波 5 psi", r:1.20, exp:0.333, col:"#e6a63c",
+     f:"绝大多数住宅被摧毁，伤亡率极高。这一圈的边界上，广岛的木结构民居被整片推平，而更结实的建筑只剩骨架。佐佐木祯子当时在距爆心 1.6 公里处，就在这一圈之外——她活了下来，十年后死于白血病。"},
+    {n:"三度烧伤",        r:1.91, exp:0.41, col:"#ff8a3d",
+     f:"皮肤全层坏死。三度烧伤反而不疼——神经末梢已被一并破坏，所以剧痛来自它旁边那圈更轻的二度烧伤。<br><br>注意这一圈的标度指数是 0.41，比冲击波的 0.333 更大：<b>当量越大，热辐射的相对影响范围增长得越快</b>。到了兆吨级，烧伤半径会远远超出冲击波半径——大当量核武器主要是纵火武器。"},
+    {n:"轻度冲击波 1 psi", r:3.13, exp:0.333, col:"#7ea3ad",
+     f:"窗户大面积破碎。听起来轻微，但在真实城市里这一圈往往贡献了最多的受伤人数：无数人在听到远处巨响后跑向窗边查看，然后被冲击波推入的玻璃击中。<br><br>这也是核爆防护建议里唯一一条对普通人真正有效的：<b>看见闪光，立刻远离窗户并卧倒。</b>"}
+  ];
+  const scaled=()=>R0.map(o=>({...o, R:o.r*Math.pow(kt/15,o.exp)}));
+
+  const list=$("#ringList"), fact=$("#ringFact");
+  function paintList(){
+    const S=scaled();
+    list.innerHTML="";
+    S.forEach((o,i)=>{
+      const b=document.createElement("button");
+      b.className="ringrow"+(i===sel?" on":"");
+      b.innerHTML=`<span class="sw" style="background:${o.col}"></span><span class="nm">${o.n}</span><span class="ds">${o.R<1?Math.round(o.R*1000)+" m":o.R.toFixed(o.R<10?2:1)+" km"}</span>`;
+      b.addEventListener("mouseenter",()=>{hover=i;draw();});
+      b.addEventListener("mouseleave",()=>{hover=-1;draw();});
+      b.addEventListener("click",()=>{sel=i;showFact(i);markSel();draw();});
+      b.addEventListener("focus",()=>{hover=i;draw();});
+      list.appendChild(b);
+    });
+  }
+  // 只切换选中态，不重建列表 —— 重建会打断键盘焦点
+  function markSel(){
+    $$(".ringrow",list).forEach((n,i)=>n.classList.toggle("on",i===sel));
+  }
+  function showFact(i){
+    const o=scaled()[i];
+    fact.innerHTML=`<span class="k">${o.n} · 半径 ${o.R<1?Math.round(o.R*1000)+" 米":o.R.toFixed(2)+" 公里"}</span><p>${o.f}</p>`;
+  }
+
+  function draw(){
+    if(!c) return;
+    const half=Math.min(W,H)/2-26;
+    if(half<=8) return;                                   // 布局尚未成形，等 ResizeObserver 再画
+    const S=scaled();
+    const maxR=S[S.length-1].R*1.12;
+    const cx=W/2, cy=H/2, px=half/maxR;                   // km→px
+
+    c.fillStyle="#050608"; c.fillRect(0,0,W,H);
+    // 城市网格
+    c.strokeStyle="rgba(120,128,140,.07)"; c.lineWidth=1;
+    const g=Math.max(26, px*0.5);
+    for(let x=cx%g;x<W;x+=g){c.beginPath();c.moveTo(x,0);c.lineTo(x,H);c.stroke();}
+    for(let y=cy%g;y<H;y+=g){c.beginPath();c.moveTo(0,y);c.lineTo(W,y);c.stroke();}
+    // 河（广岛是三角洲城市）—— 只做极淡的场地暗示
+    c.strokeStyle="rgba(126,163,173,.055)"; c.lineWidth=Math.max(2,Math.min(7,px*0.05));
+    c.beginPath(); c.moveTo(cx-px*0.55,0); c.quadraticCurveTo(cx-px*0.95,cy,cx-px*0.42,H); c.stroke();
+    c.beginPath(); c.moveTo(cx+px*0.72,0); c.quadraticCurveTo(cx+px*1.12,cy,cx+px*0.62,H); c.stroke();
+
+    // 环（由外向内）
+    for(let i=S.length-1;i>=0;i--){
+      const o=S[i], r=o.R*px, hot=(i===hover||i===sel);
+      c.beginPath(); c.arc(cx,cy,r,0,7);
+      c.fillStyle=hexA(o.col, hot?0.16:0.075); c.fill();
+      c.strokeStyle=hexA(o.col, hot?1:0.55); c.lineWidth=hot?2:1; c.stroke();
+    }
+    // 距离刻度
+    c.setLineDash([2,5]); c.strokeStyle="rgba(147,143,136,.28)";
+    c.font="9px ui-monospace,monospace"; c.fillStyle="#5b5f66"; c.textAlign="left";
+    const stepKm = maxR>30?10:maxR>8?2:1;
+    for(let d=stepKm; d<maxR; d+=stepKm){
+      c.beginPath(); c.arc(cx,cy,d*px,0,7); c.stroke();
+      c.fillText(d+" km", cx+d*px+4, cy-4);
+    }
+    c.setLineDash([]);
+    // 爆心
+    c.strokeStyle="#ffc86b"; c.lineWidth=1.2;
+    c.beginPath(); c.moveTo(cx-9,cy); c.lineTo(cx+9,cy); c.moveTo(cx,cy-9); c.lineTo(cx,cy+9); c.stroke();
+    c.fillStyle="#ffc86b"; c.beginPath(); c.arc(cx,cy,2.4,0,7); c.fill();
+    // 标签
+    c.fillStyle="#938f88"; c.font="10px ui-monospace,monospace"; c.textAlign="left";
+    c.fillText("爆心投影点 · GROUND ZERO", 16, 22);
+    c.fillText(kt>=1000?(kt/1000)+" Mt":kt+" kt", 16, 38);
+  }
+  function hexA(h,a){
+    const n=parseInt(h.slice(1),16);
+    return `rgba(${(n>>16)&255},${(n>>8)&255},${n&255},${a})`;
+  }
+
+  cv.addEventListener("mousemove",ev=>{
+    const b=cv.getBoundingClientRect();
+    const x=ev.clientX-b.left, y=ev.clientY-b.top;
+    const S=scaled(), maxR=S[S.length-1].R*1.12;
+    const px=(Math.min(b.width,b.height)/2-26)/maxR;
+    const d=Math.hypot(x-b.width/2,y-b.height/2)/px;
+    let hit=-1;
+    for(let i=0;i<S.length;i++){ if(d<=S[i].R){ hit=i; break; } }
+    if(hit!==hover){ hover=hit; draw(); if(hit>=0) showFact(hit); }
+  });
+  cv.addEventListener("mouseleave",()=>{hover=-1;draw();});
+  cv.addEventListener("click",()=>{ if(hover>=0){ sel=hover; markSel(); draw(); } });
+
+  $$("#yieldChips .chip").forEach(b=>{
+    b.addEventListener("click",()=>{
+      $$("#yieldChips .chip").forEach(x=>x.setAttribute("aria-pressed","false"));
+      b.setAttribute("aria-pressed","true");
+      kt=+b.dataset.kt; paintList(); draw(); if(sel>=0) showFact(sel);
+    });
+  });
+
+  function size(){ const r=fit(cv); c=r.c; W=r.w; H=r.h; draw(); }
+  paintList(); size(); addEventListener("resize",size);
+  if(window.ResizeObserver) new ResizeObserver(size).observe(cv);
+})();
+
+/* ═══════════════════════════════════════════════════════
+   军备曲线
+   ═══════════════════════════════════════════════════════ */
+(()=>{
+  const svg=$("#arms"); if(!svg) return;
+  const US=[[1945,2],[1950,299],[1955,2422],[1960,18638],[1965,31139],[1967,31255],[1970,26008],[1975,27519],[1980,24104],[1985,23368],[1990,21392],[1995,12144],[2000,10577],[2005,8360],[2010,5800],[2015,4670],[2020,3750],[2026,3700]];
+  const SU=[[1945,0],[1950,5],[1955,200],[1960,1605],[1965,6129],[1970,11643],[1975,19055],[1980,30062],[1985,39197],[1986,40159],[1990,37000],[1995,27000],[2000,21500],[2005,17000],[2010,12000],[2015,7500],[2020,6375],[2026,5459]];
+  const W=900,H=380,L=58,R=18,T=22,B=34;
+  const x=y=>L+((y-1945)/(2026-1945))*(W-L-R);
+  const yv=v=>H-B-(v/72000)*(H-T-B);
+  const line=d=>d.map((p,i)=>(i?"L":"M")+x(p[0]).toFixed(1)+" "+yv(p[1]).toFixed(1)).join(" ");
+  const area=d=>line(d)+` L${x(d[d.length-1][0]).toFixed(1)} ${yv(0)} L${x(d[0][0]).toFixed(1)} ${yv(0)} Z`;
+  // 两条序列的年份取样点并不相同，合计必须按年份线性插值后再相加
+  const at=(d,y)=>{
+    if(y<=d[0][0]) return d[0][1];
+    if(y>=d[d.length-1][0]) return d[d.length-1][1];
+    for(let i=0;i<d.length-1;i++){
+      if(y>=d[i][0]&&y<=d[i+1][0]){
+        const f=(y-d[i][0])/(d[i+1][0]-d[i][0]);
+        return d[i][1]+(d[i+1][1]-d[i][1])*f;
+      }
+    }
+    return 0;
+  };
+  const years=[...new Set([...US.map(p=>p[0]),...SU.map(p=>p[0])])].sort((a,b)=>a-b);
+  const tot=years.map(y=>[y, at(US,y)+at(SU,y)]);
+
+  let g='<defs>'+
+    '<linearGradient id="aUS" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7ea3ad" stop-opacity=".22"/><stop offset="1" stop-color="#7ea3ad" stop-opacity="0"/></linearGradient>'+
+    '<linearGradient id="aSU" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d0421c" stop-opacity=".22"/><stop offset="1" stop-color="#d0421c" stop-opacity="0"/></linearGradient>'+
+    '</defs>';
+  // 网格
+  for(let v=0;v<=70000;v+=10000){
+    g+=`<line x1="${L}" y1="${yv(v)}" x2="${W-R}" y2="${yv(v)}" stroke="#23272e" stroke-width="1"/>`+
+       `<text x="${L-8}" y="${yv(v)+3.5}" fill="#5b5f66" font-family="ui-monospace,monospace" font-size="9" text-anchor="end">${v?v/1000+"k":"0"}</text>`;
+  }
+  [1945,1960,1980,1986,2000,2020,2026].forEach(yy=>{
+    g+=`<text x="${x(yy)}" y="${H-12}" fill="#5b5f66" font-family="ui-monospace,monospace" font-size="9" text-anchor="middle">${yy}</text>`;
+  });
+  g+=`<path d="${area(SU)}" fill="url(#aSU)"/><path d="${area(US)}" fill="url(#aUS)"/>`;
+  g+=`<path d="${line(tot)}" fill="none" stroke="#ffc86b" stroke-width="2.2" stroke-linejoin="round"/>`;
+  g+=`<path d="${line(SU)}" fill="none" stroke="#d0421c" stroke-width="1.6"/>`;
+  g+=`<path d="${line(US)}" fill="none" stroke="#7ea3ad" stroke-width="1.6"/>`;
+  // 全球总保有量（含待拆解）峰值参考线 —— 与"现役库存"曲线口径不同，差额本身就是信息
+  g+=`<line x1="${L}" y1="${yv(70300)}" x2="${W-R}" y2="${yv(70300)}" stroke="#ffc86b" stroke-width="1" stroke-dasharray="2 5" opacity=".5"/>`;
+  g+=`<text x="${L+6}" y="${yv(70300)-6}" fill="#ffc86b" font-family="ui-monospace,monospace" font-size="9.5" opacity=".8">1986 全球总保有量峰值 ≈ 70,300 枚（含待拆解）</text>`;
+  // 曲线自身的峰值
+  const pk=tot.reduce((a,b)=>b[1]>a[1]?b:a);
+  g+=`<line x1="${x(pk[0])}" y1="${yv(pk[1])}" x2="${x(pk[0])}" y2="${H-B}" stroke="#ffc86b" stroke-width="1" stroke-dasharray="3 4" opacity=".45"/>`;
+  g+=`<circle cx="${x(pk[0])}" cy="${yv(pk[1])}" r="3.5" fill="#ffc86b"/>`;
+  g+=`<text x="${x(pk[0])+8}" y="${yv(pk[1])+4}" fill="#ffc86b" font-family="ui-monospace,monospace" font-size="11">${pk[0]} · 两国现役库存 ${Math.round(pk[1]).toLocaleString("en-US")} 枚</text>`;
+  const last=tot[tot.length-1];
+  g+=`<circle cx="${x(last[0])}" cy="${yv(last[1])}" r="3" fill="#ffc86b"/>`;
+  g+=`<text x="${x(last[0])-6}" y="${yv(last[1])-9}" fill="#ffc86b" font-family="ui-monospace,monospace" font-size="10" text-anchor="end">2026 · ${Math.round(last[1]).toLocaleString("en-US")}</text>`;
+  g+=`<line x1="${L}" y1="${yv(0)}" x2="${W-R}" y2="${yv(0)}" stroke="#3a3e45"/>`;
+  svg.innerHTML=g;
+})();
+
+/* ═══════════════════════════════════════════════════════
+   十四万个点
+   ═══════════════════════════════════════════════════════ */
+(()=>{
+  const cv=$("#dots"); if(!cv) return;
+  const TOTAL=140000, counter=$("#dotCount");
+  let c,W,H,cols,rows,pitch,raf=0,drawn=0,go=false;
+
+  const SPLIT=70000;                 // 当天死亡 / 到年底死亡 的分界
+  function size(){
+    const w=cv.clientWidth||900;
+    pitch = w>720 ? 4.0 : 3.2;
+    cols = Math.floor(w/pitch);
+    rows = Math.ceil(TOTAL/cols);
+    const h = rows*pitch;
+    cv.style.height=h+"px";
+    const r=fit(cv,h); c=r.c; W=r.w; H=r.h;
+    c.fillStyle="#040507"; c.fillRect(0,0,W,H);
+    drawn=0;
+  }
+  function frame(){
+    if(!go) return;
+    const batch = RM? TOTAL : 450;
+    const end=Math.min(TOTAL, drawn+batch);
+    for(let i=drawn;i<end;i++){
+      const px=(i%cols)*pitch+pitch/2, py=Math.floor(i/cols)*pitch+pitch/2;
+      c.fillStyle = i>=SPLIT ? "rgba(208,66,28,.45)" : "rgba(231,227,218,.52)";
+      c.fillRect(px-0.65,py-0.65,1.3,1.3);
+    }
+    drawn=end;
+    counter.textContent=drawn.toLocaleString("en-US");
+    // 分界标注
+    if(drawn>=SPLIT){
+      const by=Math.floor(SPLIT/cols)*pitch;
+      c.strokeStyle="rgba(255,200,107,.5)"; c.lineWidth=1;
+      c.beginPath(); c.moveTo(0,by+.5); c.lineTo(W,by+.5); c.stroke();
+      c.fillStyle="rgba(255,200,107,.85)"; c.font="10px ui-monospace,monospace";
+      c.textAlign="left";  c.fillText("↑ 8 月 6 日当天  约 70,000 人", 6, by-7);
+      c.fillText("↓ 到 1945 年 12 月 31 日  再 70,000 人", 6, by+16);
+    }
+    if(drawn<TOTAL) raf=requestAnimationFrame(frame);
+  }
+  size();
+  addEventListener("resize",()=>{ size(); if(go){ cancelAnimationFrame(raf); frame(); } });
+  new IntersectionObserver((es,o)=>{
+    es.forEach(e=>{ if(e.isIntersecting && !go){ go=true; frame(); o.disconnect(); } });
+  },{threshold:.05}).observe(cv);
+})();
+
+})();
+</script>
