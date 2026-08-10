@@ -1,3 +1,10 @@
+  const RIVERS=[
+    {w:150,p:[[-2500,-9000],[-2320,-6000],[-2050,-4000],[-2010,-2600],[-1860,-1200],[-1800,200],[-1700,1600],[-1640,3400],[-1560,5200],[-1520,9000]]},
+    {w:105,p:[[-1200,-9000],[-1080,-5600],[-980,-3500],[-900,-2000],[-810,-500],[-760,1000],[-700,2600],[-660,4300],[-620,6000],[-610,9000]]},
+    {w:132,p:[[-300,-9000],[-210,-6200],[-130,-4200],[-60,-2500],[40,-900],[110,700],[180,2300],[225,3900],[262,5600],[300,9000]]},
+    {w:118,p:[[980,-9000],[1060,-6000],[1150,-3800],[1230,-2200],[1310,-600],[1370,1000],[1425,2700],[1470,4400],[1505,6100],[1545,9000]]},
+    {w:165,p:[[2230,-9000],[2340,-6100],[2450,-3600],[2560,-2000],[2660,-400],[2740,1200],[2805,2900],[2860,4600],[2905,6300],[2950,9000]]}
+  ];
 <title>零时 · 原子弹的一秒与八十年</title>
 
 <style>
@@ -50,7 +57,7 @@ body{
   font-size:17px;
   line-height:1.95;
   -webkit-font-smoothing:antialiased;
-  overflow-x:hidden;
+  overflow-x:clip;
   letter-spacing:.01em;
 }
 
@@ -200,6 +207,45 @@ p{margin:0 0 1.6rem}
 .scrollcue span.bar{display:block;width:1px;height:44px;background:linear-gradient(var(--dust),transparent);animation:drop 2.8s ease-in-out infinite}
 @keyframes drop{0%,100%{opacity:.25;transform:scaleY(.5);transform-origin:top}50%{opacity:1;transform:scaleY(1);transform-origin:top}}
 
+
+/* ═══ 第四室 · 投弹视角舞台 ══════════════════════════ */
+.dscroll{position:relative;height:660vh;background:#000;
+  margin-left:calc(-1*var(--rail));width:calc(100% + var(--rail));
+  border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
+.dstage{position:sticky;top:0;height:100vh;overflow:hidden;background:#000}
+#aerial,#finale{display:block;width:100%;height:100%}
+.dframe{position:absolute;inset:0;pointer-events:none;font-family:var(--mono)}
+.dtl{position:absolute;left:calc(var(--rail) + 1.5rem);top:1.5rem;font-size:9.5px;
+  letter-spacing:.18em;color:var(--dust);line-height:2.1}
+.dtl span{color:var(--flash)}
+.dtr{position:absolute;right:1.7rem;top:1.5rem;text-align:right}
+.dtime{font-size:clamp(1.5rem,4vw,2.5rem);color:var(--flash);font-variant-numeric:tabular-nums;line-height:1;letter-spacing:.02em}
+.dtsub{font-size:9.5px;letter-spacing:.2em;color:var(--dust);margin-top:.55rem}
+.dbl{position:absolute;left:calc(var(--rail) + 1.5rem);bottom:2rem;max-width:33rem}
+.dbl h4{margin:0 0 .8rem;font-family:var(--serif);font-size:1.4rem;font-weight:400;
+  letter-spacing:.05em;color:var(--bone);text-wrap:balance}
+.dbl p{margin:0;font-family:var(--serif);font-size:1rem;line-height:2.05;color:var(--ash)}
+.dbr{position:absolute;right:1.7rem;bottom:2rem;text-align:right;font-size:9.5px;
+  letter-spacing:.16em;color:var(--dust)}
+.drow{display:flex;gap:1.2rem;justify-content:flex-end;line-height:2.1}
+.drow b{color:var(--bone);font-weight:400;font-variant-numeric:tabular-nums}
+.dscale{margin-top:.9rem;display:flex;flex-direction:column;align-items:flex-end;gap:.4rem}
+.dscale i{display:block;height:1px;background:var(--ash);width:80px}
+.dhint{position:absolute;left:50%;bottom:2.6rem;transform:translateX(-50%);font-size:10px;
+  letter-spacing:.35em;color:var(--dust);transition:opacity .7s ease}
+.fscroll{height:720vh}
+@media (max-width:900px){
+  .dscroll{height:560vh}
+  .fscroll{height:620vh}
+  .dtl{left:calc(var(--rail) + .8rem);top:.9rem;font-size:8.5px}
+  .dtr{right:.9rem;top:.9rem}
+  .dbl{left:.9rem;right:.9rem;bottom:1rem;max-width:none;
+    background:linear-gradient(to top,rgba(4,5,7,.94),rgba(4,5,7,.72) 70%,transparent);padding:1rem .8rem .4rem}
+  .dbl h4{font-size:1.1rem;margin-bottom:.5rem}
+  .dbl p{font-size:.9rem;line-height:1.9}
+  .dbr{display:none}
+}
+
 /* ═══ 年表 ══════════════════════════════════════════════ */
 .chrono{border-top:1px solid var(--hair);margin-top:1rem}
 .ev{
@@ -328,7 +374,7 @@ p{margin:0 0 1.6rem}
 
 /* ═══ 影子 ══════════════════════════════════════════════ */
 .shadowbox{display:grid;grid-template-columns:minmax(0,26rem) minmax(0,1fr);gap:4rem;align-items:center}
-.shadowbox svg{width:100%;height:auto;border:1px solid var(--hair);display:block}
+#stoneCv{width:100%;aspect-ratio:1/1;border:1px solid var(--hair);display:block;background:#57534b}
 
 /* ═══ 军备图 ════════════════════════════════════════════ */
 .chartbox{border:1px solid var(--hair);background:var(--concrete);padding:2rem;overflow-x:auto}
@@ -349,10 +395,6 @@ p{margin:0 0 1.6rem}
 
 /* ═══ 尾声 ══════════════════════════════════════════════ */
 #memorial{background:var(--void);padding:11rem 2rem 9rem;border-top:1px solid var(--hair)}
-.dotsbox{border:1px solid var(--hair);background:#040507;padding:1.5rem;position:relative}
-#dots{display:block;width:100%;height:auto}
-.dotsmeta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-family:var(--mono);font-size:10px;letter-spacing:.18em;color:var(--dust);margin-top:1.2rem}
-.dotsmeta b{color:var(--bone);font-weight:400}
 
 .cenotaph{
   text-align:center;padding:9rem 2rem 4rem;max-width:44rem;margin:0 auto;
@@ -500,11 +542,15 @@ p{margin:0 0 1.6rem}
         <div class="hud-cell"><span class="k">已裂变原子</span><span class="v" id="hAtoms">0</span></div>
         <div class="hud-cell"><span class="k">经过时间</span><span class="v" id="hTime">0 ns</span></div>
         <div class="hud-cell"><span class="k">释放能量</span><span class="v" id="hEnergy">0 J</span></div>
+        <div class="hud-cell"><span class="k">视野已拉远</span><span class="v" id="hZoom">×1</span></div>
       </div>
     </div>
-    <div style="display:flex;gap:.8rem;margin-top:1.2rem;flex-wrap:wrap">
+    <div style="display:flex;gap:.8rem;margin-top:1.2rem;flex-wrap:wrap;align-items:center">
       <button class="btn" id="chainReset">重置</button>
-      <span class="caption" style="margin:0;align-self:center">屏幕上的每个亮点是一个铀原子核。屏幕会先被填满，然后数字继续。</span>
+      <span class="caption" style="margin:0;max-width:44em">
+        每个亮点是一个铀原子核。当画面被填满时，<b>视野会自动拉远一倍</b>，好让下一次翻倍还能装得下——然后它再次被填满。这个追不上的过程会重复大约七十次。<br>
+        留意那圈最亮的前沿：<b>任何时刻，最外面那一层里的原子数，都等于它里面所有原子数的总和</b>——这就是翻倍的形状。<br>（拉远是让指数增长可见的示意手法。真实的链式反应发生在一个直径不到 20 厘米的球体内部，全程不到百万分之一秒。）
+      </span>
     </div>
 
     <div class="panelrow rv" style="margin-top:5rem">
@@ -636,44 +682,38 @@ p{margin:0 0 1.6rem}
 
 <div class="corridor"><p>下面这一段，<br>在真实世界里持续了<em>不到一秒</em>。</p></div>
 
-<!-- ═══ 第四室 · 那一秒 ══════════════════════════════════ -->
-<section class="hall deep" data-time="08:15:00.000">
+<!-- ═══ 第四室 · 投弹视角 ══════════════════════════════ -->
+<section class="hall deep" data-time="08:15:17" style="padding-bottom:5rem">
   <div class="wrap">
     <header class="roomhead rv">
       <span class="roomno">第四室 / Room IV</span>
-      <h2>从十亿分之一秒<br>到三十年</h2>
-      <span class="subhead">对数时间轴 · 横跨 18 个数量级 · 拖动或用方向键</span>
+      <h2>从投弹舱门<br>到三十年后</h2>
+      <span class="subhead">投弹视角 · 向下滚动即前进时间 · 横跨 18 个数量级</span>
     </header>
-
-    <div class="scrub rv" id="scrub">
-      <canvas id="stage" aria-label="爆炸不同时刻的示意图"></canvas>
-      <div class="scrub-text">
-        <div class="scrub-t" id="sT">+1 ns<small id="sTsub">起爆后</small></div>
-        <div class="scrub-h" id="sH">—</div>
-        <p class="scrub-b" id="sB">—</p>
-      </div>
-      <div class="axis">
-        <div class="axis-track" id="axisTrack">
-          <div class="axis-line"></div>
-          <div class="axis-fill" id="axisFill"></div>
-          <div id="axisDecs"></div>
-          <div id="axisEvs"></div>
-          <input type="range" id="axisInput" min="0" max="1000" value="0" step="1" aria-label="时间轴位置">
-          <div class="axis-knob" id="axisKnob"></div>
-        </div>
-        <div class="axis-legend"><span>1 纳秒</span><span>1 微秒</span><span>1 毫秒</span><span>1 秒</span><span>1 小时</span><span>1 年</span><span>30 年</span></div>
-        <div style="display:flex;gap:.8rem;margin-top:1.2rem;flex-wrap:wrap">
-          <button class="btn" id="playBtn" aria-pressed="false">自动播放</button>
-          <button class="btn" id="prevBtn">← 上一刻</button>
-          <button class="btn" id="nextBtn">下一刻 →</button>
-        </div>
-      </div>
-    </div>
-    <p class="caption rv">
-      <b>示意图说明：</b>火球尺度与冲击波到达时间按 15 千吨空爆的公开经验公式近似绘制，视野比例尺随时间自动缩放（见图右下角）。用于建立数量级直觉，非精确模拟。
-    </p>
+    <p class="lede narrow rv">接下来这一段没有按钮。你往下滚多少，时间就走多少——从松开挂钩的那一刻，一直到今天。</p>
+    <p class="caption rv narrow"><b>说明：</b>画面为按公开经验公式生成的示意，非历史影像。视野宽度会随时间自动缩放（见右下角比例尺），从 3 米的弹体一直拉到 11 公里的全城。</p>
   </div>
 </section>
+
+<div class="dscroll" id="dscroll">
+  <div class="dstage" id="dstage">
+    <canvas id="aerial" aria-label="投弹视角下从起爆到数十年后的过程示意"></canvas>
+    <div class="dframe">
+      <div class="dtl">RECON · HIROSHIMA · 34.3955°N 132.4536°E<br><span id="dMark"></span></div>
+      <div class="dtr">
+        <div class="dtime" id="dTime">T−43.0 s</div>
+        <div class="dtsub" id="dTsub">投弹后 · 自由下落</div>
+      </div>
+      <div class="dbl"><h4 id="dHead">08:15:17 · 投下</h4><p id="dBody"></p></div>
+      <div class="dbr">
+        <div class="drow"><span>高度</span><b id="dAlt">9,470 m</b></div>
+        <div class="drow"><span>视野宽度</span><b id="dSpan">11.0 km</b></div>
+        <div class="dscale"><i id="dBar"></i><span id="dBarLabel">1 km</span></div>
+      </div>
+      <div class="dhint" id="dHint">向下滚动</div>
+    </div>
+  </div>
+</div>
 
 <!-- ═══ 第五室 · 火 ══════════════════════════════════════ -->
 <section class="hall deep" data-time="+00:01:00" style="padding-top:7rem">
@@ -732,6 +772,7 @@ p{margin:0 0 1.6rem}
             <button class="chip" data-kt="1200" aria-pressed="false">1.2 Mt · B83</button>
             <button class="chip" data-kt="50000" aria-pressed="false">50 Mt · 沙皇炸弹</button>
           </div>
+          <button class="chip" id="refToggle" aria-pressed="true" style="align-self:flex-start;margin-top:.3rem">比例参照：曼哈顿岛</button>
         </div>
         <div class="ringlist" id="ringList"></div>
         <div class="ringfact" id="ringFact">
@@ -811,29 +852,7 @@ p{margin:0 0 1.6rem}
       <span class="roomno">第七室 / Room VII</span>
     </header>
     <div class="shadowbox rv">
-      <svg viewBox="0 0 300 300" role="img" aria-label="住友银行石阶上人影的示意复原">
-        <defs>
-          <filter id="rough" x="0" y="0" width="100%" height="100%">
-            <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="4" result="n"/>
-            <feColorMatrix in="n" type="saturate" values="0"/>
-          </filter>
-        </defs>
-        <rect width="300" height="300" fill="#0a0c0f"/>
-        <!-- 被漂白的石阶 -->
-        <g>
-          <rect x="20" y="60" width="260" height="76" fill="#b8b3a6"/>
-          <rect x="20" y="136" width="260" height="8" fill="#8d8a80"/>
-          <rect x="20" y="144" width="260" height="76" fill="#c2bdb0"/>
-          <rect x="20" y="220" width="260" height="8" fill="#8d8a80"/>
-          <rect x="20" y="228" width="260" height="46" fill="#b0aba0"/>
-        </g>
-        <rect x="20" y="60" width="260" height="214" fill="url(#rough)" opacity=".35"/>
-        <!-- 未被漂白处 -->
-        <path d="M150 86 c-13 0 -21 10 -21 21 c0 8 4 13 9 17 c-14 6 -22 18 -24 33 l-4 32 l-9 44 l14 0 l7 -40 l4 0 l-3 40 l16 0 l0 -46 l6 0 l0 46 l16 0 l-3 -40 l4 0 l7 40 l14 0 l-9 -44 l-4 -32 c-2 -15 -10 -27 -24 -33 c5 -4 9 -9 9 -17 c0 -11 -8 -21 -21 -21 z"
-                fill="#4d4a44" opacity=".92"/>
-        <rect x="20" y="60" width="260" height="214" fill="none" stroke="#3a3e45"/>
-        <text x="150" y="292" fill="#5b5f66" font-family="ui-monospace,monospace" font-size="8.5" text-anchor="middle" letter-spacing="2">示意复原 · 非原物影像</text>
-      </svg>
+      <canvas id="stoneCv" aria-label="住友银行石阶上人影的示意复原"></canvas>
       <div>
         <h2 style="font-size:clamp(1.8rem,4.6vw,3rem);margin-bottom:2rem">距爆心 260 米。<br>上午八点十五分。<br>银行还没开门。</h2>
         <p class="lede">我们不知道这个人的名字、性别、年纪，不知道他们那天为什么要早到，不知道他们在等什么。</p>
@@ -950,28 +969,41 @@ p{margin:0 0 1.6rem}
 </section>
 
 <!-- ═══ 尾声 ═════════════════════════════════════════════ -->
-<section id="memorial" data-time="1945.12.31">
+<section class="hall deep" data-time="1945.12.31" style="padding-bottom:5rem">
   <div class="wrap">
-    <div class="rv" style="text-align:center;margin-bottom:3.5rem">
+    <div class="rv" style="text-align:center">
       <span class="roomno center">尾声 / Epilogue</span>
-      <h2 style="margin-top:1.4rem">每一个点，<br>是一个人</h2>
+      <h2 style="margin-top:1.4rem">十四万，<br>然后呢</h2>
+      <p class="lede narrow" style="margin:2.4rem auto 0;color:var(--ash)">继续向下滚。这一段会自己走完。</p>
     </div>
-    <div class="dotsbox rv">
-      <canvas id="dots" aria-label="十四万个点，代表1945年底前广岛的死亡人数"></canvas>
+  </div>
+</section>
+
+<div class="dscroll fscroll" id="fscroll">
+  <div class="dstage">
+    <canvas id="finale" aria-label="从十四万名死者到今日核武库存的比例序列"></canvas>
+    <div class="dframe">
+      <div class="dtl"><span id="fLabel"></span></div>
+      <div class="dtr">
+        <div class="dtime" id="fCount">0</div>
+        <div class="dtsub" id="fUnit">人</div>
+      </div>
+      <div class="dbl"><h4 id="fHead">每一个点，是一个人</h4><p id="fBody"></p></div>
     </div>
-    <div class="dotsmeta">
-      <span>广岛 · 至 1945 年 12 月 31 日 · <b id="dotCount">0</b> / 140,000</span>
-      <span style="color:var(--ash)">上半：当天即死亡 &nbsp;·&nbsp; 下半：此后四个月内陆续死亡</span>
-      <span>长崎另有约 <b>70,000</b> 人</span>
-    </div>
-    <p class="caption rv" style="max-width:48em;margin-top:2rem">
-      <b>关于这个数字：</b>爆炸当天的直接死亡约 7 万人。到 1945 年底，因烧伤、外伤与急性放射病死亡的总数估计为约 14 万人。此后数十年间，白血病与实体癌的超额死亡仍在继续累加，因此这个数字没有一个真正的终点。当时的户籍档案本身也在爆炸中被烧毁了，所以所有的统计都是重建出来的估计——有多少人连"被计入"这件事都没能做到，无人知道。
+  </div>
+</div>
+
+<section id="memorial">
+  <div class="wrap">
+    <p class="caption rv" style="max-width:48em;margin:0 auto">
+      <b>关于这些数字：</b>广岛爆炸当天的直接死亡约 7 万人；到 1945 年底，因烧伤、外伤与急性放射病死亡的总数估计约 14 万人。长崎另有约 7 万人。此后数十年间，超额癌症死亡仍在继续累加，所以这个数字没有一个真正的终点——而当时的户籍档案本身也在爆炸中烧毁了，有多少人连「被计入」都没能做到，无人知道。<br>
+      全球弹头数为 FAS 2026 年初的公开估计（现役库存 + 待拆解）。饥荒风险人数取自 Xia 等人 2022 年发表于《自然·食品》的气候—农业耦合模型结果。
     </p>
 
     <div class="cenotaph rv">
       <p class="jp">安らかに眠って下さい<br>過ちは繰返しませぬから</p>
       <p class="cn">请安息吧<br>过错不会重演</p>
-      <p class="attr">广岛和平都市纪念碑 · 1952<br>碑文主语被刻意省略。<br>关于"过错"是谁犯的，日文原文不作说明——<br>这被理解为：说话的是全体人类。</p>
+      <p class="attr">广岛和平都市纪念碑 · 1952<br>碑文的主语被刻意省略了。<br>关于「过错」究竟是谁犯的，日文原文不作说明——<br>这被理解为：说话的是全体人类。</p>
     </div>
   </div>
 </section>
@@ -990,7 +1022,8 @@ p{margin:0 0 1.6rem}
       <li>Bulletin of the Atomic Scientists · 2026 Doomsday Clock Statement</li>
       <li>Arms Control Association · New START Expires, 2026.03</li>
       <li>Our World in Data · Nuclear Weapons（基于 Norris &amp; Kristensen 数据集）</li>
-      <li>Robock &amp; Toon 等 · 区域核冲突气候与粮食影响模型研究</li>
+      <li>Robock &amp; Toon 等 · 区域核冲突气候影响研究</li>
+      <li>Xia, Robock, Scherrer 等 · Global food insecurity and famine from nuclear war soot injection，《Nature Food》2022</li>
       <li>Richard Rhodes《原子弹出世记》(The Making of the Atomic Bomb), 1986</li>
       <li>John Hersey《广岛》(Hiroshima), The New Yorker, 1946</li>
     </ul>
@@ -1051,367 +1084,635 @@ const fmt=n=>{
 };
 
 /* ═══════════════════════════════════════════════════════
-   链式反应
+   链式反应 —— 随代数持续拉远的点阵
+   每两代把视野放大一倍，好让翻倍始终发生在画面里
    ═══════════════════════════════════════════════════════ */
 (()=>{
   const cv=$("#chain"); if(!cv) return;
   const box=$("#reactor");
-  let c,W,H, nuclei=[], flying=[], gen=0, running=false, raf=0, tLast=0, acc=0;
-  let whiteout=0, tail=0, finished=false;
-  const GEN_MS = RM?60:300, HUD_ATOMS=$("#hAtoms"),HUD_GEN=$("#hGen"),HUD_T=$("#hTime"),HUD_E=$("#hEnergy");
+  const Hg=$("#hGen"),Ha=$("#hAtoms"),Ht=$("#hTime"),He=$("#hEnergy"),Hz=$("#hZoom");
+  const MAXGEN=80, EPF=3.204e-11, INV=1/1.7724539;
+  let c,W,H,raf=0,last=0,gen=0,running=false,white=0,endT=0,zoomOut=1;
 
-  function build(){
-    const r=fit(cv); c=r.c; W=r.w; H=r.h;
-    nuclei=[];
-    const target = Math.round(W*H/900);
-    const cols=Math.round(Math.sqrt(target*W/H)), rows=Math.max(1,Math.round(target/cols));
-    const dx=W/cols, dy=H/rows;
-    for(let j=0;j<rows;j++)for(let i=0;i<cols;i++){
-      nuclei.push({x:(i+.5)*dx+(Math.random()-.5)*dx*.62,
-                   y:(j+.5)*dy+(Math.random()-.5)*dy*.62,
-                   f:0,t:0});
-    }
-    draw();
-  }
-  function reset(){
-    gen=0;flying=[];whiteout=0;tail=0;finished=false;running=false;
-    nuclei.forEach(n=>{n.f=0;n.t=0});
-    box.classList.remove("done");
-    hud(0); draw();
-    cancelAnimationFrame(raf);
-  }
-  const MAXGEN=80, EPF=3.204e-11;              // 每次裂变约 200 MeV
-  const cumAtoms=g=> g<=0?0:Math.pow(2,g)-1;   // 第 n 代有 2^(n-1) 次裂变，累计 2^n − 1
-  function hud(g){
-    HUD_GEN.textContent=g;
-    const atoms=cumAtoms(g);
-    HUD_ATOMS.textContent=fmt(atoms);
-    HUD_T.textContent = (g*10)>=1000 ? (g*10/1000).toFixed(2)+" µs" : (g*10)+" ns";
-    const J=atoms*EPF;
-    HUD_E.textContent = g===0 ? "0 J"
-      : J<4.184e10 ? fmt(J)+" J"
-      : (J/4.184e12).toFixed(J/4.184e12<10?2:0)+" 千吨 TNT";
-  }
-  function ignite(n,g){ n.f=1; n.t=performance.now(); n.g=g; }
+  const cum=g=> g<=0?0:Math.pow(2,g)-1;
+  const front=g=> Math.pow(2,g/2)*INV;                       // 已裂变区半径（世界单位＝原子间距）
+  const dur =g=> g<8?320 : g<26?105 : g<50?52 : 34;          // 每代耗时：先慢后快
+  function hsh(i,j){ let n=(Math.imul(i,374761393)^Math.imul(j,668265263))|0;
+    n=Math.imul(n^(n>>>13),1274126177); return ((n^(n>>>16))>>>0)/4294967296; }
 
-  function step(){
-    const cur=nuclei.filter(n=>n.f===1&&n.g===gen);
-    if(gen===0){
-      const s=nuclei[Math.floor(nuclei.length/2)+Math.floor((Math.random()-.5)*8)];
-      ignite(s,1); gen=1; hud(1); return;
-    }
-    let spawned=0;
-    for(const n of cur){
-      const near=[];
-      for(const m of nuclei){ if(m.f) continue;
-        const d=(m.x-n.x)**2+(m.y-n.y)**2;
-        if(d < 5200){ near.push([d,m]); }
-      }
-      near.sort((a,b)=>a[0]-b[0]);
-      for(let k=0;k<2&&k<near.length;k++){
-        const m=near[k][1]; ignite(m,gen+1); spawned++;
-        flying.push({x0:n.x,y0:n.y,x1:m.x,y1:m.y,p:0});
-      }
-    }
-    gen++;
-    hud(gen);
-    if(spawned===0 && !finished){ finished=true; tail=performance.now(); }
+  function hud(){
+    const gi=Math.min(MAXGEN,Math.floor(gen)), a=cum(gi), J=a*EPF;
+    Hg.textContent=gi;
+    Ha.textContent=fmt(a);
+    Ht.textContent=(gi*10)>=1000?(gi*10/1000).toFixed(2)+" µs":(gi*10)+" ns";
+    He.textContent= gi===0?"0 J" : J<4.184e10? fmt(J)+" J"
+                   : (J/4.184e12).toFixed(J/4.184e12<10?2:0)+" 千吨 TNT";
+    if(Hz) Hz.textContent = zoomOut<1.5 ? "×1" : "×"+fmt(zoomOut);
   }
 
-  function draw(now){
+  function render(){
+    if(!c||W<10) return;
+    const g=Math.min(MAXGEN,gen);
+    const cx=W/2, cy=H/2;
+    const z0=24;                                             // 起始：原子间距 24 px
+    // 反应前沿的目标屏幕半径：先固定，后期一路涨到盖满画面
+    const near=Math.min(W,H)*0.40, far=Math.hypot(W,H)*0.56;
+    const target=near+(far-near)*Math.pow(g/MAXGEN,1.9);
+    const F=front(Math.max(g,1e-4));
+    const zoom=Math.min(z0, target/F);
+    const Fpx=F*zoom;
+    zoomOut=Math.max(1,z0/zoom);
+
     c.fillStyle="#050608"; c.fillRect(0,0,W,H);
-    // 未裂变核
-    c.fillStyle="rgba(120,128,140,.30)";
-    for(const n of nuclei){ if(!n.f){ c.beginPath(); c.arc(n.x,n.y,1.1,0,7); c.fill(); } }
-    // 已裂变
-    for(const n of nuclei){
-      if(!n.f) continue;
-      const age=Math.min(1,((now||performance.now())-n.t)/900);
-      const r=1.6+ (1-age)*6;
-      const a=.35+(1-age)*.65;
-      c.beginPath(); c.arc(n.x,n.y,r,0,7);
-      c.fillStyle=`rgba(255,${190+Math.round(50*(1-age))},${90+Math.round(120*(1-age))},${a})`;
-      c.fill();
-      if(age<.55){
-        c.beginPath(); c.arc(n.x,n.y, 6+age*26, 0, 7);
-        c.strokeStyle=`rgba(255,200,107,${(.5-age*.9).toFixed(3)})`; c.lineWidth=1; c.stroke();
+
+    // LOD：始终画屏幕间距 7–14 px 的那一层格子（上一层是下一层的子集，不会闪）
+    let k=0, spx=zoom;
+    while(spx<7){ k++; spx*=2; }
+    const step=Math.pow(2,k);                                // 世界间距
+    const dotR=Math.max(.65, Math.min(2.4, spx*0.15));
+    const hotG=Math.pow(g/MAXGEN,1.55);
+    const i0=Math.floor(-cx/spx)-1, i1=Math.ceil((W-cx)/spx)+1;
+    const j0=Math.floor(-cy/spx)-1, j1=Math.ceil((H-cy)/spx)+1;
+
+    for(let j=j0;j<=j1;j++){
+      for(let i=i0;i<=i1;i++){
+        const hx=hsh(i,j), hy=hsh(j,i+7919);
+        const sx=cx+(i+(hx-.5)*.72)*spx, sy=cy+(j+(hy-.5)*.72)*spx;
+        const wx=(i+(hx-.5)*.72)*step, wy=(j+(hy-.5)*.72)*step;
+        const r=Math.hypot(wx,wy);
+        const gr=2*Math.log2(Math.max(1e-9,r)/INV);          // 这个原子在第几代被点着
+        const age=g-gr;
+        if(age<0){                                           // 未裂变
+          c.fillStyle="rgba(126,134,148,.19)";
+          c.fillRect(sx-dotR*.5,sy-dotR*.5,dotR,dotR);
+        } else if(age<0.85){                                 // 刚刚裂变：闪
+          const f=1-age/0.85;
+          c.fillStyle=`rgba(255,${240-Math.round(30*(1-f))},${200-Math.round(90*(1-f))},${(.55+.45*f).toFixed(3)})`;
+          const rr=dotR*(1+f*1.9);
+          c.beginPath(); c.arc(sx,sy,rr,0,6.2832); c.fill();
+          // 前沿向外推进的短迹
+          if(f>.45 && r>0){
+            c.strokeStyle=`rgba(255,206,120,${(f*.5).toFixed(3)})`; c.lineWidth=1;
+            c.beginPath(); c.moveTo(sx,sy);
+            c.lineTo(sx-wx/r*spx*.55, sy-wy/r*spx*.55); c.stroke();
+          }
+        } else {                                             // 已烧过：越到后面整片越白热
+          const a=(0.20+0.52*Math.exp(-age/9))*(0.55+0.75*hotG);
+          c.fillStyle=`rgba(255,${186+Math.round(56*hotG)},${96+Math.round(96*hotG)},${Math.min(1,a).toFixed(3)})`;
+          c.fillRect(sx-dotR*.78,sy-dotR*.78,dotR*1.56,dotR*1.56);
+        }
       }
     }
-    // 中子轨迹
-    c.lineWidth=1;
-    for(const f of flying){
-      const x=f.x0+(f.x1-f.x0)*f.p, y=f.y0+(f.y1-f.y0)*f.p;
-      c.strokeStyle="rgba(255,200,107,.4)";
-      c.beginPath(); c.moveTo(f.x0,f.y0); c.lineTo(x,y); c.stroke();
+
+    // 内部积累的辉光：越到后面越白
+    const hot=hotG;
+    const gl=c.createRadialGradient(cx,cy,0,cx,cy,Math.max(1,Fpx));
+    gl.addColorStop(0,`rgba(255,${228-Math.round(20*(1-hot))},${196-Math.round(70*(1-hot))},${(0.05+0.80*hot).toFixed(3)})`);
+    gl.addColorStop(.45,`rgba(255,208,140,${(0.04+0.52*hot).toFixed(3)})`);
+    gl.addColorStop(.80,`rgba(255,176,92,${(0.02+0.26*hot).toFixed(3)})`);
+    gl.addColorStop(1,"rgba(255,150,60,0)");
+    c.fillStyle=gl; c.fillRect(0,0,W,H);
+
+    // 反应前沿
+    if(g>0.4 && g<MAXGEN){
+      c.strokeStyle=`rgba(255,214,140,${(0.30*(1-hot*0.8)).toFixed(3)})`; c.lineWidth=1.2;
+      c.beginPath(); c.arc(cx,cy,Fpx,0,6.2832); c.stroke();
     }
-    if(whiteout>0){ c.fillStyle=`rgba(255,236,200,${whiteout})`; c.fillRect(0,0,W,H); }
-    if(whiteout>.6 && capGen>=MAXGEN){
-      const a=Math.min(1,(whiteout-.6)/.28);
-      c.textAlign="center";
-      c.fillStyle=`rgba(20,16,10,${a*.92})`;
-      c.font="600 13px ui-monospace,monospace";
-      c.fillText("第 80 代 · 1.21×10²⁴ 次裂变 · 8.0×10⁻⁷ 秒 · ≈ 9 千吨 TNT", W/2, H/2-14);
-      c.fillStyle=`rgba(20,16,10,${a*.62})`;
-      c.font="11px ui-monospace,monospace";
-      c.fillText("再多一代，就是 18 千吨。广岛那颗，落在这两者之间。", W/2, H/2+12);
-      c.textAlign="left";
+
+    if(white>0){
+      c.fillStyle=`rgba(255,239,206,${white.toFixed(3)})`; c.fillRect(0,0,W,H);
+      if(white>.62){
+        const a=Math.min(1,(white-.62)/.26);
+        c.textAlign="center";
+        c.fillStyle=`rgba(20,16,10,${(a*.93).toFixed(3)})`;
+        c.font="600 13px ui-monospace,monospace";
+        c.fillText("第 80 代 · 1.21×10²⁴ 次裂变 · 8.0×10⁻⁷ 秒 · ≈ 9 千吨 TNT", W/2, H/2-14);
+        c.fillStyle=`rgba(20,16,10,${(a*.6).toFixed(3)})`;
+        c.font="11px ui-monospace,monospace";
+        c.fillText("再多一代，就是 18 千吨。广岛那颗，落在这两者之间。", W/2, H/2+12);
+        c.textAlign="left";
+      }
     }
   }
 
-  let capGen=0;
   function loop(now){
-    if(!tLast) tLast=now;
-    const dt=now-tLast; tLast=now;
-    if(running && !finished){ acc+=dt; if(acc>=GEN_MS){ acc=0; step(); } }
-    for(const f of flying){ f.p=Math.min(1,f.p+dt/(GEN_MS*.85)); }
-    flying=flying.filter(f=>f.p<1);
-
-    let stop=false;
-    if(finished){
-      const el=now-tail;
-      whiteout=Math.min(.94, el/2400);
-      capGen=Math.min(MAXGEN, gen+Math.floor(el/30));
-      hud(capGen);
-      if(capGen>=MAXGEN && el>5200){ running=false; stop=true; }
+    if(!last) last=now;
+    const dt=Math.min(90,now-last); last=now;
+    if(running){
+      if(gen<MAXGEN){
+        gen=Math.min(MAXGEN, gen+dt/dur(gen));
+        if(gen>=MAXGEN) endT=now;
+      } else {
+        white=Math.min(.95,(now-endT)/1700);
+        if(now-endT>4200){ running=false; hud(); render(); return; }
+      }
+      hud();
     }
-    draw(now);
-    if(!stop) raf=requestAnimationFrame(loop);
+    render();
+    raf=requestAnimationFrame(loop);
   }
+
+  function reset(){
+    cancelAnimationFrame(raf); raf=0; last=0;
+    gen=0; white=0; running=false; zoomOut=1;
+    box.classList.remove("done"); hud(); render();
+  }
+  function size(){ const r=fit(cv); c=r.c; W=r.w; H=r.h; render(); }
 
   $("#chainStart").addEventListener("click",()=>{
     reset(); box.classList.add("done");
-    running=true; tLast=0; acc=GEN_MS; capGen=0;
-    cancelAnimationFrame(raf); raf=requestAnimationFrame(loop);
+    running=true; last=0; cancelAnimationFrame(raf); raf=requestAnimationFrame(loop);
   });
-  $("#chainReset").addEventListener("click",()=>{ reset(); });
+  $("#chainReset").addEventListener("click",reset);
 
-  build();
-  addEventListener("resize",()=>{ build(); reset(); });
+  size(); hud(); addEventListener("resize",size);
+  if(window.ResizeObserver) new ResizeObserver(size).observe(cv);
 })();
 
 /* ═══════════════════════════════════════════════════════
-   对数时间轴
+   第四室 · 投弹视角 —— 滚动即时间
+   一台从 9,470 m 俯视的相机，一路拉近到火球、再拉远到全城
    ═══════════════════════════════════════════════════════ */
 (()=>{
-  const cv=$("#stage"); if(!cv) return;
-  const LO=-9, HI=9;             // 10^-9 s → 10^9 s
+  const cv=$("#aerial"); if(!cv) return;
+  const scroll=$("#dscroll");
+  const elT=$("#dTime"), elTs=$("#dTsub"), elH=$("#dHead"), elB=$("#dBody"),
+        elAlt=$("#dAlt"), elSpan=$("#dSpan"), elBar=$("#dBar"), elBarL=$("#dBarLabel"),
+        elMark=$("#dMark"), elHint=$("#dHint");
+  let c,W,H,raf=0,vis=false,P=0;
+
+  const DROP_END=0.105, FLASH_END=0.15;
+  const REL_ALT=9470, BURST_ALT=580;       // 投放高度 / 起爆高度
+
+  // 镜头与时间的关键帧：p → log10(秒), 视野宽度(米)
+  const KF=[
+    {p:0.150, lt:-9.0, span:11000},
+    {p:0.205, lt:-6.2, span:2600},
+    {p:0.255, lt:-4.4, span:420},
+    {p:0.300, lt:-3.0, span:420},
+    {p:0.350, lt:-1.7, span:620},
+    {p:0.410, lt: 0.0, span:1050},
+    {p:0.470, lt: 0.5, span:2200},
+    {p:0.545, lt: 1.05,span:4600},
+    {p:0.620, lt: 1.6, span:7200},
+    {p:0.700, lt: 2.7, span:8400},
+    {p:0.780, lt: 3.6, span:9200},
+    {p:0.870, lt: 5.2, span:10400},
+    {p:1.000, lt: 9.0, span:11200}
+  ];
+
   const EV=[
     {t:1e-9,h:"起爆",b:"中子源向弹芯注入第一批中子。此刻装置的外形、位置、温度都还完全正常。"},
-    {t:1e-8,h:"第 1 代",b:"一个铀核裂开，放出约 200 MeV 和 2 个中子。释放的总能量目前约为 3×10⁻¹¹ 焦耳——不足以让一粒灰尘动一下。"},
-    {t:3e-7,h:"第 30 代",b:"已有约 10 亿个原子裂变。能量仍然微不足道。指数增长在这个阶段看起来像什么都没发生。"},
+    {t:1e-8,h:"第 1 代",b:"一个铀核裂开，放出约 200 MeV 和 2 个中子。已释放的总能量约 3×10⁻¹¹ 焦耳——不足以让一粒灰尘动一下。"},
+    {t:3e-7,h:"第 30 代",b:"约十亿个原子已经裂变。能量仍然微不足道。指数增长在这个阶段看起来像什么都没发生。"},
     {t:7e-7,h:"第 77 代",b:"到这一步为止，所有代加起来释放的能量，还不到最终总量的八分之一。"},
-    {t:8e-7,h:"第 80 代 · 反应结束",b:"约 1.2×10²⁴ 个原子完成裂变，相当于 10 千吨量级的 TNT。全部能量的 99% 以上是在最后 3 代、约 30 纳秒内释放的。弹芯温度超过 6,000 万℃，压力达数百万个大气压——比太阳中心还极端。"},
-    {t:1e-6,h:"+1 微秒 · 弹体还没动",b:"这是最反直觉的一刻：能量已经全部释放完毕，但炸弹的金属外壳还完整地停在原处。它来不及移动——冲击波在钢里传播需要时间，而这里的时间尺度比那还短。"},
-    {t:1e-5,h:"X 射线点燃空气",b:"弹芯以 X 射线的形式向外辐射能量，把周围的空气加热到不透明的等离子体状态。火球就此诞生，边界是空气本身。"},
-    {t:1e-4,h:"火球直径 30 米",q:1,b:"表面温度约 30 万℃。此时火球的膨胀速度快于声速——它不是被推开的，它是被「点亮」的。"},
-    {t:1e-3,h:"第一次闪光",q:1,b:"火球直径约 180 米，亮度达到正午太阳的约 100 倍。在数十公里外，这道光足以造成瞬时闪光失明。地面上任何直视它的人，视网膜会被灼伤。"},
-    {t:1.5e-2,h:"双闪 · 核爆的指纹",q:1,b:"冲击波从火球中脱出，形成一层不透明的激波前沿，短暂遮住内部更亮的核心，亮度出现一个凹谷。这个「亮—暗—更亮」的双峰曲线是核爆独有的特征，全球核监测卫星正是靠识别它来判定核试验。"},
-    {t:2e-1,h:"第二次、也是最强的闪光",q:1,b:"激波前沿冷却变透明，火球核心重新露出。核爆约三分之一的能量以热辐射形式射出，其中绝大部分集中在这之后的几秒钟内。远处的可燃物在这一刻被点燃。"},
-    {t:1,h:"火球最大 · 地面 3,000℃",q:1,b:"火球直径达到约 400 米的峰值，随即因浮力开始上升并变暗。爆心正下方的地表温度达到 3,000 – 4,000℃：屋瓦表面熔化，花岗岩起泡，人的影子被印在石头上。而此刻，冲击波才刚刚离开火球。"},
-    {t:2,h:"冲击波抵达 1 公里",b:"这里的建筑在几分之一秒内被压垮。站在这里的人，先是在 1 秒多以前看到了那道光，然后经历了几秒钟绝对的安静，然后才被击中。"},
-    {t:10,h:"冲击波抵达 3.5 公里 · 声音到了",b:"玻璃在这个距离上大面积碎裂，飞散的碎片造成了大量创伤。声音终于在此刻追上来。更远的地方要再等几十秒。"},
-    {t:60,h:"云柄成形",b:"火球已升到数公里高空，从地面卷起的尘土和碎片被吸成一根柱子跟在下面。同时，全城成千上万处独立火点开始蔓延。"},
-    {t:600,h:"云顶抵达平流层",b:"上升在约 16 公里高度停住——那里温度不再随高度下降，浮力消失。蘑菇云在此摊平成帽状，开始向下风向漂移。"},
+    {t:8e-7,h:"第 80 代 · 反应结束",b:"约 1.2×10²⁴ 个原子完成裂变。99% 以上的能量是在最后 3 代、约 30 纳秒内释放的。弹芯温度超过 6,000 万℃——比太阳中心还极端。"},
+    {t:1e-6,h:"+1 微秒 · 弹体还没动",b:"最反直觉的一刻：能量已经全部释放完毕，而炸弹的金属外壳还完整地停在原处。它来不及移动——冲击波在钢里传播需要时间，而这里的时间尺度比那还短。"},
+    {t:1e-5,h:"X 射线点燃空气",b:"弹芯以 X 射线向外辐射能量，把周围的空气加热成不透明的等离子体。火球就此诞生——它的边界是空气本身。"},
+    {t:1e-4,h:"火球直径 30 米",b:"表面温度约 30 万℃。此时火球的膨胀快于声速——它不是被推开的，它是被「点亮」的。"},
+    {t:1e-3,h:"第一次闪光",b:"火球直径约 180 米，亮度达到正午太阳的约 100 倍。数十公里外的人被这道光短暂致盲；直视它的人视网膜被灼伤。"},
+    {t:1.5e-2,h:"双闪 · 核爆的指纹",b:"冲击波从火球中脱出，形成不透明的激波前沿，短暂遮住内部更亮的核心，亮度出现一个凹谷。这个「亮—暗—更亮」的双峰曲线是核爆独有的特征，全球核监测卫星正是靠识别它判定核试验。"},
+    {t:2e-1,h:"第二次、也是最强的闪光",b:"激波前沿冷却变透明，核心重新露出。核爆约三分之一的能量以热辐射射出，其中绝大部分集中在这之后的几秒内。远处的可燃物在这一刻被点燃。"},
+    {t:1,h:"火球最大 · 地面 3,000℃",b:"火球直径达到约 400 米的峰值，随即因浮力上升变暗。爆心正下方地表温度达 3,000–4,000℃：屋瓦表面熔化，花岗岩起泡，人的影子被印在石头上。而冲击波此刻才刚刚离开火球。"},
+    {t:2,h:"冲击波抵达 1 公里",b:"这里的建筑在几分之一秒内被压垮。站在这里的人，一秒多以前看到了那道光，然后是几秒钟绝对的安静，然后才被击中。"},
+    {t:10,h:"冲击波抵达 3.5 公里 · 声音到了",b:"玻璃在这个距离上大面积碎裂，飞散的碎片造成大量创伤。声音终于在此刻追上来；更远处要再等几十秒。"},
+    {t:60,h:"云柄成形 · 全城起火",b:"火球升到数公里高空，从地面卷起的尘土被吸成一根柱子跟在下面。同时，全城成千上万处独立火点开始蔓延。"},
+    {t:600,h:"云顶抵达平流层",b:"上升在约 16 公里高度停住——那里温度不再随高度下降，浮力消失。蘑菇云在此摊平成帽状。"},
     {t:1800,h:"黑雨",b:"烟尘被抽上高空，水汽在其上凝结，二三十分钟后落回地面：黑色、粘稠、微温，含有裂变产物。供水系统已被摧毁，重度烧伤者极度脱水，很多人仰起脸喝了它。"},
-    {t:3600,h:"火风暴",b:"约 11 平方公里的城区同时燃烧，上升气流把四面的空气抽向中心形成大风。许多在爆炸中幸存但被压在废墟下的人，是在这几个小时里被烧死的。"},
-    {t:6e5,h:"第 1 – 2 周 · 急性放射病",b:"经历了几天「假愈期」、看似在康复的人开始脱发、牙龈出血、高烧不退。当年的医生完全不知道这是什么，在病历上写下「原爆症」。"},
+    {t:3600,h:"火风暴",b:"约 11 平方公里的城区同时燃烧，上升气流把四面的空气抽向中心，形成大风。许多在爆炸中幸存、被压在废墟下的人，是在这几个小时里被烧死的。"},
+    {t:6e5,h:"第 1 – 2 周 · 急性放射病",b:"经历了几天「假愈期」、看似正在康复的人开始脱发、牙龈出血、高烧不退。当年的医生完全不知道这是什么，在病历上写下「原爆症」。"},
     {t:2.2e8,h:"第 5 – 8 年 · 白血病峰值",b:"白血病的超额发病率在 1950 – 1953 年前后达到高点，儿童尤其显著。佐佐木祯子就死于这一波。"},
-    {t:1e9,h:"第 30 年之后 · 还在继续",b:"甲状腺癌、乳腺癌、肺癌等实体癌的超额风险在几十年间持续存在，与受照剂量近似成线性关系，并且在流行病学上<b>没有观察到一个安全阈值</b>。<br><br>那一秒，到今天还没有结束。"}
+    {t:1e9,h:"第 30 年之后 · 还在继续",b:"实体癌的超额风险在几十年间持续存在，与受照剂量近似成线性关系，并且在流行病学上<b>没有观察到一个安全阈值</b>。<br><br>那一秒，到今天还没有结束。"}
   ];
-  const pos=t=>(Math.log10(t)-LO)/(HI-LO);
-  const val=p=>Math.pow(10, LO+p*(HI-LO));
 
-  const input=$("#axisInput"), knob=$("#axisKnob"), fill=$("#axisFill");
-  const sT=$("#sT"),sTsub=$("#sTsub"),sH=$("#sH"),sB=$("#sB");
-  let c,W,H;
-
-  // 刻度
-  const decs=$("#axisDecs"), evs=$("#axisEvs");
-  const LBL={"-9":"ns","-6":"µs","-3":"ms","0":"s","3":"","6":"","9":""};
-  for(let e=LO;e<=HI;e+=1){
-    const d=document.createElement("div"); d.className="axis-dec";
-    d.style.left=(((e-LO)/(HI-LO))*100)+"%";
-    if(e%3===0){ d.style.height="17px"; d.innerHTML='<span>10'+sup(e)+'</span>'; }
-    decs.appendChild(d);
+  const lerp=(a,b,t)=>a+(b-a)*t;
+  const clamp=(v,a,b)=>v<a?a:v>b?b:v;
+  function keyAt(p){
+    if(p<=KF[0].p) return {lt:KF[0].lt,span:KF[0].span};
+    for(let i=0;i<KF.length-1;i++) if(p<=KF[i+1].p){
+      const f=(p-KF[i].p)/(KF[i+1].p-KF[i].p);
+      return {lt:lerp(KF[i].lt,KF[i+1].lt,f),
+              span:Math.exp(lerp(Math.log(KF[i].span),Math.log(KF[i+1].span),f))};
+    }
+    return {lt:KF[KF.length-1].lt,span:KF[KF.length-1].span};
   }
-  EV.forEach((e,i)=>{
-    const d=document.createElement("div"); d.className="axis-ev"; d.dataset.i=i;
-    d.style.left=(pos(e.t)*100)+"%"; evs.appendChild(d);
-  });
-  const evNodes=$$(".axis-ev");
 
+  // ── 物理近似（15 kt 空爆）────────────────────
+  const TAB=(tab,x)=>{
+    if(x<=tab[0][0])return tab[0][1];
+    if(x>=tab[tab.length-1][0])return tab[tab.length-1][1];
+    for(let i=0;i<tab.length-1;i++) if(x<=tab[i+1][0]){
+      const f=(x-tab[i][0])/(tab[i+1][0]-tab[i][0]);
+      return lerp(tab[i][1],tab[i+1][1],f);
+    }
+    return 0;
+  };
+  const FIRE=[[-9,0],[-6,0],[-5,5],[-4,15],[-3,90],[-2,150],[-1,190],[0,200],[.6,175],[1.2,90],[2,0]];
+  const SHOCK=[[-1,0],[0,120],[.3,320],[.5,600],[1,1250],[1.4,2400],[1.8,4200],[2.2,7000],[3,20000]];
+
+  // ── 城市（世界坐标：米，原点＝爆心投影点）────
+  const ROT=0.20, CO=Math.cos(ROT), SI=Math.sin(ROT);
+  const RIVERS=[
+    {w:150,p:[[-2500,-9000],[-2150,-4000],[-1900,-1200],[-1750,1600],[-1600,5200],[-1520,9000]]},
+    {w:105,p:[[-1200,-9000],[-1010,-3500],[-830,-500],[-700,2600],[-640,6000],[-610,9000]]},
+    {w:130,p:[[-260,-9000],[-140,-4200],[40,-900],[170,2300],[255,5600],[300,9000]]},
+    {w:118,p:[[1000,-9000],[1140,-3800],[1300,-600],[1420,2700],[1500,6100],[1545,9000]]},
+    {w:165,p:[[2250,-9000],[2440,-3600],[2650,-400],[2800,2900],[2900,6300],[2950,9000]]}
+  ];
+  function hsh(i,j){ let n=(Math.imul(i,374761393)^Math.imul(j,668265263))|0;
+    n=Math.imul(n^(n>>>13),1274126177); return ((n^(n>>>16))>>>0)/4294967296; }
+
+  let fires=null;
+  function makeFires(){
+    fires=[];
+    for(let i=0;i<2400;i++){
+      const a=Math.random()*6.2832, r=2600*Math.sqrt(Math.random());
+      fires.push({x:Math.cos(a)*r, y:Math.sin(a)*r, r, t0:0.3+Math.random()*1.7, s:0.35+Math.random()*0.75});
+    }
+  }
+
+  // 值噪声：给城市一个有机的密度场，而不是棋盘
+  function vn(x,y){
+    const i=Math.floor(x), j=Math.floor(y), fx=x-i, fy=y-j;
+    const u=fx*fx*(3-2*fx), v=fy*fy*(3-2*fy);
+    const a=hsh(i,j), b2=hsh(i+1,j), c2=hsh(i,j+1), d2=hsh(i+1,j+1);
+    return a*(1-u)*(1-v)+b2*u*(1-v)+c2*(1-u)*v+d2*u*v;
+  }
+  const smoothstep=(e0,e1,x)=>{const t=clamp((x-e0)/(e1-e0),0,1);return t*t*(3-2*t);};
+  // 城市密度：市中心最密，向外化为田地；东北为丘陵
+  function urban(wx,wy){
+    const d=Math.hypot(wx,wy);
+    const core=1-smoothstep(1700,4900,d);
+    const n=vn(wx/700+31,wy/700+17)*0.5+vn(wx/2100+5,wy/2100+9)*0.5;
+    return n*0.62+core*0.60;
+  }
+  function hill(wx,wy){
+    const d=Math.hypot(wx,wy);
+    if(d<2600) return 0;
+    return clamp(vn(wx/4200+61,wy/4200+43)*1.5-0.72,0,1)*smoothstep(2600,5200,d);
+  }
+
+  function drawCity(mpp,cx,cy,destroyR,burnT){
+    c.fillStyle="#0c0e11"; c.fillRect(0,0,W,H);          // 田地 / 底色
+    let cell=90; while(cell/mpp<13) cell*=2;
+    const px=cell/mpp;
+    const pad=cell*2;
+    const i0=Math.floor((-cx*mpp-pad)/cell), i1=Math.ceil(((W-cx)*mpp+pad)/cell);
+    const j0=Math.floor((-cy*mpp-pad)/cell), j1=Math.ceil(((H-cy)*mpp+pad)/cell);
+    const arter=Math.max(4,Math.round(560/cell));        // 干道间隔（约 560 m）
+
+    for(let j=j0;j<=j1;j++){
+      for(let i=i0;i<=i1;i++){
+        const wx0=i*cell, wy0=j*cell;
+        const rx=wx0*CO-wy0*SI, ry=wx0*SI+wy0*CO;
+        const sx=cx+rx/mpp, sy=cy+ry/mpp;
+        if(sx<-px||sx>W+px||sy<-px||sy>H+px) continue;
+        const hv=hill(rx,ry);
+        if(hv>0.30){                                      // 丘陵：无建筑
+          c.fillStyle= hv>0.6?"#0e1512":"#0d1211";
+          c.fillRect(sx-px*0.52,sy-px*0.52,px*1.04,px*1.04);
+          continue;
+        }
+        const u=urban(rx,ry);
+        if(u<0.52) continue;                              // 空地 / 郊外农田
+        const h=hsh(i,j), h2v=hsh(j,i+7919);
+        const road=(i%arter===0)||(j%arter===0);
+        const d=Math.hypot(rx,ry);
+        const razed = destroyR>0 && d<destroyR*0.42;
+        const rubble= destroyR>0 && d<destroyR;
+        let col;
+        if(razed)       col="#0a0b0c";
+        else if(rubble) col= h<.5?"#151617":"#191a1b";
+        else{
+          const lift=Math.round((u-0.52)*60)+Math.round(h*11);
+          col=`rgb(${21+lift},${25+lift},${31+lift})`;
+        }
+        c.fillStyle=col;
+        const span0=px*(road?0.42:0.80);
+        if(razed){ c.fillRect(sx-span0/2,sy-span0/2,span0,span0); }
+        else if(px<19){                                   // 远：整块街区一个色块
+          c.fillRect(sx-span0/2,sy-span0/2,span0,span0);
+        } else {                                          // 近：街区里排 1–3 栋
+          const nb=1+Math.floor(h*2.99);
+          for(let b=0;b<nb;b++){
+            const q1=hsh(i*7+b,j*13), q2=hsh(j*7+b,i*13+5), q3=hsh(i+b*97,j+b*53);
+            const bw=span0*(0.30+q3*0.62)/Math.sqrt(nb), bh=span0*(0.30+q2*0.62)/Math.sqrt(nb);
+            const ox=(q1-0.5)*(span0-bw), oy=(q2-0.5)*(span0-bh);
+            c.fillRect(sx+ox-bw/2, sy+oy-bh/2, bw, bh);
+            if(px>40 && !rubble){
+              c.fillStyle= q3<.5?"rgba(255,255,255,.05)":"rgba(0,0,0,.24)";
+              c.fillRect(sx+ox-bw/2+bw*0.12, sy+oy-bh/2+bh*0.12, bw*0.4, bh*0.34);
+              c.fillStyle=col;
+            }
+          }
+        }
+      }
+    }
+
+    // 河：太田川三角洲，六条汊流
+    for(const rv of RIVERS){
+      c.beginPath();
+      let first=true, prx=0, pry=0;
+      for(let k=0;k<rv.p.length;k++){
+        const wx=rv.p[k][0], wy=rv.p[k][1];
+        const rx=wx*CO-wy*SI, ry=wx*SI+wy*CO;
+        const sx=cx+rx/mpp, sy=cy+ry/mpp;
+        if(first){ c.moveTo(sx,sy); first=false; }
+        else c.quadraticCurveTo(prx,pry,(sx+prx)/2,(sy+pry)/2);
+        prx=sx; pry=sy;
+      }
+      c.lineTo(prx,pry);
+      c.lineCap="round"; c.lineJoin="round";
+      c.strokeStyle="#0b171e"; c.lineWidth=Math.max(1.6,rv.w/mpp); c.stroke();
+      c.strokeStyle="rgba(126,163,173,.16)"; c.lineWidth=Math.max(.7,rv.w/mpp*0.45); c.stroke();
+    }
+
+    // 广岛湾（南侧）
+    const seaY=cy+(4200*CO)/mpp;
+    if(seaY<H+40){
+      c.fillStyle="#07121a"; c.beginPath(); c.moveTo(-10,H+10); c.lineTo(-10,seaY+30);
+      for(let x=-10;x<=W+10;x+=36)
+        c.lineTo(x, seaY+Math.sin(x*0.011)*(26/Math.max(1,mpp*0.006))*0.02*mpp+Math.sin(x*0.029)*14);
+      c.lineTo(W+10,H+10); c.closePath(); c.fill();
+      c.strokeStyle="rgba(126,163,173,.10)"; c.lineWidth=1; c.stroke();
+    }
+
+    // 毁伤区：一层柔和的圆形压暗，让"被夷平"这件事一眼可读
+    if(destroyR>0){
+      const rr=Math.max(3,destroyR/mpp);
+      const g=c.createRadialGradient(cx,cy,0,cx,cy,rr);
+      g.addColorStop(0,"rgba(2,3,4,.66)");
+      g.addColorStop(.40,"rgba(4,5,6,.52)");
+      g.addColorStop(.84,"rgba(6,7,8,.20)");
+      g.addColorStop(1,"rgba(6,7,8,0)");
+      c.fillStyle=g; c.beginPath(); c.arc(cx,cy,rr,0,6.2832); c.fill();
+    }
+
+    // 火
+    if(burnT>0 && fires){
+      const spread=clamp((burnT-0.25)/2.0,0,1);
+      const fade=clamp(3.3-burnT*0.6,0,1);
+      const R=2600*spread;
+      // 整片燃烧区的暖光
+      if(R>60&&fade>0.02){
+        const rr=Math.max(3,R/mpp);
+        const g=c.createRadialGradient(cx,cy,0,cx,cy,rr);
+        g.addColorStop(0,`rgba(255,126,44,${(0.26*fade).toFixed(3)})`);
+        g.addColorStop(.62,`rgba(226,86,26,${(0.17*fade).toFixed(3)})`);
+        g.addColorStop(1,"rgba(190,60,16,0)");
+        c.fillStyle=g; c.beginPath(); c.arc(cx,cy,rr,0,6.2832); c.fill();
+      }
+      c.globalCompositeOperation="lighter";
+      for(const f of fires){
+        if(f.r>R) continue;
+        const a=clamp((burnT-f.t0)*1.1,0,1)*fade;
+        if(a<=0.02) continue;
+        const rx=f.x*CO-f.y*SI, ry=f.x*SI+f.y*CO;
+        const sx=cx+rx/mpp, sy=cy+ry/mpp;
+        if(sx<-20||sx>W+20||sy<-20||sy>H+20) continue;
+        const rr=Math.max(0.9,(26*f.s)/mpp);
+        const g=c.createRadialGradient(sx,sy,0,sx,sy,rr*3.2);
+        g.addColorStop(0,`rgba(255,214,150,${(a*.70).toFixed(3)})`);
+        g.addColorStop(.3,`rgba(255,132,44,${(a*.40).toFixed(3)})`);
+        g.addColorStop(1,"rgba(190,54,12,0)");
+        c.fillStyle=g; c.beginPath(); c.arc(sx,sy,rr*3.2,0,6.2832); c.fill();
+      }
+      c.globalCompositeOperation="source-over";
+      // 燃烧前沿
+      if(spread>0.05&&spread<1&&fade>0.15){
+        c.strokeStyle=`rgba(255,150,70,${(0.15*fade).toFixed(3)})`; c.lineWidth=3;
+        c.beginPath(); c.arc(cx,cy,Math.max(2,R/mpp),0,6.2832); c.stroke();
+      }
+    }
+  }
+
+  function drawReticle(){
+    const cx=W/2, cy=H/2, s=Math.min(W,H)*0.30;
+    c.strokeStyle="rgba(231,227,218,.16)"; c.lineWidth=1;
+    // 四角
+    const m=Math.min(W,H)*0.06, L=Math.min(W,H)*0.05;
+    [[m,m,1,1],[W-m,m,-1,1],[m,H-m,1,-1],[W-m,H-m,-1,-1]].forEach(([x,y,dx,dy])=>{
+      c.beginPath(); c.moveTo(x+dx*L,y); c.lineTo(x,y); c.lineTo(x,y+dy*L); c.stroke();
+    });
+    // 十字丝
+    c.strokeStyle="rgba(231,227,218,.13)";
+    c.beginPath(); c.moveTo(cx-s,cy); c.lineTo(cx-14,cy); c.moveTo(cx+14,cy); c.lineTo(cx+s,cy);
+    c.moveTo(cx,cy-s); c.lineTo(cx,cy-14); c.moveTo(cx,cy+14); c.lineTo(cx,cy+s); c.stroke();
+  }
+
+  function grainVignette(){
+    const g=c.createRadialGradient(W/2,H/2,Math.min(W,H)*0.28,W/2,H/2,Math.hypot(W,H)*0.62);
+    g.addColorStop(0,"rgba(0,0,0,0)"); g.addColorStop(1,"rgba(0,0,0,.62)");
+    c.fillStyle=g; c.fillRect(0,0,W,H);
+  }
+
+  function render(){
+    if(!c||W<10) return;
+    const cx=W/2, cy=H/2;
+    let mpp, t=0, alt=REL_ALT, flash=0, mark="";
+
+    if(P<DROP_END){                                   // ── 投弹 ──
+      const f=P/DROP_END;
+      const fall=f*f;                                 // 自由落体
+      alt=REL_ALT-(REL_ALT-BURST_ALT)*fall;
+      t=-43*(1-f);
+      mpp=11000/W;
+      drawCity(mpp,cx,cy,0,0);
+      // 瞄准点：相生桥
+      const bx=cx+(-170*CO+170*SI)/mpp, by=cy+(-170*SI-170*CO)/mpp;
+      c.strokeStyle="rgba(255,200,107,.55)"; c.lineWidth=1;
+      c.beginPath(); c.arc(bx,by,11,0,6.2832); c.stroke();
+      c.beginPath(); c.moveTo(bx-17,by); c.lineTo(bx-13,by); c.moveTo(bx+13,by); c.lineTo(bx+17,by); c.stroke();
+      c.fillStyle="rgba(255,200,107,.75)"; c.font="10px ui-monospace,monospace"; c.textAlign="left";
+      c.fillText("瞄准点 · 相生桥", bx+20, by+3);
+      // 下落中的弹体（从投弹机看：越落越小）
+      const sc=120*Math.pow(1-f,1.55)+2.4;
+      const dx=cx+f*W*0.045, dy=cy+f*H*0.09;
+      c.save();
+      // 下落尾迹
+      c.strokeStyle=`rgba(150,156,166,${(0.16*(1-f)).toFixed(3)})`; c.lineWidth=Math.max(1,sc*0.10);
+      c.beginPath(); c.moveTo(cx,cy); c.lineTo(dx,dy); c.stroke();
+      c.translate(dx,dy); c.rotate(0.16+f*0.55);
+      c.fillStyle="#0d0f13"; c.strokeStyle="rgba(163,169,180,.85)"; c.lineWidth=1;
+      c.beginPath(); c.ellipse(0,0,sc*0.40,sc*1.10,0,0,6.2832); c.fill(); c.stroke();
+      c.fillStyle="#1b1f25"; c.fillRect(-sc*0.50,sc*0.58,sc*1.00,sc*0.32);
+      c.strokeRect(-sc*0.50,sc*0.58,sc*1.00,sc*0.32);
+      c.fillStyle="rgba(231,227,218,.14)";
+      c.beginPath(); c.ellipse(-sc*0.13,-sc*0.15,sc*0.11,sc*0.55,0,0,6.2832); c.fill();
+      c.restore();
+      mark="弹体自由下落 43 秒";
+      elAlt.textContent=Math.round(alt).toLocaleString("en-US")+" m";
+    } else if(P<FLASH_END){                           // ── 起爆闪光 ──
+      const f=(P-DROP_END)/(FLASH_END-DROP_END);
+      mpp=11000/W;
+      drawCity(mpp,cx,cy,0,0);
+      flash=1-Math.pow(f,0.55);
+      t=0; alt=BURST_ALT;
+      mark="起爆";
+      elAlt.textContent="580 m";
+    } else {                                          // ── 对数时间 ──
+      const k=keyAt(P);
+      t=Math.pow(10,k.lt); mpp=k.span/W; alt=BURST_ALT;
+      const fb=TAB(FIRE,k.lt);                        // 火球半径 m
+      const sw=TAB(SHOCK,k.lt);                       // 冲击波半径 m
+      const burnT=Math.max(0,k.lt-1.0);               // 火的推进（log 秒）
+      drawCity(mpp,cx,cy,sw>140?Math.min(sw,3300):0,burnT);
+
+      // 烟幕：燃烧区上方的烟盖
+      if(k.lt>1.4){
+        const sp=clamp((k.lt-1.4)/2.2,0,1), rr=(900+2400*sp)/mpp;
+        const g=c.createRadialGradient(cx,cy,0,cx,cy,Math.max(2,rr));
+        g.addColorStop(0,`rgba(26,22,20,${(0.62*sp).toFixed(3)})`);
+        g.addColorStop(.6,`rgba(34,29,26,${(0.44*sp).toFixed(3)})`);
+        g.addColorStop(1,"rgba(30,26,24,0)");
+        c.fillStyle=g; c.beginPath(); c.arc(cx,cy,Math.max(2,rr),0,6.2832); c.fill();
+      }
+      // 黑雨：向西北漂
+      if(k.lt>3.1){
+        const sp=clamp((k.lt-3.1)/1.6,0,1);
+        c.save(); c.globalAlpha=0.5*sp;
+        const rx=cx-2600/mpp, ry=cy-2200/mpp;
+        const g=c.createRadialGradient(rx,ry,0,rx,ry,Math.max(4,4200/mpp));
+        g.addColorStop(0,"rgba(12,14,16,.85)"); g.addColorStop(1,"rgba(12,14,16,0)");
+        c.fillStyle=g; c.fillRect(0,0,W,H);
+        c.strokeStyle="rgba(150,150,152,.16)"; c.lineWidth=1;
+        for(let i=0;i<70;i++){
+          const a=hsh(i,3)*W, bq=hsh(i,7)*H;
+          c.beginPath(); c.moveTo(a,bq); c.lineTo(a-5,bq+16); c.stroke();
+        }
+        c.restore();
+        mark="黑雨落下，范围超过 10 公里";
+      }
+      // 冲击波
+      if(sw>0){
+        const r=sw/mpp;
+        if(r>2&&r<Math.hypot(W,H)){
+          c.strokeStyle="rgba(214,222,236,.34)"; c.lineWidth=2.2;
+          c.beginPath(); c.arc(cx,cy,r,0,6.2832); c.stroke();
+          c.strokeStyle="rgba(214,222,236,.10)"; c.lineWidth=9;
+          c.beginPath(); c.arc(cx,cy,r,0,6.2832); c.stroke();
+        }
+      }
+      // 火球
+      if(fb>0.5){
+        const r=Math.max(1.5,fb/mpp);
+        const heat=clamp((0.9-k.lt)/2.6,0,1);
+        const g=c.createRadialGradient(cx,cy,0,cx,cy,r*1.35);
+        g.addColorStop(0,`rgba(255,255,${236+Math.round(18*heat)},1)`);
+        g.addColorStop(.38,`rgba(255,${214+Math.round(34*heat)},${122+Math.round(70*heat)},.99)`);
+        g.addColorStop(.72,`rgba(238,${118+Math.round(40*heat)},34,.84)`);
+        g.addColorStop(1,"rgba(130,32,8,0)");
+        c.fillStyle=g; c.beginPath(); c.arc(cx,cy,r*1.35,0,6.2832); c.fill();
+      }
+      // 弹体（能量已放完、外壳未动的那一刻）
+      if(k.lt<-4.7){
+        const fade=clamp((-4.7-k.lt)/0.9,0,1), BL=3.0/mpp, BD=0.71/mpp;
+        if(BL>5){
+          c.save(); c.globalAlpha=fade;
+          c.fillStyle="#1b1e23"; c.strokeStyle="#5b6069"; c.lineWidth=1;
+          c.fillRect(cx+BL*0.24,cy-BD*0.80,BL*0.26,BD*1.60);
+          c.strokeRect(cx+BL*0.24,cy-BD*0.80,BL*0.26,BD*1.60);
+          c.fillStyle="#23272e"; c.strokeStyle="#767b84";
+          c.beginPath();
+          c.moveTo(cx+BL*0.30,cy-BD*0.5); c.lineTo(cx-BL*0.24,cy-BD*0.5);
+          c.quadraticCurveTo(cx-BL*0.52,cy-BD*0.46,cx-BL*0.50,cy);
+          c.quadraticCurveTo(cx-BL*0.52,cy+BD*0.46,cx-BL*0.24,cy+BD*0.5);
+          c.lineTo(cx+BL*0.30,cy+BD*0.5); c.closePath(); c.fill(); c.stroke();
+          c.fillStyle="#938f88"; c.font="10px ui-monospace,monospace"; c.textAlign="center";
+          c.fillText("弹体 · 3.0 m · 尚未移动", cx, cy-BD*1.5);
+          c.restore();
+          mark="能量已全部释放，外壳还停在原处";
+        }
+      }
+      // 尾声：标注毁伤环
+      if(P>0.90){
+        const a=clamp((P-0.90)/0.06,0,1);
+        const RG=[[0.18,"火球","#ffe9b0"],[0.5,"20 psi 重度","#d0421c"],[1.13,"500 rem","#c98adf"],
+                  [1.2,"5 psi 中度","#e6a63c"],[1.91,"三度烧伤","#ff8a3d"],[3.13,"1 psi 玻璃碎裂","#7ea3ad"]];
+        c.save(); c.globalAlpha=a; c.setLineDash([3,5]);
+        c.font="10px ui-monospace,monospace"; c.textAlign="left";
+        RG.forEach(([km,nm,col],idx)=>{
+          const r=km*1000/mpp; if(r<4||r>Math.hypot(W,H)) return;
+          c.strokeStyle=col; c.lineWidth=1.2;
+          c.beginPath(); c.arc(cx,cy,r,0,6.2832); c.stroke();
+          // 每个环用不同角度出标签，避免叠在一起
+          const ang=-1.05+idx*0.30;
+          const lx=cx+Math.cos(ang)*r, ly=cy+Math.sin(ang)*r;
+          c.fillStyle=col;
+          c.fillRect(lx-1.5,ly-1.5,3,3);
+          c.fillText(`  ${nm} · ${km<1?Math.round(km*1000)+" m":km+" km"}`, lx, ly-4);
+        });
+        c.restore();
+        mark="爆心投影点 · 广岛市中心";
+      }
+      elAlt.textContent="爆心 580 m 空爆";
+    }
+
+    // 比例尺
+    const barM=Math.pow(10,Math.round(Math.log10(mpp*W/4.5)));
+    const barPx=barM/mpp;
+    if(barPx>18&&barPx<W*0.5){
+      elBar.style.width=barPx+"px";
+      elBarL.textContent=barM>=1000?(barM/1000)+" km":barM+" m";
+    }
+    elSpan.textContent=(mpp*W>=1000?(mpp*W/1000).toFixed(1)+" km":Math.round(mpp*W)+" m");
+
+    drawReticle();
+    grainVignette();
+    if(flash>0){ c.fillStyle=`rgba(255,248,234,${flash.toFixed(3)})`; c.fillRect(0,0,W,H); }
+
+    // ── HUD 文本 ──
+    if(P<DROP_END){
+      elT.textContent="T−"+Math.abs(t).toFixed(1)+" s";
+      elTs.textContent="投弹后 · 自由下落";
+      elH.textContent="08:15:17 · 投下";
+      elB.innerHTML="埃诺拉·盖伊在 9,470 米高度投下这颗弹，随即做了一个 155 度的急转弯逃离。<br>投弹手瞄准的是相生桥——一座 T 字形的桥，从空中极易辨认。实际起爆点偏离了大约 240 米，落在岛医院上空。";
+    } else if(P<FLASH_END){
+      elT.textContent="0"; elTs.textContent="起爆";
+      elH.textContent="08:15:00"; elB.textContent="";
+    } else {
+      const k=keyAt(P), tt=Math.pow(10,k.lt);
+      let bi=0,bd=1e9;
+      EV.forEach((e,i)=>{const d=Math.abs(Math.log10(e.t)-k.lt); if(d<bd){bd=d;bi=i;}});
+      elT.textContent="+"+timeLabel(tt);
+      elTs.textContent="起爆后 · 10"+sup(Math.round(k.lt))+" 秒量级";
+      if(elH.dataset.i!==String(bi)){ elH.dataset.i=String(bi); elH.textContent=EV[bi].h; elB.innerHTML=EV[bi].b; }
+    }
+    elMark.textContent=mark;
+    if(elHint) elHint.style.opacity = P>0.02?0:1;
+  }
+
+  const nf=v=>String(+v.toPrecision(2));          // 避免 toPrecision 吐出科学计数法
   function timeLabel(t){
-    if(t<1e-6) return (t*1e9).toPrecision(2).replace(/\.?0+$/,"")+" ns";
-    if(t<1e-3) return (t*1e6).toPrecision(2).replace(/\.?0+$/,"")+" µs";
-    if(t<1)    return (t*1e3).toPrecision(2).replace(/\.?0+$/,"")+" ms";
-    if(t<60)   return t.toPrecision(2).replace(/\.?0+$/,"")+" 秒";
+    if(t<1e-6) return nf(t*1e9)+" ns";
+    if(t<1e-3) return nf(t*1e6)+" µs";
+    if(t<1)    return nf(t*1e3)+" ms";
+    if(t<60)   return nf(t)+" 秒";
     if(t<3600) return Math.round(t/60)+" 分钟";
     if(t<86400)return (t/3600).toFixed(1)+" 小时";
     if(t<3.15e7)return Math.round(t/86400)+" 天";
     return (t/3.156e7).toFixed(t/3.156e7<10?1:0)+" 年";
   }
 
-  // 视觉尺度模型（15 kt 空爆近似）
-  const FB=[[-9,0],[-6.4,0],[-6,0.3],[-5,5],[-4,15],[-3,90],[-2,150],[-1,190],[0,200],[1,150]]; // log10 t → 火球半径 m
-  const SW=[[0,60],[0.3,180],[0.5,420],[1,1000],[1.6,2600],[2,5000],[3,20000]]; // log10 t → 冲击波半径 m
-  const CH=[[1,600],[1.5,2000],[2,5000],[2.5,9000],[3,16000],[4,16000],[9,16000]]; // 云顶 m
-  function interp(tab,lt){
-    if(lt<=tab[0][0])return tab[0][1];
-    if(lt>=tab[tab.length-1][0])return tab[tab.length-1][1];
-    for(let i=0;i<tab.length-1;i++){
-      if(lt>=tab[i][0]&&lt<=tab[i+1][0]){
-        const f=(lt-tab[i][0])/(tab[i+1][0]-tab[i][0]);
-        return tab[i][1]+(tab[i+1][1]-tab[i][1])*f;
-      }
-    }
-    return tab[tab.length-1][1];
+  function readP(){
+    const r=scroll.getBoundingClientRect();
+    const total=scroll.offsetHeight-innerHeight;
+    return clamp(total>0? -r.top/total : 0, 0, 1);
   }
-
-  function render(t){
-    if(!c) return;
-    const lt=Math.log10(t);
-    c.fillStyle="#040507"; c.fillRect(0,0,W,H);
-    const fb=interp(FB,lt), sw=lt>-0.6?interp(SW,lt):0, ch=lt>0.8?interp(CH,lt):0;
-    // 视野宽度（米）：早期贴近弹体，后期一路拉远
-    const span=Math.max(fb*4.5, sw*2.4, ch*2.2, 12);
-    const S=W/span;                     // 米→像素
-    const cx=W/2;
-    // 爆点在地面上方 580 m。当这个高度超出画面时，改为把爆点居中，地面移出视野。
-    let gy=H*0.82, cy=gy-580*S;
-    if(cy < H*0.26){ cy=H*0.46; gy=cy+580*S; }
-    const groundVisible = gy < H-2;
-
-    // 天空
-    const sky=c.createLinearGradient(0,0,0,Math.min(gy,H));
-    sky.addColorStop(0,"#05070a"); sky.addColorStop(1,"#0b0e13");
-    c.fillStyle=sky; c.fillRect(0,0,W,Math.min(gy,H));
-    if(groundVisible){
-      c.fillStyle="#0a0b0d"; c.fillRect(0,gy,W,H-gy);
-      c.strokeStyle="#23272e"; c.beginPath(); c.moveTo(0,gy+.5); c.lineTo(W,gy+.5); c.stroke();
-      // 城市剪影（仅在比例尺足够远时才有意义）
-      if(span>600){
-        c.fillStyle="#111418";
-        let sx=0, seed=7;
-        while(sx<W){ const rw=8+((seed=(seed*1103515245+12345)&0x7fffffff)%22), rh=4+(seed>>7)%16;
-          c.fillRect(sx,gy-rh,rw,rh); sx+=rw+2; }
-      }
-    }
-
-    // 冲击波环
-    if(sw>0 && groundVisible){
-      const r=sw*S;
-      c.strokeStyle="rgba(180,190,205,.30)"; c.lineWidth=2;
-      c.beginPath(); c.arc(cx,gy,r,Math.PI,0); c.stroke();
-      c.strokeStyle="rgba(180,190,205,.10)"; c.lineWidth=6;
-      c.beginPath(); c.arc(cx,gy,r,Math.PI,0); c.stroke();
-    }
-    // 云
-    if(ch>0){
-      const top=gy-ch*S, capR=Math.max(6,ch*S*0.30);
-      const g=c.createLinearGradient(0,top,0,gy);
-      g.addColorStop(0,"rgba(150,150,152,.5)"); g.addColorStop(1,"rgba(70,66,64,.35)");
-      c.fillStyle=g;
-      c.beginPath(); c.ellipse(cx,top+capR*.55,capR,capR*.55,0,0,7); c.fill();
-      c.beginPath(); c.moveTo(cx-capR*.20,top+capR); c.lineTo(cx-capR*.34,gy);
-      c.lineTo(cx+capR*.34,gy); c.lineTo(cx+capR*.20,top+capR); c.closePath(); c.fill();
-    }
-    // 火球
-    if(fb>0.4 && lt<1.6){
-      const r=Math.max(1.5,fb*S);
-      const heat=Math.max(0,Math.min(1,(0.5-lt)/2.2));
-      const g=c.createRadialGradient(cx,cy,0,cx,cy,r);
-      g.addColorStop(0,`rgba(255,255,${230+Math.round(20*heat)},1)`);
-      g.addColorStop(.42,`rgba(255,${205+Math.round(40*heat)},${110+Math.round(70*heat)},.98)`);
-      g.addColorStop(.78,`rgba(${230-Math.round(20*(1-heat))},${110+Math.round(40*heat)},30,.82)`);
-      g.addColorStop(1,"rgba(120,30,8,0)");
-      c.fillStyle=g; c.beginPath(); c.arc(cx,cy,r*1.25,0,7); c.fill();
-    }
-    // 弹体：能量已经全部释放，外壳却还没来得及动
-    if(lt < -4.6){
-      const fade=Math.max(0,Math.min(1,(-4.6-lt)/0.8));
-      const BL=3.0*S, BD=0.71*S;            // 小男孩 3.0 m × 0.71 m
-      if(BL>4){
-        c.save(); c.globalAlpha=fade;
-        // 尾翼盒（先画，压在弹体之下）
-        c.fillStyle="#1b1e23"; c.strokeStyle="#5b6069"; c.lineWidth=1;
-        c.beginPath(); c.rect(cx+BL*0.24, cy-BD*0.80, BL*0.26, BD*1.60); c.fill(); c.stroke();
-        c.beginPath(); c.moveTo(cx+BL*0.24,cy-BD*0.80); c.lineTo(cx+BL*0.24,cy+BD*0.80); c.stroke();
-        // 弹体：圆头圆柱
-        c.fillStyle="#23272e"; c.strokeStyle="#767b84";
-        c.beginPath();
-        c.moveTo(cx+BL*0.30, cy-BD*0.50);
-        c.lineTo(cx-BL*0.24, cy-BD*0.50);
-        c.quadraticCurveTo(cx-BL*0.52, cy-BD*0.46, cx-BL*0.50, cy);
-        c.quadraticCurveTo(cx-BL*0.52, cy+BD*0.46, cx-BL*0.24, cy+BD*0.50);
-        c.lineTo(cx+BL*0.30, cy+BD*0.50);
-        c.closePath(); c.fill(); c.stroke();
-        c.fillStyle="#938f88"; c.font="10px ui-monospace,monospace"; c.textAlign="center";
-        c.fillText("弹体 · 3.0 m", cx, cy-BD*1.35);
-        c.restore();
-      } else {
-        c.fillStyle="#ffc86b"; c.fillRect(cx-1.5,cy-1.5,3,3);
-      }
-    }
-    if(!groundVisible){
-      c.fillStyle="#5b5f66"; c.font="10px ui-monospace,monospace"; c.textAlign="left";
-      c.fillText("离地 580 m · 地面在画面之外", 20, 24);
-    }
-    // 比例尺
-    const barM=Math.pow(10,Math.round(Math.log10(span/4)));
-    const barPx=barM*S;
-    c.strokeStyle="#5b5f66"; c.lineWidth=1;
-    c.beginPath(); c.moveTo(W-24-barPx,H-22); c.lineTo(W-24,H-22); c.stroke();
-    c.beginPath(); c.moveTo(W-24-barPx,H-26); c.lineTo(W-24-barPx,H-18); c.moveTo(W-24,H-26); c.lineTo(W-24,H-18); c.stroke();
-    c.fillStyle="#938f88"; c.font="10px ui-monospace,monospace"; c.textAlign="right";
-    c.fillText(barM>=1000?(barM/1000)+" km":barM+" m", W-24, H-30);
-    c.textAlign="left"; c.fillStyle="#5b5f66";
-    c.fillText("15 kt · 580 m 空爆 · 侧视示意", 20, H-22);
+  function tick(){
+    if(!vis){ raf=0; return; }
+    const np=readP();
+    if(Math.abs(np-P)>0.00015){ P=np; render(); }
+    raf=requestAnimationFrame(tick);
   }
+  function size(){ const r=fit(cv); c=r.c; W=r.w; H=r.h; render(); }
 
-  let curI=-1;
-  function apply(p,fromEvent){
-    const t=val(p);
-    fill.style.width=(p*100)+"%"; knob.style.left=(p*100)+"%";
-    // 最近事件
-    let bi=0,bd=1e9;
-    EV.forEach((e,i)=>{ const d=Math.abs(pos(e.t)-p); if(d<bd){bd=d;bi=i;} });
-    if(bi!==curI){
-      curI=bi;
-      const e=EV[bi];
-      sH.textContent=e.h; sB.innerHTML=e.b;
-      evNodes.forEach((n,i)=>n.classList.toggle("on",i===bi));
-    }
-    sT.childNodes[0].nodeValue="+"+timeLabel(t);
-    sTsub.textContent="起爆后 · 10"+sup(Math.round(Math.log10(t)))+" 秒量级";
-    render(t);
-  }
-  function setP(p){ input.value=Math.round(p*1000); apply(p); }
-
-  input.addEventListener("input",()=>apply(+input.value/1000));
-  $("#nextBtn").addEventListener("click",()=>{ const i=Math.min(EV.length-1,curI+1); setP(pos(EV[i].t)); });
-  $("#prevBtn").addEventListener("click",()=>{ const i=Math.max(0,curI-1); setP(pos(EV[i].t)); });
-  evNodes.forEach(n=>n.addEventListener("click",()=>setP(pos(EV[+n.dataset.i].t))));
-
-  let playing=false, pRaf=0, pT=0;
-  const playBtn=$("#playBtn");
-  playBtn.addEventListener("click",()=>{
-    playing=!playing; playBtn.setAttribute("aria-pressed",String(playing));
-    playBtn.textContent=playing?"暂停":"自动播放";
-    if(playing){ if(+input.value>=1000) setP(0); pT=0; pRaf=requestAnimationFrame(tickPlay); }
-    else cancelAnimationFrame(pRaf);
-  });
-  function tickPlay(now){
-    if(!pT) pT=now;
-    const dt=now-pT; pT=now;
-    let p=+input.value/1000 + dt/26000;
-    if(p>=1){ p=1; playing=false; playBtn.setAttribute("aria-pressed","false"); playBtn.textContent="自动播放"; }
-    setP(p);
-    if(playing) pRaf=requestAnimationFrame(tickPlay);
-  }
-
-  function size(){ const r=fit(cv); c=r.c; W=r.w; H=r.h; apply(+input.value/1000); }
-  size(); addEventListener("resize",size);
-  setP(0);
+  makeFires(); size();
+  addEventListener("resize",size);
+  new IntersectionObserver(es=>{
+    es.forEach(e=>{ vis=e.isIntersecting; if(vis&&!raf) raf=requestAnimationFrame(tick); });
+  },{rootMargin:"200px"}).observe(scroll);
+  addEventListener("scroll",()=>{ if(vis&&!raf) raf=requestAnimationFrame(tick); },{passive:true});
 })();
 
 /* ═══════════════════════════════════════════════════════
@@ -1604,27 +1905,41 @@ const fmt=n=>{
 })();
 
 /* ═══════════════════════════════════════════════════════
-   半径图
+   半径图 —— 当量切换时地图连续变焦，曼哈顿岛作比例参照
    ═══════════════════════════════════════════════════════ */
 (()=>{
   const cv=$("#rings"); if(!cv) return;
-  let c,W,H,kt=15,hover=-1,sel=-1;
-  // 基准 15 kt 空爆，半径单位 km；exp = 标度指数
+  let c,W,H,hover=-1,sel=-1,raf=0;
+  let ktTo=15, ktNow=15, refOn=true;
+
   const R0=[
-    {n:"火球",           r:0.18, exp:0.40, col:"#ffe9b0",
-     f:"在这个半径内，物质不是被烧毁，而是被电离。空气本身变成了发光的等离子体。任何固体在这里都不会留下可辨认的残骸——广岛爆心附近的死亡人数之所以是「估计」，部分原因就是没有可供统计的遗体。"},
+    {n:"火球",            r:0.18, exp:0.40, col:"#ffe9b0",
+     f:"在这个半径内，物质不是被烧毁，而是被电离——空气本身变成了发光的等离子体。任何固体在这里都不会留下可辨认的残骸。广岛爆心附近的死亡人数之所以只能是「估计」，部分原因就是没有可供统计的遗体。"},
     {n:"重度冲击波 20 psi", r:0.50, exp:0.333, col:"#d0421c",
      f:"超压 20 磅/平方英寸。钢筋混凝土建筑被压垮，重型工业设备被掀翻。这里的致死原因通常不是「被炸飞」，而是建筑物在零点几秒内塌到人的身上。"},
     {n:"致死辐射剂量 500 rem", r:1.13, exp:0.333, col:"#c98adf",
-     f:"约一半的人会在没有救治的情况下死于急性放射病。但在广岛，这一圈几乎没有独立意义——落在这个半径内的人，早已同时承受了致命的热与冲击波。它真正的意义在于现代小当量武器：那时辐射半径可以超过爆炸半径。"},
-    {n:"中度冲击波 5 psi", r:1.20, exp:0.333, col:"#e6a63c",
-     f:"绝大多数住宅被摧毁，伤亡率极高。这一圈的边界上，广岛的木结构民居被整片推平，而更结实的建筑只剩骨架。佐佐木祯子当时在距爆心 1.6 公里处，就在这一圈之外——她活了下来，十年后死于白血病。"},
-    {n:"三度烧伤",        r:1.91, exp:0.41, col:"#ff8a3d",
-     f:"皮肤全层坏死。三度烧伤反而不疼——神经末梢已被一并破坏，所以剧痛来自它旁边那圈更轻的二度烧伤。<br><br>注意这一圈的标度指数是 0.41，比冲击波的 0.333 更大：<b>当量越大，热辐射的相对影响范围增长得越快</b>。到了兆吨级，烧伤半径会远远超出冲击波半径——大当量核武器主要是纵火武器。"},
-    {n:"轻度冲击波 1 psi", r:3.13, exp:0.333, col:"#7ea3ad",
+     f:"约一半的人会在没有救治的情况下死于急性放射病。但在广岛，这一圈几乎没有独立意义——落在这个半径内的人早已同时承受了致命的热与冲击波。它真正的意义在于现代小当量武器：那时辐射半径可以超过爆炸半径。"},
+    {n:"中度冲击波 5 psi",  r:1.20, exp:0.333, col:"#e6a63c",
+     f:"绝大多数住宅被摧毁，伤亡率极高。广岛的木结构民居在这一圈内被整片推平，只有更结实的建筑剩下骨架。佐佐木祯子当时在距爆心 1.6 公里处，就在这一圈之外——她活了下来，十年后死于白血病。"},
+    {n:"三度烧伤",         r:1.91, exp:0.41, col:"#ff8a3d",
+     f:"皮肤全层坏死。三度烧伤反而不疼——神经末梢已被一并破坏，所以剧痛来自它旁边那圈更轻的二度烧伤。<br><br>注意这一圈的标度指数是 0.41，大于冲击波的 0.333：<b>当量越大，热辐射的相对影响范围涨得越快</b>。到了兆吨级，烧伤半径会远远超出冲击波半径——大当量核武器主要是纵火武器。"},
+    {n:"轻度冲击波 1 psi",  r:3.13, exp:0.333, col:"#7ea3ad",
      f:"窗户大面积破碎。听起来轻微，但在真实城市里这一圈往往贡献了最多的受伤人数：无数人在听到远处巨响后跑向窗边查看，然后被冲击波推入的玻璃击中。<br><br>这也是核爆防护建议里唯一一条对普通人真正有效的：<b>看见闪光，立刻远离窗户并卧倒。</b>"}
   ];
-  const scaled=()=>R0.map(o=>({...o, R:o.r*Math.pow(kt/15,o.exp)}));
+  const scaled=k=>R0.map(o=>({...o, R:o.r*Math.pow((k||ktNow)/15,o.exp)}));
+
+  // 曼哈顿岛轮廓（归一化后按真实 3.7 km × 21.6 km 缩放）作为比例参照
+  const MAN=[[-0.30,-10.8],[0.60,-10.2],[1.20,-9.0],[1.50,-7.6],[1.90,-6.2],[2.10,-4.6],
+             [2.30,-3.0],[2.50,-1.2],[2.70,0.6],[2.90,2.4],[3.00,4.2],[2.60,6.0],[2.20,7.6],
+             [1.70,9.0],[1.00,10.2],[0.20,10.8],[-0.60,10.2],[-1.00,8.8],[-1.10,7.0],
+             [-1.00,5.0],[-0.90,3.0],[-0.90,1.0],[-1.00,-1.0],[-1.10,-3.0],[-1.20,-5.0],
+             [-1.10,-7.0],[-0.90,-8.8]];
+  const MANS=(()=>{                          // 归一化到 3.7 × 21.6 km
+    let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;
+    MAN.forEach(([x,y])=>{x0=Math.min(x0,x);x1=Math.max(x1,x);y0=Math.min(y0,y);y1=Math.max(y1,y);});
+    const sx=3.7/(x1-x0), sy=21.6/(y1-y0), mx=(x0+x1)/2, my=(y0+y1)/2;
+    return MAN.map(([x,y])=>[(x-mx)*sx,(y-my)*sy]);
+  })();
 
   const list=$("#ringList"), fact=$("#ringFact");
   function paintList(){
@@ -1633,30 +1948,36 @@ const fmt=n=>{
     S.forEach((o,i)=>{
       const b=document.createElement("button");
       b.className="ringrow"+(i===sel?" on":"");
-      b.innerHTML=`<span class="sw" style="background:${o.col}"></span><span class="nm">${o.n}</span><span class="ds">${o.R<1?Math.round(o.R*1000)+" m":o.R.toFixed(o.R<10?2:1)+" km"}</span>`;
+      b.innerHTML=`<span class="sw" style="background:${o.col}"></span><span class="nm">${o.n}</span><span class="ds" data-i="${i}"></span>`;
       b.addEventListener("mouseenter",()=>{hover=i;draw();});
       b.addEventListener("mouseleave",()=>{hover=-1;draw();});
       b.addEventListener("click",()=>{sel=i;showFact(i);markSel();draw();});
       b.addEventListener("focus",()=>{hover=i;draw();});
       list.appendChild(b);
     });
+    updateList();
   }
-  // 只切换选中态，不重建列表 —— 重建会打断键盘焦点
-  function markSel(){
-    $$(".ringrow",list).forEach((n,i)=>n.classList.toggle("on",i===sel));
+  function updateList(){
+    const S=scaled();
+    $$(".ds",list).forEach(n=>{
+      const o=S[+n.dataset.i];
+      n.textContent = o.R<1?Math.round(o.R*1000)+" m" : o.R.toFixed(o.R<10?2:o.R<100?1:0)+" km";
+    });
   }
+  function markSel(){ $$(".ringrow",list).forEach((n,i)=>n.classList.toggle("on",i===sel)); }
   function showFact(i){
     const o=scaled()[i];
     fact.innerHTML=`<span class="k">${o.n} · 半径 ${o.R<1?Math.round(o.R*1000)+" 米":o.R.toFixed(2)+" 公里"}</span><p>${o.f}</p>`;
   }
+  const hexA=(h,a)=>{const n=parseInt(h.slice(1),16);
+    return `rgba(${(n>>16)&255},${(n>>8)&255},${n&255},${a})`;};
 
   function draw(){
     if(!c) return;
-    const half=Math.min(W,H)/2-26;
-    if(half<=8) return;                                   // 布局尚未成形，等 ResizeObserver 再画
+    const half=Math.min(W,H)/2-26; if(half<=8) return;
     const S=scaled();
     const maxR=S[S.length-1].R*1.12;
-    const cx=W/2, cy=H/2, px=half/maxR;                   // km→px
+    const cx=W/2, cy=H/2, px=half/maxR;                  // km→px
 
     c.fillStyle="#050608"; c.fillRect(0,0,W,H);
     // 城市网格
@@ -1664,40 +1985,66 @@ const fmt=n=>{
     const g=Math.max(26, px*0.5);
     for(let x=cx%g;x<W;x+=g){c.beginPath();c.moveTo(x,0);c.lineTo(x,H);c.stroke();}
     for(let y=cy%g;y<H;y+=g){c.beginPath();c.moveTo(0,y);c.lineTo(W,y);c.stroke();}
-    // 河（广岛是三角洲城市）—— 只做极淡的场地暗示
+    // 太田川三角洲
     c.strokeStyle="rgba(126,163,173,.055)"; c.lineWidth=Math.max(2,Math.min(7,px*0.05));
     c.beginPath(); c.moveTo(cx-px*0.55,0); c.quadraticCurveTo(cx-px*0.95,cy,cx-px*0.42,H); c.stroke();
     c.beginPath(); c.moveTo(cx+px*0.72,0); c.quadraticCurveTo(cx+px*1.12,cy,cx+px*0.62,H); c.stroke();
 
+    // 比例参照：曼哈顿岛
+    if(refOn){
+      c.save();
+      c.beginPath();
+      MANS.forEach(([x,y],i)=>{ const sx=cx+x*px, sy=cy-y*px; i?c.lineTo(sx,sy):c.moveTo(sx,sy); });
+      c.closePath();
+      c.fillStyle="rgba(231,227,218,.045)"; c.fill();
+      c.strokeStyle="rgba(231,227,218,.30)"; c.lineWidth=1; c.stroke();
+      // 中央公园 4.07 × 0.83 km
+      c.strokeStyle="rgba(231,227,218,.22)";
+      c.strokeRect(cx-0.42*px, cy-(4.9)*px, 0.83*px, 4.07*px);
+      if(21.6*px>50){
+        c.fillStyle="rgba(231,227,218,.5)"; c.font="10px ui-monospace,monospace"; c.textAlign="left";
+        c.fillText("曼哈顿岛 · 21.6 km（比例参照）", cx+2.2*px, cy-10.0*px+11);
+      }
+      c.restore();
+    }
+
     // 环（由外向内）
     for(let i=S.length-1;i>=0;i--){
       const o=S[i], r=o.R*px, hot=(i===hover||i===sel);
-      c.beginPath(); c.arc(cx,cy,r,0,7);
+      c.beginPath(); c.arc(cx,cy,r,0,6.2832);
       c.fillStyle=hexA(o.col, hot?0.16:0.075); c.fill();
       c.strokeStyle=hexA(o.col, hot?1:0.55); c.lineWidth=hot?2:1; c.stroke();
     }
     // 距离刻度
     c.setLineDash([2,5]); c.strokeStyle="rgba(147,143,136,.28)";
     c.font="9px ui-monospace,monospace"; c.fillStyle="#5b5f66"; c.textAlign="left";
-    const stepKm = maxR>30?10:maxR>8?2:1;
+    const stepKm = maxR>60?20:maxR>30?10:maxR>8?2:1;
     for(let d=stepKm; d<maxR; d+=stepKm){
-      c.beginPath(); c.arc(cx,cy,d*px,0,7); c.stroke();
+      c.beginPath(); c.arc(cx,cy,d*px,0,6.2832); c.stroke();
       c.fillText(d+" km", cx+d*px+4, cy-4);
     }
     c.setLineDash([]);
     // 爆心
     c.strokeStyle="#ffc86b"; c.lineWidth=1.2;
     c.beginPath(); c.moveTo(cx-9,cy); c.lineTo(cx+9,cy); c.moveTo(cx,cy-9); c.lineTo(cx,cy+9); c.stroke();
-    c.fillStyle="#ffc86b"; c.beginPath(); c.arc(cx,cy,2.4,0,7); c.fill();
+    c.fillStyle="#ffc86b"; c.beginPath(); c.arc(cx,cy,2.4,0,6.2832); c.fill();
     // 标签
     c.fillStyle="#938f88"; c.font="10px ui-monospace,monospace"; c.textAlign="left";
     c.fillText("爆心投影点 · GROUND ZERO", 16, 22);
-    c.fillText(kt>=1000?(kt/1000)+" Mt":kt+" kt", 16, 38);
+    c.fillStyle="#ffc86b";
+    c.fillText(ktNow>=1000?(ktNow/1000).toFixed(ktNow%1000?1:0)+" Mt":Math.round(ktNow)+" kt", 16, 38);
   }
-  function hexA(h,a){
-    const n=parseInt(h.slice(1),16);
-    return `rgba(${(n>>16)&255},${(n>>8)&255},${n&255},${a})`;
+
+  // ── 当量切换：在对数空间里缓动，地图跟着连续变焦 ──
+  function animate(){
+    const a=Math.log(ktNow), b=Math.log(ktTo);
+    if(Math.abs(b-a)<0.004){ ktNow=ktTo; draw(); updateList(); if(sel>=0)showFact(sel); raf=0; return; }
+    ktNow=Math.exp(a+(b-a)*0.13);
+    draw(); updateList(); if(sel>=0) showFact(sel);
+    raf=requestAnimationFrame(animate);
   }
+  function setKt(v){ ktTo=v; if(RM){ ktNow=v; draw(); updateList(); if(sel>=0)showFact(sel); return; }
+    if(!raf) raf=requestAnimationFrame(animate); }
 
   cv.addEventListener("mousemove",ev=>{
     const b=cv.getBoundingClientRect();
@@ -1716,8 +2063,12 @@ const fmt=n=>{
     b.addEventListener("click",()=>{
       $$("#yieldChips .chip").forEach(x=>x.setAttribute("aria-pressed","false"));
       b.setAttribute("aria-pressed","true");
-      kt=+b.dataset.kt; paintList(); draw(); if(sel>=0) showFact(sel);
+      setKt(+b.dataset.kt);
     });
+  });
+  const refBtn=$("#refToggle");
+  if(refBtn) refBtn.addEventListener("click",()=>{
+    refOn=!refOn; refBtn.setAttribute("aria-pressed",String(refOn)); draw();
   });
 
   function size(){ const r=fit(cv); c=r.c; W=r.w; H=r.h; draw(); }
@@ -1784,52 +2135,297 @@ const fmt=n=>{
 })();
 
 /* ═══════════════════════════════════════════════════════
-   十四万个点
+   石阶 —— 花岗岩被漂白，只留下没被照到的那一块
    ═══════════════════════════════════════════════════════ */
 (()=>{
-  const cv=$("#dots"); if(!cv) return;
-  const TOTAL=140000, counter=$("#dotCount");
-  let c,W,H,cols,rows,pitch,raf=0,drawn=0,go=false;
+  const cv=$("#stoneCv"); if(!cv) return;
+  let c,W,H,raf=0,t0=0,go=false,darkL=null,lightL=null;
+  const DUR=5600;
 
-  const SPLIT=70000;                 // 当天死亡 / 到年底死亡 的分界
-  function size(){
-    const w=cv.clientWidth||900;
-    pitch = w>720 ? 4.0 : 3.2;
-    cols = Math.floor(w/pitch);
-    rows = Math.ceil(TOTAL/cols);
-    const h = rows*pitch;
-    cv.style.height=h+"px";
-    const r=fit(cv,h); c=r.c; W=r.w; H=r.h;
-    c.fillStyle="#040507"; c.fillRect(0,0,W,H);
-    drawn=0;
+  function seated(x,px,py,s){                     // 坐着的人 · 侧背向
+    x.beginPath();
+    x.moveTo(px, py-s*0.98);
+    x.bezierCurveTo(px+s*0.20,py-s*0.98, px+s*0.22,py-s*0.72, px+s*0.10,py-s*0.62);
+    x.bezierCurveTo(px+s*0.34,py-s*0.54, px+s*0.40,py-s*0.26, px+s*0.38,py-s*0.02);
+    x.lineTo(px+s*0.62,py-s*0.02);
+    x.bezierCurveTo(px+s*0.72,py-s*0.02, px+s*0.74,py+s*0.12, px+s*0.60,py+s*0.14);
+    x.lineTo(px+s*0.30,py+s*0.14);
+    x.bezierCurveTo(px+s*0.30,py+s*0.40, px+s*0.24,py+s*0.52, px+s*0.10,py+s*0.52);
+    x.lineTo(px-s*0.12,py+s*0.52);
+    x.bezierCurveTo(px-s*0.26,py+s*0.52, px-s*0.28,py+s*0.30, px-s*0.22,py+s*0.06);
+    x.bezierCurveTo(px-s*0.30,py-s*0.30, px-s*0.24,py-s*0.56, px-s*0.10,py-s*0.62);
+    x.bezierCurveTo(px-s*0.22,py-s*0.72, px-s*0.20,py-s*0.98, px, py-s*0.98);
+    x.closePath();
   }
-  function frame(){
-    if(!go) return;
-    const batch = RM? TOTAL : 450;
-    const end=Math.min(TOTAL, drawn+batch);
-    for(let i=drawn;i<end;i++){
-      const px=(i%cols)*pitch+pitch/2, py=Math.floor(i/cols)*pitch+pitch/2;
-      c.fillStyle = i>=SPLIT ? "rgba(208,66,28,.45)" : "rgba(231,227,218,.52)";
-      c.fillRect(px-0.65,py-0.65,1.3,1.3);
+
+  function stone(w,h,base,spec){
+    const o=document.createElement("canvas"); o.width=w; o.height=h;
+    const x=o.getContext("2d");
+    x.fillStyle=base; x.fillRect(0,0,w,h);
+    // 花岗岩颗粒
+    const n=Math.round(w*h/5);
+    for(let i=0;i<n;i++){
+      const px=Math.random()*w, py=Math.random()*h;
+      const v=Math.random();
+      x.fillStyle= v<.42 ? `rgba(0,0,0,${(0.05+Math.random()*0.16).toFixed(3)})`
+                : v<.82 ? `rgba(255,255,255,${(0.03+Math.random()*0.10).toFixed(3)})`
+                        : `rgba(${spec},${(0.05+Math.random()*0.12).toFixed(3)})`;
+      const r=Math.random()<.9?1:2;
+      x.fillRect(px,py,r,r);
     }
-    drawn=end;
-    counter.textContent=drawn.toLocaleString("en-US");
-    // 分界标注
-    if(drawn>=SPLIT){
-      const by=Math.floor(SPLIT/cols)*pitch;
-      c.strokeStyle="rgba(255,200,107,.5)"; c.lineWidth=1;
-      c.beginPath(); c.moveTo(0,by+.5); c.lineTo(W,by+.5); c.stroke();
-      c.fillStyle="rgba(255,200,107,.85)"; c.font="10px ui-monospace,monospace";
-      c.textAlign="left";  c.fillText("↑ 8 月 6 日当天  约 70,000 人", 6, by-7);
-      c.fillText("↓ 到 1945 年 12 月 31 日  再 70,000 人", 6, by+16);
+    // 三级台阶
+    const bands=3, bh=h/bands;
+    for(let i=1;i<bands;i++){
+      const y=i*bh;
+      x.fillStyle="rgba(0,0,0,.42)"; x.fillRect(0,y-3,w,5);
+      x.fillStyle="rgba(255,255,255,.09)"; x.fillRect(0,y+2,w,2);
     }
-    if(drawn<TOTAL) raf=requestAnimationFrame(frame);
+    x.fillStyle="rgba(0,0,0,.25)"; x.fillRect(0,0,w,3);
+    return o;
   }
-  size();
-  addEventListener("resize",()=>{ size(); if(go){ cancelAnimationFrame(raf); frame(); } });
+
+  function build(){
+    const r=fit(cv,cv.clientWidth); c=r.c; W=r.w; H=r.h;
+    darkL =stone(W,H,"#57534b","120,110,96");        // 未漂白
+    lightL=stone(W,H,"#b9b4a7","210,204,188");       // 被漂白
+    // 在漂白层上挖一个带半影的人形洞：火球张角很大，所以影子边缘是柔的
+    const x=lightL.getContext("2d");
+    x.globalCompositeOperation="destination-out";
+    const s=H*0.40, px=W*0.5, py=H*0.62;
+    if("filter" in x){
+      x.filter=`blur(${Math.max(3,H*0.016)}px)`;
+      x.fillStyle="#000"; seated(x,px,py,s); x.fill();
+      x.filter="none";
+    } else {
+      for(let i=8;i>=0;i--){                          // 无 filter 时的多重描边近似
+        x.globalAlpha=i===0?1:0.13;
+        x.fillStyle="#000"; x.save(); x.translate(px,py); x.scale(1+i*0.012,1+i*0.012);
+        seated(x,0,0,s); x.fill(); x.restore();
+      }
+      x.globalAlpha=1;
+    }
+    x.globalCompositeOperation="source-over";
+    render(0);
+  }
+
+  function render(p){
+    if(!c) return;
+    c.drawImage(darkL,0,0,W,H);
+    const bleach = p<0.16 ? 0 : Math.min(1,(p-0.16)/0.34);
+    if(bleach>0){ c.globalAlpha=bleach; c.drawImage(lightL,0,0,W,H); c.globalAlpha=1; }
+    if(p>0.10&&p<0.22){
+      const f=1-Math.abs(p-0.14)/0.08;
+      if(f>0){ c.fillStyle=`rgba(255,250,238,${(f*0.95).toFixed(3)})`; c.fillRect(0,0,W,H); }
+    }
+    c.fillStyle="rgba(147,143,136,.55)"; c.font="9px ui-monospace,monospace"; c.textAlign="center";
+    c.fillText("示意复原 · 非原物影像", W/2, H-10);
+  }
+
+  function loop(now){
+    if(!t0) t0=now;
+    const p=Math.min(1,(now-t0)/DUR);
+    render(p);
+    if(p<1) raf=requestAnimationFrame(loop);
+  }
+
+  build();
+  addEventListener("resize",()=>{ build(); if(go) render(1); });
   new IntersectionObserver((es,o)=>{
-    es.forEach(e=>{ if(e.isIntersecting && !go){ go=true; frame(); o.disconnect(); } });
-  },{threshold:.05}).observe(cv);
+    es.forEach(e=>{ if(e.isIntersecting&&!go){ go=true;
+      if(RM){ render(1); } else { t0=0; raf=requestAnimationFrame(loop); } o.disconnect(); } });
+  },{threshold:.3}).observe(cv);
+})();
+
+/* ═══════════════════════════════════════════════════════
+   尾声 —— 十四万个点 → 一颗弹头 → 一万两千颗 → 画不下
+   ═══════════════════════════════════════════════════════ */
+(()=>{
+  const cv=$("#finale"); if(!cv) return;
+  const scroll=$("#fscroll");
+  const elC=$("#fCount"), elU=$("#fUnit"), elH=$("#fHead"), elB=$("#fBody"), elL=$("#fLabel");
+  let c,W,H,raf=0,vis=false,P=0,snap=null,snapAt=-1;
+
+  const TOTAL=140000, SPLIT=70000, TODAY=12200, PEAK=70300, ENOUGH=100, FAMINE=2e9;
+  const clamp=(v,a,b)=>v<a?a:v>b?b:v;
+  const ease=t=>t<.5?2*t*t:1-Math.pow(-2*t+2,2)/2;
+
+  const ST=[
+    {a:0.00,b:0.26,h:"每一个点，是一个人",
+     t:"广岛，至 1945 年 12 月 31 日。<br>上半是当天即死亡的约七万人；下半是此后四个月里陆续死去的另外七万人。<br>点会越来越小——因为画面必须把他们全部装下。"},
+    {a:0.26,b:0.37,h:"这些人，是一颗弹",
+     t:"一颗约一万五千吨当量的裂变弹，在离地 580 米处起爆。<br>它的全部工作在不到百万分之一秒内完成。"},
+    {a:0.37,b:0.57,h:"今天有 12,200 颗",
+     t:"分属九个国家。而今天一枚常见的战略弹头当量约 30 万吨——<b>是广岛那颗的二十倍</b>。<br>这里的每一个图形，都是上面那一整屏人。"},
+    {a:0.57,b:0.71,h:"1986 年，是这么多",
+     t:"70,300 颗。冷战最高峰。<br>后来的削减是真实的成就，不该被抹掉——但那条曲线在 2015 年之后基本走平了。"},
+    {a:0.71,b:0.87,h:"其实不需要一万两千颗",
+     t:"近年的气候与农业模型给出一个更不安的结论：一场只动用约 <b>100 枚</b>广岛级弹头的区域核战争，产生的烟尘足以让全球粮食连年减产，使 <b>超过 20 亿人</b> 面临饥荒风险。<br>核武器早已不是「谁按按钮谁承担后果」的武器。它没有旁观者。"},
+    {a:0.87,b:1.01,h:"",t:""}
+  ];
+
+  function warhead(x,cx0,cy0,w,h){                 // 再入弹头剖面
+    x.beginPath();
+    x.moveTo(cx0,cy0-h*0.5);
+    x.quadraticCurveTo(cx0+w*0.30,cy0-h*0.06,cx0+w*0.5,cy0+h*0.34);
+    x.lineTo(cx0+w*0.5,cy0+h*0.5);
+    x.lineTo(cx0-w*0.5,cy0+h*0.5);
+    x.lineTo(cx0-w*0.5,cy0+h*0.34);
+    x.quadraticCurveTo(cx0-w*0.30,cy0-h*0.06,cx0,cy0-h*0.5);
+    x.closePath();
+  }
+
+  // n 个单元铺满画布时的行列与间距
+  function layout(n){
+    const cols=Math.max(1,Math.ceil(Math.sqrt(n*W/H)));
+    const rows=Math.ceil(n/cols);
+    return {cols,rows,px:W/cols,py:H/rows};
+  }
+
+  function drawDots(n,total){
+    const L=layout(total);
+    const r=Math.max(0.5,Math.min(1.9,L.px*0.30));
+    for(let i=0;i<n;i++){
+      const x=(i%L.cols)*L.px+L.px/2, y=Math.floor(i/L.cols)*L.py+L.py/2;
+      c.fillStyle = i>=SPLIT ? "rgba(208,66,28,.52)" : "rgba(231,227,218,.58)";
+      c.fillRect(x-r,y-r,r*2,r*2);
+    }
+    if(n>=SPLIT&&total===TOTAL){
+      const by=Math.floor(SPLIT/L.cols)*L.py;
+      c.strokeStyle="rgba(255,200,107,.45)"; c.lineWidth=1;
+      c.beginPath(); c.moveTo(0,by); c.lineTo(W,by); c.stroke();
+      c.fillStyle="rgba(255,200,107,.8)"; c.font="10px ui-monospace,monospace"; c.textAlign="left";
+      c.fillText("↑ 8 月 6 日当天  约 70,000 人", 10, by-8);
+      c.fillText("↓ 到 12 月 31 日  再 70,000 人", 10, by+17);
+    }
+  }
+
+  function drawHeads(bright,total,ghostFrom){
+    const L=layout(total);
+    const w=L.px*0.56, h=L.py*0.78;
+    for(let i=0;i<total;i++){
+      const x=(i%L.cols)*L.px+L.px/2, y=Math.floor(i/L.cols)*L.py+L.py/2;
+      const isGhost = ghostFrom!=null && i>=ghostFrom;
+      c.fillStyle = isGhost ? "rgba(147,143,136,.20)"
+                  : i<bright ? "rgba(231,227,218,.80)" : "rgba(147,143,136,.26)";
+      if(w<13){ c.fillRect(x-w/2,y-h/2,Math.max(0.8,w),Math.max(1,h)); }
+      else { warhead(c,x,y,w,h); c.fill(); }
+    }
+  }
+
+  function render(){
+    if(!c||W<10) return;
+    c.fillStyle="#040507"; c.fillRect(0,0,W,H);
+    const st=ST.find(s=>P>=s.a&&P<s.b)||ST[ST.length-1];
+    const f=clamp((P-st.a)/(st.b-st.a),0,1);
+    let count=0, unit="人", label="";
+
+    if(st===ST[0]){                                    // 十四万个点
+      const n=Math.round(TOTAL*ease(clamp(f/0.92,0,1)));
+      drawDots(n,TOTAL); count=n; unit="人 / 140,000";
+      label="广岛 · 1945";
+    } else if(st===ST[1]){                             // 塌缩成一颗
+      const k=ease(f);
+      c.save();
+      c.globalAlpha=1-k;
+      c.translate(W/2,H/2); c.scale(1-k*0.94,1-k*0.94); c.translate(-W/2,-H/2);
+      drawDots(TOTAL,TOTAL);
+      c.restore();
+      const s=Math.min(W,H)*0.34*k;
+      if(s>1){
+        c.globalAlpha=k; c.fillStyle="rgba(231,227,218,.88)";
+        warhead(c,W/2,H/2,s*0.46,s); c.fill(); c.globalAlpha=1;
+      }
+      count=1; unit="颗"; label="1945.08.06 · 15 千吨";
+    } else if(st===ST[2]){                             // 增殖到 12,200
+      const n=Math.max(1,Math.round(Math.exp(Math.log(1)+(Math.log(TODAY))*ease(f))));
+      drawHeads(n,n,null); count=n; unit="颗 · 2026 年"; label="全球现役核弹头";
+    } else if(st===ST[3]){                             // 1986 年的 70,300
+      const n=Math.round(TODAY+(PEAK-TODAY)*ease(f));
+      drawHeads(TODAY,n,TODAY); count=n; unit="颗 · 1986 年峰值"; label="其中 12,200 颗＝今天";
+    } else if(st===ST[4]){                             // 100 颗 → 画不下
+      if(f<0.34){
+        const k=ease(f/0.34);
+        drawHeads(Math.round(TODAY+(ENOUGH-TODAY)*k),PEAK,TODAY);
+        count=Math.round(TODAY+(ENOUGH-TODAY)*k); unit="颗"; label="足以引发全球饥荒的数量";
+      } else {
+        const k=ease(clamp((f-0.34)/0.66,0,1));
+        const shown=Math.round(FAMINE*k);
+        // 上限刻意取 140,000 —— 于是这一屏会和开头那一屏长得一模一样
+        const draw=Math.min(shown,TOTAL);
+        const L=layout(TOTAL);
+        const r=Math.max(0.5,Math.min(1.9,L.px*0.30));
+        for(let i=0;i<draw;i++){
+          const x=(i%L.cols)*L.px+L.px/2, y=Math.floor(i/L.cols)*L.py+L.py/2;
+          c.fillStyle="rgba(231,227,218,.55)";
+          c.fillRect(x-r,y-r,r*2,r*2);
+        }
+        count=shown; unit="人 · 面临饥荒风险"; label="Xia 等，2022，《自然 · 食品》";
+        if(shown>TOTAL){
+          const a=clamp((shown-TOTAL)/4e6,0,1);
+          c.fillStyle=`rgba(4,5,7,${(0.80*a).toFixed(3)})`; c.fillRect(0,H/2-78,W,156);
+          c.textAlign="center";
+          c.globalAlpha=a;
+          c.fillStyle="rgba(231,227,218,.96)"; c.font='600 17px "Songti SC","Noto Serif CJK SC",Georgia,serif';
+          c.fillText("这一屏画不下。", W/2, H/2-30);
+          c.fillStyle="rgba(231,227,218,.72)"; c.font='15px "Songti SC","Noto Serif CJK SC",Georgia,serif';
+          c.fillText("它和你在这一段开头看到的那一屏，看起来一模一样。", W/2, H/2+4);
+          c.fillStyle="rgba(208,66,28,.92)"; c.font='15px "Songti SC","Noto Serif CJK SC",Georgia,serif';
+          c.fillText("那一屏，是十四万人。", W/2, H/2+38);
+          c.globalAlpha=1; c.textAlign="left";
+        }
+      }
+    } else {                                           // 黑场 · 一句话
+      const k=clamp((P-0.87)/0.07,0,1);
+      c.fillStyle="#040507"; c.fillRect(0,0,W,H);
+      c.textAlign="center";
+      c.globalAlpha=k;
+      c.fillStyle="rgba(231,227,218,.93)";
+      const fs=Math.min(30,Math.max(17,W*0.021));
+      c.font=`${fs}px "Songti SC","Noto Serif CJK SC",Georgia,serif`;
+      c.fillText("我成了死神，世界的毁灭者。", W/2, H/2-fs*0.4);
+      c.globalAlpha=k*Math.max(0,(P-0.91)/0.05);
+      c.fillStyle="rgba(147,143,136,.9)"; c.font="11px ui-monospace,monospace";
+      c.fillText("罗伯特·奥本海默 · 1965 年回忆三位一体试验时引用《薄伽梵歌》", W/2, H/2+fs*0.9);
+      c.globalAlpha=k*Math.max(0,(P-0.95)/0.05);
+      c.fillStyle="rgba(147,143,136,.75)";
+      c.fillText("试验总指挥巴恩布里奇当时的原话要短得多：「现在我们都是狗娘养的了。」", W/2, H/2+fs*1.9);
+      c.globalAlpha=1; c.textAlign="left";
+      count=0; unit=""; label="";
+    }
+
+    // HUD 底衬：让文字在密集点阵上仍然可读
+    if(P<0.87){
+      const gh=Math.min(H*0.52,360);
+      const gb=c.createLinearGradient(0,H-gh,0,H);
+      gb.addColorStop(0,"rgba(4,5,7,0)"); gb.addColorStop(.42,"rgba(4,5,7,.80)"); gb.addColorStop(1,"rgba(4,5,7,.98)");
+      c.fillStyle=gb; c.fillRect(0,H-gh,W,gh);
+      const gt=c.createLinearGradient(W,0,W*0.5,140);
+      gt.addColorStop(0,"rgba(4,5,7,.88)"); gt.addColorStop(1,"rgba(4,5,7,0)");
+      c.fillStyle=gt; c.fillRect(W*0.42,0,W*0.58,150);
+      const gl2=c.createLinearGradient(0,0,W*0.35,90);
+      gl2.addColorStop(0,"rgba(4,5,7,.85)"); gl2.addColorStop(1,"rgba(4,5,7,0)");
+      c.fillStyle=gl2; c.fillRect(0,0,W*0.35,92);
+    }
+    elC.textContent = count>0 ? count.toLocaleString("en-US") : "";
+    elU.textContent = unit;
+    elL.textContent = label;
+    if(elH.dataset.k!==st.h){ elH.dataset.k=st.h; elH.textContent=st.h; elB.innerHTML=st.t; }
+  }
+
+  function readP(){
+    const r=scroll.getBoundingClientRect(), total=scroll.offsetHeight-innerHeight;
+    return clamp(total>0?-r.top/total:0,0,1);
+  }
+  function tick(){
+    if(!vis){ raf=0; return; }
+    const np=readP();
+    if(Math.abs(np-P)>0.0002){ P=np; render(); }
+    raf=requestAnimationFrame(tick);
+  }
+  function size(){ const r=fit(cv); c=r.c; W=r.w; H=r.h; render(); }
+  size(); addEventListener("resize",size);
+  new IntersectionObserver(es=>{ es.forEach(e=>{ vis=e.isIntersecting; if(vis&&!raf) raf=requestAnimationFrame(tick); }); },{rootMargin:"200px"}).observe(scroll);
+  addEventListener("scroll",()=>{ if(vis&&!raf) raf=requestAnimationFrame(tick); },{passive:true});
 })();
 
 })();
